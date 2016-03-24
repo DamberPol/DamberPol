@@ -19,6 +19,7 @@ public class ConnectSql {
 			 */
 			conn = DriverManager.getConnection(Connectionurl);
 			if (conn != null) {
+				System.out.println("Polaczenie z DB poprawne");
 				DatabaseMetaData dm = (DatabaseMetaData) conn.getMetaData();
 				System.out.println("Driver name: " + dm.getDriverName());
 				System.out.println("Driver version: " + dm.getDriverVersion());
