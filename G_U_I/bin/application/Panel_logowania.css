@@ -1,0 +1,16 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.root{
+	-fx-background-image: url("Panel_Logowania.png");
+	
+}
+.button{
+	-fx-background-color: linear-gradient(#dc9656, #ab4642) ;
+	-fx-text-fill: #FFFFFF;
+}
+.label
+{
+	-fx-font-family: arial, verdana, sans-serif; 
+	-fx-font-weight: bold;
+	-fx-text-fill:aliceblue;
+   -fx-font-size: 20px;
+}

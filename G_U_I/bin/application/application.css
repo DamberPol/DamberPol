@@ -1,0 +1,16 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.root{
+	-fx-background-image: url("tlopowitalne.png");
+	
+}
+.button{
+	-fx-background-color: linear-gradient(#dc9656, #ab4642) ;
+	-fx-text-fill: #FFFFFF;
+		  -fx-font-size: 12px;
+}
+.label
+{
+	-fx-font-family: "Times New Roman";
+	
+   -fx-font-size: 20px;
+}

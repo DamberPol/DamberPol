@@ -1,0 +1,22 @@
+.root{
+	-fx-background-image: url("Rozk³adJazdy.png");
+	
+}
+.button{
+	-fx-background-color: linear-gradient(#dc9656, #ab4642) ;
+	-fx-text-fill: #FFFFFF;
+	  -fx-font-size: 14px;
+}
+.label
+{
+	-fx-font-family: "Verdana";
+	-fx-font-weight: bold;
+
+ 
+}
+.choiceBox{
+	-fx-font-family: "Verdana";
+	-fx-font-weight: bold;
+	  -fx-font-size: 12px;
+	
+}
