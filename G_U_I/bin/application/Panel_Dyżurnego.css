@@ -1,0 +1,52 @@
+.root{
+	-fx-background-image: url("PanelDyz.png");
+	
+}
+.button{
+	-fx-background-color: linear-gradient(#dc9656, #ab4642) ;
+	-fx-text-fill: #FFFFFF;
+	  -fx-font-size: 14px;
+}
+.label
+{
+	-fx-font-family: "Verdana";
+	-fx-font-weight: bold;
+}
+.menu-bar{
+  -fx-background-color: linear-gradient(#dc9656, #ab4642);
+
+
+}
+
+.menu-bar .label {
+    -fx-font-size: 14 pt;
+    -fx-font-family: "Segoe UI Light";
+		-fx-text-fill: #000000;
+
+}
+
+
+.menu:hover {
+    -fx-background-color: linear-gradient(#dc9656, #ab4642);
+}
+.menu-item .label{
+     -fx-font-size: 14 pt;
+ 
+      
+}
+
+.tree-view, .tree-cell {
+    -fx-background-color:  #404040 ;
+    -fx-text-fill: white ;
+}
+.tree-cell:expanded, .tree-cell:sub-tree-item {
+    -fx-background-color: #404040 ;
+}
+.tree-cell:selected {
+    -fx-font-weight: bold ;
+}
+.tree-cell {
+    -fx-padding: 0.75em 0em 0.75em 0em ;
+}
+.tree-cell:sub-tree-item {    -fx-padding: 0.25em ;
+}

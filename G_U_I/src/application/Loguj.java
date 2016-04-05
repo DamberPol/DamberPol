@@ -7,9 +7,12 @@ import javafx.scene.control.*;
 import javafx.geometry.*;
 
 public class Loguj {
-	public static void display() {
+	static boolean ansver;
+	public static boolean display() {
 		Stage window = new Stage();
 		
+		String login="user";
+		String has³o="user";
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("LOGUJ");
 		window.setMinHeight(200);
@@ -41,9 +44,37 @@ public class Loguj {
 		
 		Button loginButton=new Button("Zaloguj");
 		GridPane.setConstraints( loginButton, 1, 2);
+		loginButton.setOnAction(e ->{
+		/*	if(login==nameLabel.getText())
+			{
+				if(has³o==passwordLabel.getText())
+				{*/
+			ansver= true;
+			window.close();
+			/*    }
+			
+				else{
+			ansver= false;
+			window.close();
+			        }
+			
+			}
+			
+			else{
+				ansver= false;
+				window.close();
+			      }*/
+			                        } 
+		);
 		
 		Button closeButton=new Button("Zamknij");
-		closeButton.setOnAction(e -> window.close());
+		closeButton.setOnAction(e ->{
+			ansver= false;
+			window.close();
+		});
+		
+		
+		
 		GridPane.setConstraints( closeButton, 1, 3);
 	
 		
@@ -54,6 +85,7 @@ public class Loguj {
 	window.setScene(scene);
 
 		window.showAndWait();
+		return ansver;
 		
 	}
 
