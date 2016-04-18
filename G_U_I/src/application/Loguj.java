@@ -10,20 +10,20 @@ public class Loguj {
 	static boolean ansver;
 	public static boolean display() {
 		Stage window = new Stage();
-		
+
 		String login="user";
 		String has³o="user";
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("LOGUJ");
-		window.setMinHeight(200);
-		window.setMinWidth(200);
-	
+		window.setMinHeight(120);
+		window.setMinWidth(120);
+	BorderPane layout = new BorderPane(); 
 		GridPane grid= new GridPane(); 
 		grid.setPadding(new Insets(10,10,10,10));
 		grid.setVgap(8);
 		grid.setHgap(12);
-		VBox box= new VBox();
-		
+		HBox box= new HBox();
+		Label separator= new Label(" ");
 		//name
 		Label nameLabel= new Label("Login");
 		GridPane.setConstraints( nameLabel, 0, 0);
@@ -43,7 +43,7 @@ public class Loguj {
 	
 		
 		Button loginButton=new Button("Zaloguj");
-		GridPane.setConstraints( loginButton, 1, 2);
+		
 		loginButton.setOnAction(e ->{
 		/*	if(login==nameLabel.getText())
 			{
@@ -75,12 +75,14 @@ public class Loguj {
 		
 		
 		
-		GridPane.setConstraints( closeButton, 1, 3);
-	
 		
-	grid.getChildren().addAll(nameLabel, nameInput, passwordLabel, passwordInput, loginButton,closeButton);
+	
+		box.getChildren().addAll(loginButton,separator,closeButton);
+		GridPane.setConstraints( box, 1, 2);
+	grid.getChildren().addAll(nameLabel, nameInput, passwordLabel, passwordInput,box );
 
-	Scene scene= new Scene(grid,300,150);
+	layout.setCenter(grid);
+	Scene scene= new Scene(layout,250,120);
 	scene.getStylesheets().add("application/Panel_logowania.css");
 	window.setScene(scene);
 

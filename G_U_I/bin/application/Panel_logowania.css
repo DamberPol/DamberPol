@@ -14,3 +14,7 @@
 	-fx-text-fill:aliceblue;
    -fx-font-size: 20px;
 }
+.separator{
+	
+	-fx-background-color:#000000;
+}

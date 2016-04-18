@@ -32,28 +32,30 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	Stage window;
-	Scene scene, scene2,scene3,scene4,scene5,scene6, scene7, scene8;
+	Scene scene, scene2,scene3,scene4,scene5,scene6, scene7, scene8, scene9;
 	Button przyciskDoPaneluLogowania, przyciskDoOknaKlienta,wyszukajpolaczen;
 	Label labelPowitalny, odstep, odstep1, odstep2, labelRozk³adJazdy, przyjazdlabel,odjazdLabel;
-	BorderPane oknoPowitalne, layout2, bordePaneDlaOkna3, bordePaneDlaOkna4, bordePaneDlaOkna5, bordePaneDlaOkna6, bordePaneDlaOkna7,bordePaneDlaOkna8;
+	BorderPane oknoPowitalne, layout2, bordePaneDlaOkna3, bordePaneDlaOkna4, bordePaneDlaOkna5, bordePaneDlaOkna6, bordePaneDlaOkna7, bordePaneDlaOkna8, bordePaneDlaOkna9;
 	VBox box, boxprzyjazd, boxodjazd;
-	HBox hbox,hbox2,hbox3, hbox4, hbox5, hbox6;
+	HBox hbox,hbox2,hbox3, hbox4, hbox5, hbox6, hbox7;
 	TilePane tilepanel1;
 	Menu filemenu2,filemenu,editMenu;
 	MenuItem newFile,paste;
-	MenuBar menuBar, menuBar1, menuBar3, menuBar4, menuBar5, menuBar6;
+	MenuBar menuBar, menuBar1, menuBar3, menuBar4, menuBar5, menuBar6, menuBar7;
 	Boolean rezultat;
-	TreeView<String> tree3, tree2, tree, tree4, tree5, tree6;
+	TreeView<String> tree3, tree2, tree, tree4, tree5, tree6, tree7;
 	TableView<Kierowcy> table;
 	TableView<Przystanki> table2;
 	TableView<Trasa> table3;
 	TableView<Autokary> table4;
 	TableView<Kursy> table5;
+	TableView<Miejscowosci> table6;
 	TextField nameInput, idInput, nazwiskoInput, peselInput, dataInput, iDPrzystaniki, iDMiejscowsci, inputulica, idprzystaniki,	
 	idkursyinput , idtrasyinput, dzentygodniainput, godzinainput, uwaginput, idAutokaruInput, modelInput, markaInput, rokProdukcjiInput,
 	pojemnoscSilnikaInput,  spalanieInput, katAutokaruInput, iloscMiejsInput, numerRejestracyjny,IdKursInput, idAutaInput, idKierowcyInput,
-	kursSygnaturaKursuInput, kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput;
-	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3, addbutton4, deltebutton4, addbutton5, deltebutton5;
+	kursSygnaturaKursuInput, kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput, IdMiejscowosciInput, nazwaMiejscowosciInput, wojewodztwoInput,
+	powiatInput, gminaInput ;
+	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3, addbutton4, deltebutton4, addbutton5, deltebutton5, addbutton6, deltebutton6;
 	Hyperlink link;
 	
 	public static void main(String[] args){
@@ -798,23 +800,23 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		
 
 		TableColumn<Kursy, String> columnIdKurs= new TableColumn<>("ID_Kurs");
-		columnIdKurs.setMinWidth(125);
+		columnIdKurs.setMinWidth(100);
 		columnIdKurs.setCellValueFactory(new PropertyValueFactory<>("Id_Kursy"));
 		
 		TableColumn<Kursy, String> columnIdAuta= new TableColumn<>("ID_Auta");
-		columnIdAuta.setMinWidth(125);
+		columnIdAuta.setMinWidth(100);
 		columnIdAuta.setCellValueFactory(new PropertyValueFactory<>("id_Auta"));
 		
 		TableColumn<Kursy, String> columnKierowcyInput= new TableColumn<>("ID_Kierowcy");
-		columnKierowcyInput.setMinWidth(125);
+		columnKierowcyInput.setMinWidth(100);
 		columnKierowcyInput.setCellValueFactory(new PropertyValueFactory<>("id_Kierowcy"));
 	
 		TableColumn<Kursy, String> columnSygnaturaKursu = new TableColumn<>("Sygnatury Kursu");
-		columnSygnaturaKursu.setMinWidth(125);
+		columnSygnaturaKursu.setMinWidth(120);
 		columnSygnaturaKursu.setCellValueFactory(new PropertyValueFactory<>("Sygnatury Kursu"));
 	
 		TableColumn<Kursy, String>  columnkursOpis= new TableColumn<>("Opis");
-		 columnkursOpis.setMinWidth(150);
+		 columnkursOpis.setMinWidth(250);
 		 columnkursOpis.setCellValueFactory(new PropertyValueFactory<>("Opis"));
 	
 		TableColumn<Kursy, String> columnKursCzasOdjazd = new TableColumn<>("Czas Odjazdu");
@@ -833,7 +835,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		*/
 		IdKursInput = new TextField();
 		IdKursInput.setPromptText("Id");
-		idAutokaruInput.setMinWidth(50);
+		IdKursInput.setMinWidth(50);
 		
 		idAutaInput = new TextField();
 		idAutaInput.setPromptText("Imie");
@@ -862,6 +864,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		addbutton5= new Button("Add");
 		addbutton5.setOnAction(e -> addbutton5Clicked());
 		addbutton5.setMinWidth(50);
+		
 		deltebutton5 = new Button("Delete");
 		deltebutton5.setOnAction(e -> deltebutton5Clicked());
 		deltebutton5.setMinWidth(70);
@@ -922,6 +925,129 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 	
 		
 		
+		bordePaneDlaOkna9= new BorderPane();
+		scene9 = new Scene(bordePaneDlaOkna9, 1200,480);
+		scene9.getStylesheets().add("application/Panel_Dy¿urnego.css");
+		
+		menuBar7= new MenuBar();
+		menuBar7.getMenus().addAll(filemenu,editMenu);
+		
+
+		TableColumn<Miejscowosci, String> columnIDmiejscow= new TableColumn<>("ID_Miejscowoœæ");
+		columnIDmiejscow.setMinWidth(180);
+		columnIDmiejscow.setCellValueFactory(new PropertyValueFactory<>("Id_Miejscowosci"));
+		
+		TableColumn<Miejscowosci, String> columnNazwaMiejscowosci = new TableColumn<>("Nazwa Miejscowosci");
+		columnNazwaMiejscowosci.setMinWidth(180);
+		columnNazwaMiejscowosci.setCellValueFactory(new PropertyValueFactory<>("Nazwa Miejscowosci"));
+		
+		TableColumn<Miejscowosci, String> columnWojewodztwo= new TableColumn<>("Wojewodztwo");
+		columnWojewodztwo.setMinWidth(180);
+		columnWojewodztwo.setCellValueFactory(new PropertyValueFactory<>("Wojewodztwoy"));
+	
+		TableColumn<Miejscowosci, String> columnPowiat = new TableColumn<>("Powiat");
+		columnPowiat.setMinWidth(180);
+		columnPowiat.setCellValueFactory(new PropertyValueFactory<>("Powiat"));
+	
+		TableColumn<Miejscowosci, String>  columnGmina= new TableColumn<>("Gmina");
+		columnGmina.setMinWidth(180);
+		columnGmina.setCellValueFactory(new PropertyValueFactory<>("Gmina"));
+	
+	
+		
+/*
+		private int MIE_KEY;
+	private String MIE_Nazwa_Miejscow;
+	private String MIE_Wojewodztwo;
+	private String MIE_Powiat;
+	private String MIE_Gmina;
+	,IdMiejscowosciInput, nazwaMiejscowosciInput, wojewodztwoInput, powiatInput, gminaInput 
+		*/
+		IdMiejscowosciInput = new TextField();
+		IdMiejscowosciInput.setPromptText("Id");
+		IdMiejscowosciInput.setMinWidth(50);
+		
+		nazwaMiejscowosciInput = new TextField();
+		nazwaMiejscowosciInput.setPromptText("Imie");
+		nazwaMiejscowosciInput.setMinWidth(50);
+		
+		wojewodztwoInput = new TextField();
+		wojewodztwoInput.setPromptText("Imie");
+		wojewodztwoInput.setMinWidth(50);
+
+		powiatInput = new TextField();
+		powiatInput.setPromptText("Imie");
+		powiatInput.setMinWidth(50);
+		
+		gminaInput = new TextField();
+		gminaInput.setPromptText("Imie");
+		gminaInput.setMinWidth(50);
+		
+
+		addbutton6= new Button("Add");
+		addbutton6.setOnAction(e -> addbutton6Clicked());
+		addbutton6.setMinWidth(50);
+		
+		deltebutton6 = new Button("Delete");
+		deltebutton6.setOnAction(e -> deltebutton6Clicked());
+		deltebutton6.setMinWidth(70);
+		
+		hbox6 = new HBox();
+		hbox6.setPadding(new Insets(10, 10, 10, 10));
+		hbox6.setSpacing(10);
+		hbox6.getChildren().addAll(IdMiejscowosciInput, nazwaMiejscowosciInput, wojewodztwoInput, powiatInput, gminaInput,  addbutton6, deltebutton6);
+		
+		
+		table6 = new TableView<>();
+		table6.getColumns().addAll(columnIDmiejscow, columnNazwaMiejscowosci, columnWojewodztwo, columnPowiat, columnGmina);
+		table6.setItems(getProduct6());
+		
+
+
+		
+		treeitem = new TreeItem<>("Spis opcji");
+		treeitem.setExpanded(true);
+		trasy = makeBranch("Trasy", treeitem);
+		przystanki = makeBranch("Przystanki", treeitem);
+	    kierowcy = makeBranch("Kierowcy", treeitem);
+		autokary = makeBranch("Autokary", treeitem);
+		kursy = makeBranch("Kursy", treeitem);
+        miejscowosci = makeBranch("Miejscowoœci", treeitem);
+		
+		
+		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
+	
+		
+		//Create Tree
+		
+		tree7 = new TreeView<>(treeitem);
+		tree7.setShowRoot(true);
+		
+		
+		tree7.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue)-> {
+		if(newValue !=null){
+			String nazwa = newValue.getValue();
+			wyborbazydanych(nazwa);
+		
+		}
+		});
+		
+		VBox layout6= new VBox();
+		layout6.getChildren().addAll(table6, hbox6);
+		
+		bordePaneDlaOkna9.setTop(menuBar7);
+		bordePaneDlaOkna9.setLeft(tree7);
+		bordePaneDlaOkna9.setCenter(layout6);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
@@ -931,34 +1057,6 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		window.show();
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -1079,6 +1177,34 @@ public void addbutton5Clicked(){
 	IdKursInput, idAutaInput, idKierowcyInput, kursSygnaturaKursuInput, kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput
 	*/
 }
+
+public void addbutton6Clicked(){
+	Miejscowosci miejscowosci = new Miejscowosci();
+	
+	miejscowosci.setMIE_KEY(Integer.parseInt(IdMiejscowosciInput.getText()));
+	miejscowosci.setMIE_Nazwa_Miejscow(nazwaMiejscowosciInput.getText());
+	miejscowosci.setMIE_Wojewodztwo(wojewodztwoInput.getText());
+	miejscowosci.setMIE_Powiat(powiatInput.getText());
+	miejscowosci.setMIE_Gmina(gminaInput.getText());
+
+
+	/*
+	private int MIE_KEY;
+private String MIE_Nazwa_Miejscow;
+private String MIE_Wojewodztwo;
+private String MIE_Powiat;
+private String MIE_Gmina;
+,IdMiejscowosciInput, nazwaMiejscowosciInput, wojewodztwoInput, powiatInput, gminaInput 
+	*/
+	table6.getItems().add(miejscowosci);
+	
+	IdMiejscowosciInput.clear();
+	nazwaMiejscowosciInput.clear();
+	wojewodztwoInput.clear();
+	 powiatInput.clear();
+	gminaInput.clear();
+
+}
 	
 	public void deltebuttonClicked(){
 		ObservableList<Kierowcy> productSelected, allProducts;
@@ -1123,6 +1249,14 @@ public void addbutton5Clicked(){
 		productSelected.forEach(allProducts::remove);
 		
 	}
+	public void deltebutton6Clicked(){
+		ObservableList<Miejscowosci> productSelected, allProducts;
+		allProducts= table6.getItems();
+		productSelected= table6.getSelectionModel().getSelectedItems();
+		
+		productSelected.forEach(allProducts::remove);
+		
+	}
 	
 	public void wyborbazydanych(String wartosc){
 		
@@ -1145,6 +1279,10 @@ public void addbutton5Clicked(){
 			
 			case "Kursy":
 				window.setScene(scene8);
+				break;
+				
+			case "Miejscowoœci":
+				window.setScene(scene9);
 				break;
 	}
 		
@@ -1183,6 +1321,14 @@ public ObservableList<Autokary> getProduct4(){
 public ObservableList<Kursy> getProduct5(){
 	ObservableList<Kursy> products= FXCollections.observableArrayList();
 	products.add(new Kursy(1,1,1,"wies", "sda","sasdf","sds"));
+	
+	return products;
+}
+	
+
+public ObservableList<Miejscowosci> getProduct6(){
+	ObservableList<Miejscowosci> products= FXCollections.observableArrayList();
+	products.add(new Miejscowosci(1,"wies", "sda","sasdf","sds"));
 	
 	return products;
 }
