@@ -3,12 +3,14 @@ package application;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -20,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
@@ -29,22 +32,25 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	Stage window;
-	Scene scene, scene2,scene3;
+	Scene scene, scene2,scene3,scene4,scene5,scene6;
 	Button przyciskDoPaneluLogowania, przyciskDoOknaKlienta,wyszukajpolaczen;
 	Label labelPowitalny, odstep, odstep1, odstep2, labelRozk³adJazdy, przyjazdlabel,odjazdLabel;
-	BorderPane oknoPowitalne, layout2, bordePaneDlaOkna3;
+	BorderPane oknoPowitalne, layout2, bordePaneDlaOkna3, bordePaneDlaOkna4, bordePaneDlaOkna5, bordePaneDlaOkna6;
 	VBox box, boxprzyjazd, boxodjazd;
-	HBox hbox;
+	HBox hbox,hbox2,hbox3;
 	TilePane tilepanel1;
-	Menu filemenu,editMenu;
+	Menu filemenu2,filemenu,editMenu;
 	MenuItem newFile,paste;
-	MenuBar menuBar;
+	MenuBar menuBar, menuBar1, menuBar3, menuBar4;
 	Boolean rezultat;
-	TreeView<String> tree;
-	TableView<Product> table;
-	TextField nameInput,idInput, nazwiskoInput, peselInput, dataInput;
-	Button addbutton, deltebutton;
-
+	TreeView<String> tree3, tree2, tree, tree4;
+	TableView<Kierowcy> table;
+	TableView<Przystanki> table2;
+	TableView<Trasa> table3;
+	TextField nameInput,idInput, nazwiskoInput, peselInput, dataInput, iDPrzystaniki, iDMiejscowsci, inputulica, idprzystaniki,	
+	idkursyinput , idtrasyinput, dzentygodniainput, godzinainput, uwaginput ;
+	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3;
+	Hyperlink link;
 	
 	public static void main(String[] args){
 		
@@ -53,11 +59,21 @@ public class Main extends Application {
 	
 	public void start(Stage primaryStage) throws Exception{
 		
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////                                          Okno Powitalne                                                ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		window= primaryStage;
 	
 		
 		
 		
+		 //Hyperlink
+		link = new Hyperlink();
+		link.setText("Zaloguj");
 		
 		
 		
@@ -67,7 +83,7 @@ public class Main extends Application {
 		oknoPowitalne.setPadding(new Insets(20,20,20,20));
 
 		
-		przyciskDoPaneluLogowania= new Button("Zaloguj");
+	
 		//labelPowitalny =new Label("Witamy");
 		labelPowitalny= new  Label("Witamy w programie firmy Damberpol \n");
 		odstep= new  Label(" ");
@@ -86,15 +102,14 @@ public class Main extends Application {
 
 		window.setTitle("Damberpol");
 
-		przyciskDoPaneluLogowania.setMaxWidth(60);
-		przyciskDoPaneluLogowania.setMaxHeight(40);
-		przyciskDoPaneluLogowania.setOnAction(e ->
+
+		link.setOnAction(e ->
 				{ 
 					rezultat=Loguj.display();
 		
 				if(rezultat==true){
 					
-					window.setScene(scene3);
+					window.setScene(scene4);
 					
 					
 				}
@@ -105,11 +120,11 @@ public class Main extends Application {
 
 
 	
-		BorderPane.setAlignment(przyciskDoPaneluLogowania, Pos.TOP_RIGHT);
+		BorderPane.setAlignment(link, Pos.TOP_RIGHT);
 		
 	//	BorderPane.setMargin(button, new Insets(12,12,12,12));
 		
-		oknoPowitalne.setTop(przyciskDoPaneluLogowania);
+		oknoPowitalne.setTop(link);
 		BorderPane.setAlignment(box, Pos.TOP_CENTER);
 		oknoPowitalne.setCenter(box);
 		
@@ -121,12 +136,15 @@ public class Main extends Application {
 		
 		
 		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////                                          okno klienta                                                  ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		
 		
 		
-		
-		
-// Layout2
+
 		layout2= new BorderPane();
 		layout2.setPadding(new Insets(20,20,20,20));
 		scene2 = new Scene(layout2,800,600);
@@ -188,26 +206,30 @@ public class Main extends Application {
 
 
 		
-		
-		//layout 3
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////// 											 Baza Kierowcy                                                ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		
 		
 		bordePaneDlaOkna3= new BorderPane();
-		scene3 = new Scene(bordePaneDlaOkna3, 1000,500);
+		scene3 = new Scene(bordePaneDlaOkna3, 1250,500);
 		scene3.getStylesheets().add("application/Panel_Dy¿urnego.css");
 		
-        filemenu= new Menu("Plik");
+        filemenu2= new Menu("Plik");
 		
 		newFile= new MenuItem("nowy...");
 		newFile.setOnAction(e -> System.out.println("cos"));
-		filemenu.getItems().add(newFile);
-		filemenu.getItems().add(new MenuItem("Nowy raport"));
-		filemenu.getItems().add(new SeparatorMenuItem());
-		filemenu.getItems().add(new MenuItem("Dodaj ..."));
-		filemenu.getItems().add(new SeparatorMenuItem());
-		filemenu.getItems().add(new MenuItem("Usuñ ..."));
-		filemenu.getItems().add(new SeparatorMenuItem());
-		filemenu.getItems().add(new MenuItem("Wyjœcie"));
+		filemenu2.getItems().add(newFile);
+		filemenu2.getItems().add(new MenuItem("Nowy raport"));
+		filemenu2.getItems().add(new SeparatorMenuItem());
+		filemenu2.getItems().add(new MenuItem("Dodaj ..."));
+		filemenu2.getItems().add(new SeparatorMenuItem());
+		filemenu2.getItems().add(new MenuItem("Usuñ ..."));
+		filemenu2.getItems().add(new SeparatorMenuItem());
+		filemenu2.getItems().add(new MenuItem("Wyjœcie"));
 		
 		editMenu= new Menu("Edytuj");
 		editMenu.getItems().add(new MenuItem("Kopiuj"));
@@ -217,7 +239,7 @@ public class Main extends Application {
 		editMenu.getItems().add(paste);
 		
 		menuBar= new MenuBar();
-		menuBar.getMenus().addAll(filemenu,editMenu);
+		menuBar.getMenus().addAll(filemenu2,editMenu);
 		
 		
 		
@@ -229,57 +251,47 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 
 		
 		trasy = makeBranch("Trasy", treeitem);
-	
-		
 		przystanki = makeBranch("Przystanki", treeitem);
-	
-	
 		kierowcy = makeBranch("Kierowcy", treeitem);
-		
-		
 		autokary = makeBranch("Autokary", treeitem);
-		
-		
 		kursy = makeBranch("Kursy", treeitem);
-		
-		
 		miejscowosci = makeBranch("Miejscowoœci", treeitem);
-		
-		
 		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
 	
 		
 		//Create Tree
 		
-		tree= new TreeView<>(treeitem);
-		tree.setShowRoot(true);
+		tree2= new TreeView<>(treeitem);
+		tree2.setShowRoot(true);
 		
 		
-		tree.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue)-> {
-		if(newValue !=null)
-			System.out.println(newValue.getValue());
+		tree2.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue)-> {
+		if(newValue !=null){
+			String nazwa = newValue.getValue();
+			wyborbazydanych(nazwa);
+		}
 		});
 		
 
-		TableColumn<Product, String> idColumn= new TableColumn<>("ID");
-		idColumn.setMinWidth(100);
+		TableColumn<Kierowcy, String> idColumn= new TableColumn<>("ID");
+		idColumn.setMinWidth(200);
 		idColumn.setCellValueFactory(new PropertyValueFactory<>("Id"));
-		
-		TableColumn<Product, String> nameColumn= new TableColumn<>("Imie");
-		nameColumn.setMinWidth(100);
+
+		TableColumn<Kierowcy, String> nameColumn= new TableColumn<>("Imie");
+		nameColumn.setMinWidth(200);
 		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 		
-		TableColumn<Product, String> nazwiskoColumn= new TableColumn<>("Nazwisko");
-		nazwiskoColumn.setMinWidth(100);
+		TableColumn<Kierowcy, String> nazwiskoColumn= new TableColumn<>("Nazwisko");
+		nazwiskoColumn.setMinWidth(200);
 		nazwiskoColumn.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
 		
 		
-		TableColumn<Product, Double> peselColumn= new TableColumn<>("Pesel");
-		peselColumn.setMinWidth(100);
+		TableColumn<Kierowcy, Double> peselColumn= new TableColumn<>("Pesel");
+		peselColumn.setMinWidth(200);
 		peselColumn.setCellValueFactory(new PropertyValueFactory<>("pesel"));
 		
-		TableColumn<Product, String> dataColumn= new TableColumn<>("Data");
-		dataColumn.setMinWidth(150);
+		TableColumn<Kierowcy, String> dataColumn= new TableColumn<>("Data");
+		dataColumn.setMinWidth(200);
 		dataColumn.setCellValueFactory(new PropertyValueFactory<>("datazatrudnienia"));
 		
 		
@@ -305,9 +317,9 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		dataInput.setPromptText("Data");
 	
 		
-		addbutton= new Button("+");
+		addbutton= new Button("Add");
 		addbutton.setOnAction(e -> addbuttonClicked());
-		deltebutton = new Button("-");
+		deltebutton = new Button("Delete");
 		deltebutton.setOnAction(e -> deltebuttonClicked());
 		
 		
@@ -327,14 +339,351 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		
 		
 		bordePaneDlaOkna3.setTop(menuBar);
-		bordePaneDlaOkna3.setLeft(tree);
+		bordePaneDlaOkna3.setLeft(tree2);
 		bordePaneDlaOkna3.setCenter(layout);
+		
+		
+		
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////                                Okno bazy danych poczatkowe                                             ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	
+
+		bordePaneDlaOkna4= new BorderPane();
+		scene4 = new Scene(bordePaneDlaOkna4, 1250,500);
+		scene4.getStylesheets().add("application/Panel_Dy¿urnego.css");
+        filemenu= new Menu("Plik");
+		
+		newFile= new MenuItem("nowy...");
+		newFile.setOnAction(e -> System.out.println("cos"));
+		filemenu.getItems().add(newFile);
+		filemenu.getItems().add(new MenuItem("Nowy raport"));
+		filemenu.getItems().add(new SeparatorMenuItem());
+		filemenu.getItems().add(new MenuItem("Dodaj ..."));
+		filemenu.getItems().add(new SeparatorMenuItem());
+		filemenu.getItems().add(new MenuItem("Usuñ ..."));
+		filemenu.getItems().add(new SeparatorMenuItem());
+		filemenu.getItems().add(new MenuItem("Wyjœcie"));
+		
+		editMenu= new Menu("Edytuj");
+		editMenu.getItems().add(new MenuItem("Kopiuj"));
+		editMenu.getItems().add(new MenuItem("Wytnij"));
+		paste= new MenuItem("Wklej.");
+		paste.setOnAction(e -> System.out.println("cos"));
+		editMenu.getItems().add(paste);
+		
+		menuBar1= new MenuBar();
+		menuBar1.getMenus().addAll(filemenu,editMenu);
+		
+		
+		
+		tree2= new TreeView<>(treeitem);
+		tree2.setShowRoot(true);
+		
+		
+		tree2.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue)-> {
+		if(newValue !=null){
+			String nazwa = newValue.getValue();
+			wyborbazydanych(nazwa);
+		
+		}
+		});
+		
+	
+		
+		
+		
+		bordePaneDlaOkna4.setTop(menuBar1);
+		bordePaneDlaOkna4.setLeft(tree2);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////									Okno bazy danych przestanki                                           ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+		bordePaneDlaOkna5= new BorderPane();
+		scene5 = new Scene(bordePaneDlaOkna5, 870,500);
+		scene5.getStylesheets().add("application/Panel_Dy¿urnego.css");
+		
+		menuBar3= new MenuBar();
+		menuBar3.getMenus().addAll(filemenu,editMenu);
+		
+
+		TableColumn<Przystanki, String> idPrzystaniki= new TableColumn<>("ID_Przystanki");
+		idPrzystaniki.setMinWidth(200);
+		idPrzystaniki.setCellValueFactory(new PropertyValueFactory<>("Id_Przystanki"));
+		
+		TableColumn<Przystanki, String> IdMiejscowsci= new TableColumn<>("ID_Miejscowosci");
+		IdMiejscowsci.setMinWidth(200);
+		IdMiejscowsci.setCellValueFactory(new PropertyValueFactory<>("Id_Miejscowosci"));
+		
+		TableColumn<Przystanki, Float> ulicacolumn= new TableColumn<>("Ulica");
+		ulicacolumn.setMinWidth(200);
+		ulicacolumn.setCellValueFactory(new PropertyValueFactory<>("ulica"));
+		
+
+		
+		
+		iDPrzystaniki = new TextField();
+		iDPrzystaniki.setPromptText("Id");
+		iDPrzystaniki.setMinWidth(150);
+		
+	
+		
+		iDMiejscowsci = new TextField();
+		iDMiejscowsci.setPromptText("Nazwisko");
+		iDMiejscowsci.setMinWidth(150);
+		
+		inputulica = new TextField();
+		inputulica.setPromptText("Imie");
+		inputulica.setMinWidth(150);
+		
+
+		
+		addbutton2= new Button("Add");
+		addbutton2.setOnAction(e -> addbutton2Clicked());
+		deltebutton2 = new Button("Delete");
+		deltebutton2.setOnAction(e -> deltebutton2Clicked());
+		
+		
+		hbox2 = new HBox();
+		hbox2.setPadding(new Insets(10, 10, 10, 10));
+		hbox2.setSpacing(10);
+		hbox2.getChildren().addAll(iDPrzystaniki, iDMiejscowsci, inputulica,  addbutton2, deltebutton2);
+		
+		
+		table2 = new TableView<>();
+		table2.getColumns().addAll( idPrzystaniki, IdMiejscowsci, ulicacolumn);
+		table2.setItems(getProduct2());
+		
+
+
+		
+		treeitem = new TreeItem<>("Spis opcji");
+		treeitem.setExpanded(true);
+		trasy = makeBranch("Trasy", treeitem);
+		przystanki = makeBranch("Przystanki", treeitem);
+	    kierowcy = makeBranch("Kierowcy", treeitem);
+		autokary = makeBranch("Autokary", treeitem);
+		kursy = makeBranch("Kursy", treeitem);
+        miejscowosci = makeBranch("Miejscowoœci", treeitem);
+		
+		
+		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
+	
+		
+		//Create Tree
+		
+		tree3= new TreeView<>(treeitem);
+		tree3.setShowRoot(true);
+		
+		
+		tree3.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue)-> {
+		if(newValue !=null){
+			String nazwa = newValue.getValue();
+			wyborbazydanych(nazwa);
+		
+		}
+		});
+	
+		
+		//Create Tree
+
+		
+		
+		
+		
+		VBox layout2= new VBox();
+		layout2.getChildren().addAll(table2, hbox2);
+		
+		bordePaneDlaOkna5.setTop(menuBar3);
+		bordePaneDlaOkna5.setLeft(tree3);
+		bordePaneDlaOkna5.setCenter(layout2);
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////										Okno bazy danych trasy                                            ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		
+		bordePaneDlaOkna6= new BorderPane();
+		scene6 = new Scene(bordePaneDlaOkna6, 1450,500);
+		scene6.getStylesheets().add("application/Panel_Dy¿urnego.css");
+		
+		menuBar4= new MenuBar();
+		menuBar4.getMenus().addAll(filemenu,editMenu);
+		
+
+		TableColumn<Trasa, String> idTrasy= new TableColumn<>("ID_Trasy");
+		idTrasy.setMinWidth(200);
+		idTrasy.setCellValueFactory(new PropertyValueFactory<>("Id_trasy"));
+		
+		TableColumn<Trasa, String> IdKursy= new TableColumn<>("ID_Kursy");
+		IdKursy.setMinWidth(200);
+		IdKursy.setCellValueFactory(new PropertyValueFactory<>("Id_Kursy"));
+		
+		TableColumn<Trasa, String> IdPrzystanki= new TableColumn<>("ID_Przystanki");
+		IdPrzystanki.setMinWidth(200);
+		IdPrzystanki.setCellValueFactory(new PropertyValueFactory<>("Id_Przystanki"));
+
+		TableColumn<Trasa, String> dzientygcolumn = new TableColumn<>("Dzien Tygodnia");
+		dzientygcolumn.setMinWidth(200);
+		dzientygcolumn.setCellValueFactory(new PropertyValueFactory<>("Dzien Tygodnia"));
+	
+		TableColumn<Trasa, String> godzinacolumn = new TableColumn<>("Godzina");
+		godzinacolumn.setMinWidth(200);
+		godzinacolumn.setCellValueFactory(new PropertyValueFactory<>("Godzina"));
+	
+		TableColumn<Trasa, String> uwagicolumn = new TableColumn<>("Uwagi");
+		uwagicolumn.setMinWidth(200);
+		uwagicolumn.setCellValueFactory(new PropertyValueFactory<>("Uwagi"));
+		
+		
+
+		
+		idprzystaniki = new TextField();
+		idprzystaniki.setPromptText("Id");
+		idprzystaniki.setMinWidth(150);
+		
+		idkursyinput = new TextField();
+		idkursyinput.setPromptText("Imie");
+		idkursyinput.setMinWidth(150);
+		
+		idtrasyinput = new TextField();
+		idtrasyinput.setPromptText("Imie");
+		idtrasyinput.setMinWidth(150);
+
+		dzentygodniainput = new TextField();
+		dzentygodniainput.setPromptText("Imie");
+		dzentygodniainput.setMinWidth(150);
+		
+		 godzinainput = new TextField();
+		 godzinainput.setPromptText("Imie");
+		 godzinainput.setMinWidth(150);
+		
+		 uwaginput = new TextField();
+		 uwaginput.setPromptText("Imie");
+		 uwaginput.setMinWidth(150);
+		
+		
+		addbutton3= new Button("Add");
+		addbutton3.setOnAction(e -> addbutton3Clicked());
+		deltebutton3 = new Button("Delete");
+		deltebutton2.setOnAction(e -> deltebutton3Clicked());
+		
+		
+		hbox3 = new HBox();
+		hbox3.setPadding(new Insets(10, 10, 10, 10));
+		hbox3.setSpacing(10);
+		hbox3.getChildren().addAll(idprzystaniki,idkursyinput , idtrasyinput, dzentygodniainput, godzinainput, uwaginput,  addbutton3, deltebutton3);
+		
+		
+		table3 = new TableView<>();
+		table3.getColumns().addAll(idTrasy, IdKursy, IdPrzystanki, dzientygcolumn, godzinacolumn, uwagicolumn);
+		table3.setItems(getProduct3());
+		
+
+
+		
+		treeitem = new TreeItem<>("Spis opcji");
+		treeitem.setExpanded(true);
+		trasy = makeBranch("Trasy", treeitem);
+		przystanki = makeBranch("Przystanki", treeitem);
+	    kierowcy = makeBranch("Kierowcy", treeitem);
+		autokary = makeBranch("Autokary", treeitem);
+		kursy = makeBranch("Kursy", treeitem);
+        miejscowosci = makeBranch("Miejscowoœci", treeitem);
+		
+		
+		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
+	
+		
+		//Create Tree
+		
+		tree4= new TreeView<>(treeitem);
+		tree4.setShowRoot(true);
+		
+		
+		tree4.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue)-> {
+		if(newValue !=null){
+			String nazwa = newValue.getValue();
+			wyborbazydanych(nazwa);
+		
+		}
+		});
+		
+		VBox layout3= new VBox();
+		layout3.getChildren().addAll(table3, hbox3);
+		
+		bordePaneDlaOkna6.setTop(menuBar4);
+		bordePaneDlaOkna6.setLeft(tree4);
+		bordePaneDlaOkna6.setCenter(layout3);
+		
+	
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////									Okno bazy danych Autokary                                             ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		window.setTitle("Damberpol");
 		window.setScene(scene);
 		window.show();
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public TreeItem<String> makeBranch(String title, TreeItem<String> parent){
 		TreeItem<String> item= new TreeItem<>(title);
@@ -344,13 +693,13 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 	}
 
 	public void addbuttonClicked(){
-		Product product = new Product();
-		product.setId(Integer.parseInt(idInput.getText()));
-		product.setName(nameInput.getText());
-		product.setNazwisko(nameInput.getText());
-		product.setPesel(Integer.parseInt(peselInput.getText()));
-		product.setDatazatrudnienia(dataInput.getText());
-		table.getItems().add(product);
+		Kierowcy kierowca = new Kierowcy();
+		kierowca.setId(Integer.parseInt(idInput.getText()));
+		kierowca.setName(nameInput.getText());
+		kierowca.setNazwisko(nameInput.getText());
+		kierowca.setPesel(Integer.parseInt(peselInput.getText()));
+		kierowca.setDatazatrudnienia(dataInput.getText());
+		table.getItems().add(kierowca);
 		idInput.clear();
 		nameInput.clear();
 		nazwiskoInput.clear();
@@ -360,9 +709,35 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		
 	}
 	
+	public void addbutton2Clicked(){
+		Przystanki przystanki = new Przystanki();
+		przystanki.setPR_KEY(Integer.parseInt(iDPrzystaniki.getText()));
+		przystanki.setMIE_KEY(Integer.parseInt(iDMiejscowsci.getText()));
+		przystanki.setPR_Ulica(inputulica.getText());
+		table2.getItems().add(przystanki);
+		iDPrzystaniki.clear();
+		iDMiejscowsci.clear();
+		inputulica.clear();
+
+		
+		
+	}
+	public void addbutton3Clicked(){
+		Przystanki przystanki = new Przystanki();
+		przystanki.setPR_KEY(Integer.parseInt(iDPrzystaniki.getText()));
+		przystanki.setMIE_KEY(Integer.parseInt(iDMiejscowsci.getText()));
+		przystanki.setPR_Ulica(inputulica.getText());
+		table2.getItems().add(przystanki);
+		iDPrzystaniki.clear();
+		iDMiejscowsci.clear();
+		inputulica.clear();
+
+		
+		
+	}
 	
 	public void deltebuttonClicked(){
-		ObservableList<Product> productSelected, allProducts;
+		ObservableList<Kierowcy> productSelected, allProducts;
 		allProducts= table.getItems();
 		productSelected= table.getSelectionModel().getSelectedItems();
 		
@@ -370,10 +745,60 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		
 	}
 	
+	public void deltebutton2Clicked(){
+		ObservableList<Przystanki> productSelected, allProducts;
+		allProducts= table2.getItems();
+		productSelected= table2.getSelectionModel().getSelectedItems();
+		
+		productSelected.forEach(allProducts::remove);
+		
+	}
+	public void deltebutton3Clicked(){
+		ObservableList<Przystanki> productSelected, allProducts;
+		allProducts= table2.getItems();
+		productSelected= table2.getSelectionModel().getSelectedItems();
+		
+		productSelected.forEach(allProducts::remove);
+		
+	}
 	
-public ObservableList<Product> getProduct(){
-	ObservableList<Product> products= FXCollections.observableArrayList();
-	products.add(new Product(1, "Tomasz","Noga", 2132423432,"20.07.1992"));
+	
+	public void wyborbazydanych(String wartosc){
+		
+		switch(wartosc){
+		case "Kierowcy":
+			window.setScene(scene3);
+			break;
+			
+		case "Przystanki":
+		window.setScene(scene5);
+		break;
+		
+			case "Trasy":
+			window.setScene(scene6);
+			break;
+	}
+		
+	}
+	
+public ObservableList<Kierowcy> getProduct(){
+	ObservableList<Kierowcy> products= FXCollections.observableArrayList();
+	products.add(new Kierowcy(1, "Tomasz","Noga", 2132423432,"20.07.1992"));
+
+	
+	return products;
+}
+
+public ObservableList<Przystanki> getProduct2(){
+	ObservableList<Przystanki> products= FXCollections.observableArrayList();
+	products.add(new Przystanki(1,1,"wies"));
+
+	
+	return products;
+}
+public ObservableList<Trasa> getProduct3(){
+	ObservableList<Trasa> products= FXCollections.observableArrayList();
+	products.add(new Trasa(1,1,1,"wies", "dasd", "sda"));
 
 	
 	return products;
