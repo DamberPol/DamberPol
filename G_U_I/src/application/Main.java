@@ -32,24 +32,26 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	Stage window;
-	Scene scene, scene2,scene3,scene4,scene5,scene6;
+	Scene scene, scene2,scene3,scene4,scene5,scene6, scene7;
 	Button przyciskDoPaneluLogowania, przyciskDoOknaKlienta,wyszukajpolaczen;
 	Label labelPowitalny, odstep, odstep1, odstep2, labelRozk³adJazdy, przyjazdlabel,odjazdLabel;
-	BorderPane oknoPowitalne, layout2, bordePaneDlaOkna3, bordePaneDlaOkna4, bordePaneDlaOkna5, bordePaneDlaOkna6;
+	BorderPane oknoPowitalne, layout2, bordePaneDlaOkna3, bordePaneDlaOkna4, bordePaneDlaOkna5, bordePaneDlaOkna6, bordePaneDlaOkna7;
 	VBox box, boxprzyjazd, boxodjazd;
-	HBox hbox,hbox2,hbox3;
+	HBox hbox,hbox2,hbox3, hbox4;
 	TilePane tilepanel1;
 	Menu filemenu2,filemenu,editMenu;
 	MenuItem newFile,paste;
-	MenuBar menuBar, menuBar1, menuBar3, menuBar4;
+	MenuBar menuBar, menuBar1, menuBar3, menuBar4, menuBar5;
 	Boolean rezultat;
-	TreeView<String> tree3, tree2, tree, tree4;
+	TreeView<String> tree3, tree2, tree, tree4, tree5;
 	TableView<Kierowcy> table;
 	TableView<Przystanki> table2;
 	TableView<Trasa> table3;
-	TextField nameInput,idInput, nazwiskoInput, peselInput, dataInput, iDPrzystaniki, iDMiejscowsci, inputulica, idprzystaniki,	
-	idkursyinput , idtrasyinput, dzentygodniainput, godzinainput, uwaginput ;
-	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3;
+	TableView<Autokary> table4;
+	TextField nameInput, idInput, nazwiskoInput, peselInput, dataInput, iDPrzystaniki, iDMiejscowsci, inputulica, idprzystaniki,	
+	idkursyinput , idtrasyinput, dzentygodniainput, godzinainput, uwaginput, idAutokaruInput, modelInput, markaInput, rokProdukcjiInput,
+	pojemnoscSilnikaInput,  spalanieInput, katAutokaruInput, iloscMiejsInput, numerRejestracyjny;
+	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3, addbutton4, deltebutton4;
 	Hyperlink link;
 	
 	public static void main(String[] args){
@@ -355,7 +357,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 	
 
 		bordePaneDlaOkna4= new BorderPane();
-		scene4 = new Scene(bordePaneDlaOkna4, 1250,500);
+		scene4 = new Scene(bordePaneDlaOkna4, 1250,480);
 		scene4.getStylesheets().add("application/Panel_Dy¿urnego.css");
         filemenu= new Menu("Plik");
 		
@@ -406,7 +408,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 		bordePaneDlaOkna5= new BorderPane();
-		scene5 = new Scene(bordePaneDlaOkna5, 870,500);
+		scene5 = new Scene(bordePaneDlaOkna5, 870,480);
 		scene5.getStylesheets().add("application/Panel_Dy¿urnego.css");
 		
 		menuBar3= new MenuBar();
@@ -513,7 +515,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		
 		
 		bordePaneDlaOkna6= new BorderPane();
-		scene6 = new Scene(bordePaneDlaOkna6, 1450,500);
+		scene6 = new Scene(bordePaneDlaOkna6, 1450,480);
 		scene6.getStylesheets().add("application/Panel_Dy¿urnego.css");
 		
 		menuBar4= new MenuBar();
@@ -575,7 +577,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		addbutton3= new Button("Add");
 		addbutton3.setOnAction(e -> addbutton3Clicked());
 		deltebutton3 = new Button("Delete");
-		deltebutton2.setOnAction(e -> deltebutton3Clicked());
+		deltebutton3.setOnAction(e -> deltebutton3Clicked());
 		
 		
 		hbox3 = new HBox();
@@ -635,7 +637,147 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		
 		
 		
+		bordePaneDlaOkna7= new BorderPane();
+		scene7 = new Scene(bordePaneDlaOkna7, 1600,480);
+		scene7.getStylesheets().add("application/Panel_Dy¿urnego.css");
 		
+		menuBar5= new MenuBar();
+		menuBar5.getMenus().addAll(filemenu,editMenu);
+		
+
+		TableColumn<Autokary, String> idAutokarucolumn= new TableColumn<>("ID_Autokaru");
+		idAutokarucolumn.setMinWidth(125);
+		idAutokarucolumn.setCellValueFactory(new PropertyValueFactory<>("Id_Autokary"));
+		
+		TableColumn<Autokary, String> Markacolumn= new TableColumn<>("Marka");
+		Markacolumn.setMinWidth(125);
+		Markacolumn.setCellValueFactory(new PropertyValueFactory<>("Marka"));
+		
+		TableColumn<Autokary, String> Modelcolumn= new TableColumn<>("Model");
+		Modelcolumn.setMinWidth(125);
+		Modelcolumn.setCellValueFactory(new PropertyValueFactory<>("Model"));
+	
+		TableColumn<Autokary, String> rokProdukcjicolumn = new TableColumn<>("Rok produkcji");
+		rokProdukcjicolumn.setMinWidth(125);
+		rokProdukcjicolumn.setCellValueFactory(new PropertyValueFactory<>("Rok produkcji"));
+	
+		TableColumn<Autokary, Double> pojemnoscSilnikacolumn = new TableColumn<>("Pojemnoœæ silnika");
+		pojemnoscSilnikacolumn.setMinWidth(150);
+		pojemnoscSilnikacolumn.setCellValueFactory(new PropertyValueFactory<>("Pojemnoœæ silnika"));
+	
+		TableColumn<Autokary, String> spalaniecolumn = new TableColumn<>("Spalanie");
+		spalaniecolumn.setMinWidth(125);
+		spalaniecolumn.setCellValueFactory(new PropertyValueFactory<>("Spalanie"));
+		
+		TableColumn<Autokary, String> KatAutokarucolumn = new TableColumn<>("Kat_Autokaru");
+		KatAutokarucolumn.setMinWidth(125);
+		KatAutokarucolumn.setCellValueFactory(new PropertyValueFactory<>("KAT_Autokaru"));
+		
+		TableColumn<Autokary, String> iloscMiejscColumn = new TableColumn<>("Ilosc Miejsc");
+		iloscMiejscColumn.setMinWidth(125);
+		iloscMiejscColumn.setCellValueFactory(new PropertyValueFactory<>("Ilosc Miejsc"));
+		
+		TableColumn<Autokary, String> nrRejstracjiColumn = new TableColumn<>("Numer Rejestracyjny");
+		nrRejstracjiColumn.setMinWidth(150);
+		nrRejstracjiColumn.setCellValueFactory(new PropertyValueFactory<>("Numer Rejestracyjny"));
+		
+
+		
+		idAutokaruInput = new TextField();
+		idAutokaruInput.setPromptText("Id");
+		idAutokaruInput.setMinWidth(50);
+		
+		markaInput = new TextField();
+		markaInput.setPromptText("Imie");
+		markaInput.setMinWidth(50);
+		
+		modelInput = new TextField();
+		modelInput.setPromptText("Imie");
+		modelInput.setMinWidth(50);
+
+		rokProdukcjiInput = new TextField();
+		rokProdukcjiInput.setPromptText("Imie");
+		rokProdukcjiInput.setMinWidth(50);
+		
+		
+	
+		
+		pojemnoscSilnikaInput = new TextField();
+		pojemnoscSilnikaInput.setPromptText("Imie");
+		pojemnoscSilnikaInput.setMinWidth(50);
+		
+		 spalanieInput = new TextField();
+		 spalanieInput.setPromptText("Imie");
+		 spalanieInput.setMinWidth(50);
+		 
+		 katAutokaruInput = new TextField();
+		 katAutokaruInput.setPromptText("Imie");
+		 katAutokaruInput.setMinWidth(50);
+		
+		 iloscMiejsInput = new TextField();
+		 iloscMiejsInput.setPromptText("Imie");
+		 iloscMiejsInput.setMinWidth(50);
+		 
+		 numerRejestracyjny = new TextField();
+		 numerRejestracyjny.setPromptText("Imie");
+		 numerRejestracyjny.setMinWidth(50);
+			
+	
+		 
+		 
+		addbutton4= new Button("Add");
+		addbutton4.setOnAction(e -> addbutton4Clicked());
+		addbutton4.setMinWidth(50);
+		deltebutton4 = new Button("Delete");
+		deltebutton4.setOnAction(e -> deltebutton4Clicked());
+		deltebutton4.setMinWidth(70);
+		
+		hbox4 = new HBox();
+		hbox4.setPadding(new Insets(10, 10, 10, 10));
+		hbox4.setSpacing(10);
+		hbox4.getChildren().addAll(idAutokaruInput, modelInput, markaInput, rokProdukcjiInput, pojemnoscSilnikaInput, spalanieInput, katAutokaruInput, iloscMiejsInput, numerRejestracyjny,  addbutton4, deltebutton4);
+		
+		
+		table4 = new TableView<>();
+		table4.getColumns().addAll(	idAutokarucolumn,  Markacolumn, Modelcolumn,rokProdukcjicolumn, pojemnoscSilnikacolumn,  spalaniecolumn, KatAutokarucolumn,  iloscMiejscColumn, nrRejstracjiColumn);
+		table4.setItems(getProduct4());
+		
+
+
+		
+		treeitem = new TreeItem<>("Spis opcji");
+		treeitem.setExpanded(true);
+		trasy = makeBranch("Trasy", treeitem);
+		przystanki = makeBranch("Przystanki", treeitem);
+	    kierowcy = makeBranch("Kierowcy", treeitem);
+		autokary = makeBranch("Autokary", treeitem);
+		kursy = makeBranch("Kursy", treeitem);
+        miejscowosci = makeBranch("Miejscowoœci", treeitem);
+		
+		
+		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
+	
+		
+		//Create Tree
+		
+		tree5 = new TreeView<>(treeitem);
+		tree5.setShowRoot(true);
+		
+		
+		tree5.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue)-> {
+		if(newValue !=null){
+			String nazwa = newValue.getValue();
+			wyborbazydanych(nazwa);
+		
+		}
+		});
+		
+		VBox layout4= new VBox();
+		layout4.getChildren().addAll(table4, hbox4);
+		
+		bordePaneDlaOkna7.setTop(menuBar5);
+		bordePaneDlaOkna7.setLeft(tree5);
+		bordePaneDlaOkna7.setCenter(layout4);
 		
 		
 		
@@ -723,18 +865,56 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		
 	}
 	public void addbutton3Clicked(){
-		Przystanki przystanki = new Przystanki();
-		przystanki.setPR_KEY(Integer.parseInt(iDPrzystaniki.getText()));
-		przystanki.setMIE_KEY(Integer.parseInt(iDMiejscowsci.getText()));
-		przystanki.setPR_Ulica(inputulica.getText());
-		table2.getItems().add(przystanki);
-		iDPrzystaniki.clear();
-		iDMiejscowsci.clear();
-		inputulica.clear();
+		Trasa trasa = new Trasa();
+		trasa.setTR_KEY(Integer.parseInt(idtrasyinput.getText()));
+		trasa.setKUR_KEY(Integer.parseInt(idkursyinput.getText()));
+		trasa.setPR_KEY(Integer.parseInt(idprzystaniki.getText()));
+		trasa.setTR_Dzien_tyg(dzentygodniainput.getText());
+		trasa.setTR_Godzina(godzinainput.getText());
+		trasa.setTR_Uwagi(uwaginput.getText());
+		table3.getItems().add(trasa);
+		idtrasyinput.clear();
+		idkursyinput.clear();
+		idprzystaniki.clear();
+		dzentygodniainput.clear();
+		godzinainput.clear();
+		uwaginput.clear();
+
 
 		
-		
 	}
+
+public void addbutton4Clicked(){
+	Autokary autokary = new Autokary();
+	
+	autokary.setAUT_KEY(Integer.parseInt(idAutokaruInput.getText()));
+	autokary.setAUT_Marka(modelInput.getText());
+	autokary.setAUT_Model(markaInput.getText());
+	autokary.setAUT_Rok_Prod(rokProdukcjiInput.getText());
+	
+	autokary.setAUT_Poj_silnik(Double.parseDouble(idkursyinput.getText()));
+	autokary.setAUT_Spalamie_lkm(Integer.parseInt(pojemnoscSilnikaInput.getText()));
+	autokary.setAUT_Kat_autokaru(dzentygodniainput.getText());
+	autokary.setAUT_Ilosc_miejsc(Integer.parseInt(iloscMiejsInput.getText()));
+	autokary.setAUT_Nr_rejestracji(numerRejestracyjny.getText());
+	table4.getItems().add(autokary);
+	
+	idAutokaruInput.clear();
+	modelInput.clear();
+	markaInput.clear();
+	rokProdukcjiInput.clear();
+	pojemnoscSilnikaInput.clear();
+	spalanieInput.clear();
+	katAutokaruInput.clear();
+	iloscMiejsInput.clear();
+	numerRejestracyjny.clear();
+	
+
+/*
+	 idAutokaruInput, modelInput, markaInput, rokProdukcjiInput,
+		pojemnoscSilnikaInput,  spalanieInput, katAutokaruInput, iloscMiejsInput, numerRejestracyjny
+	*/
+}
 	
 	public void deltebuttonClicked(){
 		ObservableList<Kierowcy> productSelected, allProducts;
@@ -754,14 +934,22 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		
 	}
 	public void deltebutton3Clicked(){
-		ObservableList<Przystanki> productSelected, allProducts;
-		allProducts= table2.getItems();
-		productSelected= table2.getSelectionModel().getSelectedItems();
+		ObservableList<Trasa> productSelected, allProducts;
+		allProducts= table3.getItems();
+		productSelected= table3.getSelectionModel().getSelectedItems();
 		
 		productSelected.forEach(allProducts::remove);
 		
 	}
 	
+	public void deltebutton4Clicked(){
+		ObservableList<Autokary> productSelected, allProducts;
+		allProducts= table4.getItems();
+		productSelected= table4.getSelectionModel().getSelectedItems();
+		
+		productSelected.forEach(allProducts::remove);
+		
+	}
 	
 	public void wyborbazydanych(String wartosc){
 		
@@ -777,6 +965,10 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 			case "Trasy":
 			window.setScene(scene6);
 			break;
+			
+			case "Autokary":
+				window.setScene(scene7);
+				break;
 	}
 		
 	}
@@ -800,6 +992,13 @@ public ObservableList<Trasa> getProduct3(){
 	ObservableList<Trasa> products= FXCollections.observableArrayList();
 	products.add(new Trasa(1,1,1,"wies", "dasd", "sda"));
 
+	
+	return products;
+}
+
+public ObservableList<Autokary> getProduct4(){
+	ObservableList<Autokary> products= FXCollections.observableArrayList();
+	products.add(new Autokary(1,"ss","sss","wies", 1.3 ,1, "sda",2,"sds"));
 	
 	return products;
 }
