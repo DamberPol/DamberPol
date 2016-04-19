@@ -32,30 +32,31 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	Stage window;
-	Scene scene, scene2,scene3,scene4,scene5,scene6, scene7, scene8, scene9;
+	Scene scene, scene2,scene3,scene4,scene5,scene6, scene7, scene8, scene9, scene10;
 	Button przyciskDoPaneluLogowania, przyciskDoOknaKlienta,wyszukajpolaczen;
 	Label labelPowitalny, odstep, odstep1, odstep2, labelRozk³adJazdy, przyjazdlabel,odjazdLabel;
-	BorderPane oknoPowitalne, layout2, bordePaneDlaOkna3, bordePaneDlaOkna4, bordePaneDlaOkna5, bordePaneDlaOkna6, bordePaneDlaOkna7, bordePaneDlaOkna8, bordePaneDlaOkna9;
+	BorderPane oknoPowitalne, layout2, bordePaneDlaOkna3, bordePaneDlaOkna4, bordePaneDlaOkna5, bordePaneDlaOkna6, bordePaneDlaOkna7, bordePaneDlaOkna8, bordePaneDlaOkna9, bordePaneDlaOkna10;
 	VBox box, boxprzyjazd, boxodjazd;
-	HBox hbox,hbox2,hbox3, hbox4, hbox5, hbox6, hbox7;
+	HBox hbox,hbox2,hbox3, hbox4, hbox5, hbox6, hbox7, hbox8;
 	TilePane tilepanel1;
 	Menu filemenu2,filemenu,editMenu;
 	MenuItem newFile,paste;
-	MenuBar menuBar, menuBar1, menuBar3, menuBar4, menuBar5, menuBar6, menuBar7;
+	MenuBar menuBar, menuBar1, menuBar3, menuBar4, menuBar5, menuBar6, menuBar7, menuBar8;
 	Boolean rezultat;
-	TreeView<String> tree3, tree2, tree, tree4, tree5, tree6, tree7;
+	TreeView<String> tree3, tree2, tree, tree4, tree5, tree6, tree7, tree8;
 	TableView<Kierowcy> table;
 	TableView<Przystanki> table2;
 	TableView<Trasa> table3;
 	TableView<Autokary> table4;
 	TableView<Kursy> table5;
 	TableView<Miejscowosci> table6;
+	TableView<Rejestr_przejazdow> table7;
 	TextField nameInput, idInput, nazwiskoInput, peselInput, dataInput, iDPrzystaniki, iDMiejscowsci, inputulica, idprzystaniki,	
 	idkursyinput , idtrasyinput, dzentygodniainput, godzinainput, uwaginput, idAutokaruInput, modelInput, markaInput, rokProdukcjiInput,
 	pojemnoscSilnikaInput,  spalanieInput, katAutokaruInput, iloscMiejsInput, numerRejestracyjny,IdKursInput, idAutaInput, idKierowcyInput,
 	kursSygnaturaKursuInput, kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput, IdMiejscowosciInput, nazwaMiejscowosciInput, wojewodztwoInput,
-	powiatInput, gminaInput ;
-	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3, addbutton4, deltebutton4, addbutton5, deltebutton5, addbutton6, deltebutton6;
+	powiatInput, gminaInput, IdRejstrówPrzejazdówInput, reIdKursyInput, rejestdataInput, rejestrIloscOsobInput ;
+	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3, addbutton4, deltebutton4, addbutton5, deltebutton5, addbutton6, deltebutton6, addbutton7, deltebutton7;
 	Hyperlink link;
 	
 	public static void main(String[] args){
@@ -421,31 +422,31 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 
 		TableColumn<Przystanki, String> idPrzystaniki= new TableColumn<>("ID_Przystanki");
 		idPrzystaniki.setMinWidth(200);
-		idPrzystaniki.setCellValueFactory(new PropertyValueFactory<>("Id_Przystanki"));
+		idPrzystaniki.setCellValueFactory(new PropertyValueFactory<>("PR_KEY"));
 		
 		TableColumn<Przystanki, String> IdMiejscowsci= new TableColumn<>("ID_Miejscowosci");
 		IdMiejscowsci.setMinWidth(200);
-		IdMiejscowsci.setCellValueFactory(new PropertyValueFactory<>("Id_Miejscowosci"));
+		IdMiejscowsci.setCellValueFactory(new PropertyValueFactory<>("MIE_KEY"));
 		
 		TableColumn<Przystanki, Float> ulicacolumn= new TableColumn<>("Ulica");
 		ulicacolumn.setMinWidth(200);
-		ulicacolumn.setCellValueFactory(new PropertyValueFactory<>("ulica"));
+		ulicacolumn.setCellValueFactory(new PropertyValueFactory<>("PR_Ulica"));
 		
 
 		
 		
 		iDPrzystaniki = new TextField();
-		iDPrzystaniki.setPromptText("Id");
+		iDPrzystaniki.setPromptText("ID Przystanku");
 		iDPrzystaniki.setMinWidth(150);
 		
 	
 		
 		iDMiejscowsci = new TextField();
-		iDMiejscowsci.setPromptText("Nazwisko");
+		iDMiejscowsci.setPromptText("ID Miejscowosci");
 		iDMiejscowsci.setMinWidth(150);
 		
 		inputulica = new TextField();
-		inputulica.setPromptText("Imie");
+		inputulica.setPromptText("Ulica");
 		inputulica.setMinWidth(150);
 		
 
@@ -526,55 +527,56 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		menuBar4.getMenus().addAll(filemenu,editMenu);
 		
 
+
 		TableColumn<Trasa, String> idTrasy= new TableColumn<>("ID_Trasy");
 		idTrasy.setMinWidth(200);
-		idTrasy.setCellValueFactory(new PropertyValueFactory<>("Id_trasy"));
+		idTrasy.setCellValueFactory(new PropertyValueFactory<>("TR_KEY"));
 		
 		TableColumn<Trasa, String> IdKursy= new TableColumn<>("ID_Kursy");
 		IdKursy.setMinWidth(200);
-		IdKursy.setCellValueFactory(new PropertyValueFactory<>("Id_Kursy"));
+		IdKursy.setCellValueFactory(new PropertyValueFactory<>("KUR_KEY"));
 		
 		TableColumn<Trasa, String> IdPrzystanki= new TableColumn<>("ID_Przystanki");
 		IdPrzystanki.setMinWidth(200);
-		IdPrzystanki.setCellValueFactory(new PropertyValueFactory<>("Id_Przystanki"));
+		IdPrzystanki.setCellValueFactory(new PropertyValueFactory<>("PR_KEY"));
 
 		TableColumn<Trasa, String> dzientygcolumn = new TableColumn<>("Dzien Tygodnia");
 		dzientygcolumn.setMinWidth(200);
-		dzientygcolumn.setCellValueFactory(new PropertyValueFactory<>("Dzien Tygodnia"));
+		dzientygcolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Dzien_tyg"));
 	
 		TableColumn<Trasa, String> godzinacolumn = new TableColumn<>("Godzina");
 		godzinacolumn.setMinWidth(200);
-		godzinacolumn.setCellValueFactory(new PropertyValueFactory<>("Godzina"));
+		godzinacolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina"));
 	
 		TableColumn<Trasa, String> uwagicolumn = new TableColumn<>("Uwagi");
 		uwagicolumn.setMinWidth(200);
-		uwagicolumn.setCellValueFactory(new PropertyValueFactory<>("Uwagi"));
+		uwagicolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Uwagi"));
 		
 		
 
 		
 		idprzystaniki = new TextField();
-		idprzystaniki.setPromptText("Id");
+		idprzystaniki.setPromptText("Id Przystanki");
 		idprzystaniki.setMinWidth(150);
 		
 		idkursyinput = new TextField();
-		idkursyinput.setPromptText("Imie");
+		idkursyinput.setPromptText("Id Kursy");
 		idkursyinput.setMinWidth(150);
 		
 		idtrasyinput = new TextField();
-		idtrasyinput.setPromptText("Imie");
+		idtrasyinput.setPromptText("Id Trasy");
 		idtrasyinput.setMinWidth(150);
 
 		dzentygodniainput = new TextField();
-		dzentygodniainput.setPromptText("Imie");
+		dzentygodniainput.setPromptText("Dzieñ Tygodnia");
 		dzentygodniainput.setMinWidth(150);
 		
 		 godzinainput = new TextField();
-		 godzinainput.setPromptText("Imie");
+		 godzinainput.setPromptText("Godzina");
 		 godzinainput.setMinWidth(150);
 		
 		 uwaginput = new TextField();
-		 uwaginput.setPromptText("Imie");
+		 uwaginput.setPromptText("Uwagi");
 		 uwaginput.setMinWidth(150);
 		
 		
@@ -651,68 +653,68 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 
 		TableColumn<Autokary, String> idAutokarucolumn= new TableColumn<>("ID_Autokaru");
 		idAutokarucolumn.setMinWidth(125);
-		idAutokarucolumn.setCellValueFactory(new PropertyValueFactory<>("Id_Autokary"));
+		idAutokarucolumn.setCellValueFactory(new PropertyValueFactory<>("AUT_KEY"));
 		
 		TableColumn<Autokary, String> Markacolumn= new TableColumn<>("Marka");
 		Markacolumn.setMinWidth(125);
-		Markacolumn.setCellValueFactory(new PropertyValueFactory<>("Marka"));
+		Markacolumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Marka"));
 		
 		TableColumn<Autokary, String> Modelcolumn= new TableColumn<>("Model");
 		Modelcolumn.setMinWidth(125);
-		Modelcolumn.setCellValueFactory(new PropertyValueFactory<>("Model"));
+		Modelcolumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Model"));
 	
 		TableColumn<Autokary, String> rokProdukcjicolumn = new TableColumn<>("Rok produkcji");
 		rokProdukcjicolumn.setMinWidth(125);
-		rokProdukcjicolumn.setCellValueFactory(new PropertyValueFactory<>("Rok produkcji"));
+		rokProdukcjicolumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Rok_Prod"));
 	
 		TableColumn<Autokary, Double> pojemnoscSilnikacolumn = new TableColumn<>("Pojemnoœæ silnika");
 		pojemnoscSilnikacolumn.setMinWidth(150);
-		pojemnoscSilnikacolumn.setCellValueFactory(new PropertyValueFactory<>("Pojemnoœæ silnika"));
-	
+		pojemnoscSilnikacolumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Poj_silnik"));
+		
 		TableColumn<Autokary, String> spalaniecolumn = new TableColumn<>("Spalanie");
 		spalaniecolumn.setMinWidth(125);
-		spalaniecolumn.setCellValueFactory(new PropertyValueFactory<>("Spalanie"));
+		spalaniecolumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Poj_silnik"));
 		
 		TableColumn<Autokary, String> KatAutokarucolumn = new TableColumn<>("Kat_Autokaru");
 		KatAutokarucolumn.setMinWidth(125);
-		KatAutokarucolumn.setCellValueFactory(new PropertyValueFactory<>("KAT_Autokaru"));
+		KatAutokarucolumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Kat_autokaru"));
 		
 		TableColumn<Autokary, String> iloscMiejscColumn = new TableColumn<>("Ilosc Miejsc");
 		iloscMiejscColumn.setMinWidth(125);
-		iloscMiejscColumn.setCellValueFactory(new PropertyValueFactory<>("Ilosc Miejsc"));
+		iloscMiejscColumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Ilosc_miejsc"));
 		
 		TableColumn<Autokary, String> nrRejstracjiColumn = new TableColumn<>("Numer Rejestracyjny");
 		nrRejstracjiColumn.setMinWidth(150);
-		nrRejstracjiColumn.setCellValueFactory(new PropertyValueFactory<>("Numer Rejestracyjny"));
+		nrRejstracjiColumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Nr_rejestracji"));
 		
 
 		
 		idAutokaruInput = new TextField();
-		idAutokaruInput.setPromptText("Id");
+		idAutokaruInput.setPromptText("Id Autokaru");
 		idAutokaruInput.setMinWidth(50);
 		
 		markaInput = new TextField();
-		markaInput.setPromptText("Imie");
+		markaInput.setPromptText("Marka");
 		markaInput.setMinWidth(50);
 		
 		modelInput = new TextField();
-		modelInput.setPromptText("Imie");
+		modelInput.setPromptText("Model");
 		modelInput.setMinWidth(50);
 
 		rokProdukcjiInput = new TextField();
-		rokProdukcjiInput.setPromptText("Imie");
+		rokProdukcjiInput.setPromptText("Rok produkcji");
 		rokProdukcjiInput.setMinWidth(50);
 		
 		pojemnoscSilnikaInput = new TextField();
-		pojemnoscSilnikaInput.setPromptText("Imie");
+		pojemnoscSilnikaInput.setPromptText("Pojemnoœæ silnika");
 		pojemnoscSilnikaInput.setMinWidth(50);
 		
 		 spalanieInput = new TextField();
-		 spalanieInput.setPromptText("Imie");
+		 spalanieInput.setPromptText("Silnik");
 		 spalanieInput.setMinWidth(50);
 		 
 		 katAutokaruInput = new TextField();
-		 katAutokaruInput.setPromptText("Imie");
+		 katAutokaruInput.setPromptText("Kategoria");
 		 katAutokaruInput.setMinWidth(50);
 		
 		 iloscMiejsInput = new TextField();
@@ -720,7 +722,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		 iloscMiejsInput.setMinWidth(50);
 		 
 		 numerRejestracyjny = new TextField();
-		 numerRejestracyjny.setPromptText("Imie");
+		 numerRejestracyjny.setPromptText("Numer rejestracji");
 		 numerRejestracyjny.setMinWidth(50);
 			
 	
@@ -801,64 +803,64 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 
 		TableColumn<Kursy, String> columnIdKurs= new TableColumn<>("ID_Kurs");
 		columnIdKurs.setMinWidth(100);
-		columnIdKurs.setCellValueFactory(new PropertyValueFactory<>("Id_Kursy"));
+		columnIdKurs.setCellValueFactory(new PropertyValueFactory<>("KUR_KEY"));
 		
 		TableColumn<Kursy, String> columnIdAuta= new TableColumn<>("ID_Auta");
 		columnIdAuta.setMinWidth(100);
-		columnIdAuta.setCellValueFactory(new PropertyValueFactory<>("id_Auta"));
+		columnIdAuta.setCellValueFactory(new PropertyValueFactory<>("AUT_KEY"));
 		
 		TableColumn<Kursy, String> columnKierowcyInput= new TableColumn<>("ID_Kierowcy");
 		columnKierowcyInput.setMinWidth(100);
-		columnKierowcyInput.setCellValueFactory(new PropertyValueFactory<>("id_Kierowcy"));
+		columnKierowcyInput.setCellValueFactory(new PropertyValueFactory<>("KIE_KEY"));
 	
 		TableColumn<Kursy, String> columnSygnaturaKursu = new TableColumn<>("Sygnatury Kursu");
 		columnSygnaturaKursu.setMinWidth(120);
-		columnSygnaturaKursu.setCellValueFactory(new PropertyValueFactory<>("Sygnatury Kursu"));
+		columnSygnaturaKursu.setCellValueFactory(new PropertyValueFactory<>("KUR_Sygnatura_Kursu"));
 	
 		TableColumn<Kursy, String>  columnkursOpis= new TableColumn<>("Opis");
 		 columnkursOpis.setMinWidth(250);
-		 columnkursOpis.setCellValueFactory(new PropertyValueFactory<>("Opis"));
+		 columnkursOpis.setCellValueFactory(new PropertyValueFactory<>("KUR_Opis"));
 	
 		TableColumn<Kursy, String> columnKursCzasOdjazd = new TableColumn<>("Czas Odjazdu");
 		columnKursCzasOdjazd.setMinWidth(125);
-		columnKursCzasOdjazd.setCellValueFactory(new PropertyValueFactory<>("Czas Odjazdu"));
+		columnKursCzasOdjazd.setCellValueFactory(new PropertyValueFactory<>("KUR_Czas_Odjazdu"));
 		
 		TableColumn<Kursy, String> columnKursCzasprzyjazdu = new TableColumn<>("Czas Przyjazdu");
 		columnKursCzasprzyjazdu.setMinWidth(125);
-		columnKursCzasprzyjazdu.setCellValueFactory(new PropertyValueFactory<>("Czas Przyjazdu"));
+		columnKursCzasprzyjazdu.setCellValueFactory(new PropertyValueFactory<>("KUR_Czas_Przyjazdu"));
 		
 /*
-		KUR_KEY, AUT_KEY, KIE_KEY, KUR_Sygnatura_Kursu, KUR_Opis, KUR_Czas_Odjazdu, KUR_Czas_Przyjazdu;
+		, AUT_KEY, KIE_KEY, KUR_Sygnatura_Kursu, KUR_Opis, KUR_Czas_Odjazdu, KUR_Czas_Przyjazdu;
 		columnIdKurs columnIdAuta, columnKierowcyInput, columnSygnaturaKursu, columnkursOpis, columnKursCzasOdjazd, columnKursCzasprzyjazdu
 		IdKursInput, idAutaInput, idKierowcyInput, kursSygnaturaKursuInput, kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput
 		
 		*/
 		IdKursInput = new TextField();
-		IdKursInput.setPromptText("Id");
+		IdKursInput.setPromptText("Id Kurs");
 		IdKursInput.setMinWidth(50);
 		
 		idAutaInput = new TextField();
-		idAutaInput.setPromptText("Imie");
+		idAutaInput.setPromptText("Id Autokaru");
 		idAutaInput.setMinWidth(50);
 		
 		idKierowcyInput = new TextField();
-		idKierowcyInput.setPromptText("Imie");
+		idKierowcyInput.setPromptText("Id Kierowcy");
 		idKierowcyInput.setMinWidth(50);
 
 		kursSygnaturaKursuInput = new TextField();
-		kursSygnaturaKursuInput.setPromptText("Imie");
+		kursSygnaturaKursuInput.setPromptText("Sygnatura Kursu");
 		kursSygnaturaKursuInput.setMinWidth(50);
 		
 		kursOpisInput = new TextField();
-		kursOpisInput.setPromptText("Imie");
+		kursOpisInput.setPromptText("Opis");
 		kursOpisInput.setMinWidth(150);
 		
 		kursCzasOdjazduInput = new TextField();
-		kursCzasOdjazduInput.setPromptText("Imie");
+		kursCzasOdjazduInput.setPromptText("Czas Odjazdu");
 		kursCzasOdjazduInput.setMinWidth(50);
 		 
 		kursCzasPrzyjazduInput = new TextField();
-		kursCzasPrzyjazduInput.setPromptText("Imie");
+		kursCzasPrzyjazduInput.setPromptText("Czas Przyjazdu");
 		kursCzasPrzyjazduInput.setMinWidth(50);
 		 
 		addbutton5= new Button("Add");
@@ -935,23 +937,23 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 
 		TableColumn<Miejscowosci, String> columnIDmiejscow= new TableColumn<>("ID_Miejscowoœæ");
 		columnIDmiejscow.setMinWidth(180);
-		columnIDmiejscow.setCellValueFactory(new PropertyValueFactory<>("Id_Miejscowosci"));
+		columnIDmiejscow.setCellValueFactory(new PropertyValueFactory<>("MIE_KEY"));
 		
 		TableColumn<Miejscowosci, String> columnNazwaMiejscowosci = new TableColumn<>("Nazwa Miejscowosci");
 		columnNazwaMiejscowosci.setMinWidth(180);
-		columnNazwaMiejscowosci.setCellValueFactory(new PropertyValueFactory<>("Nazwa Miejscowosci"));
+		columnNazwaMiejscowosci.setCellValueFactory(new PropertyValueFactory<>("MIE_Nazwa_Miejscow"));
 		
 		TableColumn<Miejscowosci, String> columnWojewodztwo= new TableColumn<>("Wojewodztwo");
 		columnWojewodztwo.setMinWidth(180);
-		columnWojewodztwo.setCellValueFactory(new PropertyValueFactory<>("Wojewodztwoy"));
+		columnWojewodztwo.setCellValueFactory(new PropertyValueFactory<>("MIE_Wojewodztwo"));
 	
 		TableColumn<Miejscowosci, String> columnPowiat = new TableColumn<>("Powiat");
 		columnPowiat.setMinWidth(180);
-		columnPowiat.setCellValueFactory(new PropertyValueFactory<>("Powiat"));
+		columnPowiat.setCellValueFactory(new PropertyValueFactory<>("MIE_Powiat"));
 	
 		TableColumn<Miejscowosci, String>  columnGmina= new TableColumn<>("Gmina");
 		columnGmina.setMinWidth(180);
-		columnGmina.setCellValueFactory(new PropertyValueFactory<>("Gmina"));
+		columnGmina.setCellValueFactory(new PropertyValueFactory<>("MIE_Gmina"));
 	
 	
 		
@@ -964,23 +966,23 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 	,IdMiejscowosciInput, nazwaMiejscowosciInput, wojewodztwoInput, powiatInput, gminaInput 
 		*/
 		IdMiejscowosciInput = new TextField();
-		IdMiejscowosciInput.setPromptText("Id");
+		IdMiejscowosciInput.setPromptText("Id Miejscowosci");
 		IdMiejscowosciInput.setMinWidth(50);
 		
 		nazwaMiejscowosciInput = new TextField();
-		nazwaMiejscowosciInput.setPromptText("Imie");
+		nazwaMiejscowosciInput.setPromptText("Nazwa");
 		nazwaMiejscowosciInput.setMinWidth(50);
 		
 		wojewodztwoInput = new TextField();
-		wojewodztwoInput.setPromptText("Imie");
+		wojewodztwoInput.setPromptText("Wojewodztwo");
 		wojewodztwoInput.setMinWidth(50);
 
 		powiatInput = new TextField();
-		powiatInput.setPromptText("Imie");
+		powiatInput.setPromptText("Powiat");
 		powiatInput.setMinWidth(50);
 		
 		gminaInput = new TextField();
-		gminaInput.setPromptText("Imie");
+		gminaInput.setPromptText("Gmina");
 		gminaInput.setMinWidth(50);
 		
 
@@ -1039,14 +1041,119 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		bordePaneDlaOkna9.setLeft(tree7);
 		bordePaneDlaOkna9.setCenter(layout6);
 		
+	
 		
 		
 		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////					Okno bazy danych Rejestr przejazdów                                                   ////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		
+		bordePaneDlaOkna10= new BorderPane();
+		scene10 = new Scene(bordePaneDlaOkna10, 1200,480);
+		scene10.getStylesheets().add("application/Panel_Dy¿urnego.css");
+		
+		menuBar8= new MenuBar();
+		menuBar8.getMenus().addAll(filemenu,editMenu);
+		
+
+		TableColumn<Rejestr_przejazdow, String> columnIdrejest = new TableColumn<>("ID_Rejestr_Przejazdów");
+		columnIdrejest.setMinWidth(180);
+		columnIdrejest.setCellValueFactory(new PropertyValueFactory<>("REJ_KEY"));
+		
+		TableColumn<Rejestr_przejazdow, String> columnIDkurs = new TableColumn<>("ID_Kursu");
+		columnIDkurs.setMinWidth(180);
+		columnIDkurs.setCellValueFactory(new PropertyValueFactory<>("KUR_KEY"));
+		
+		TableColumn<Rejestr_przejazdow, String> columnRejestdata = new TableColumn<>("Data");
+		columnRejestdata.setMinWidth(180);
+		columnRejestdata.setCellValueFactory(new PropertyValueFactory<>("REJ_data"));
+	
+		TableColumn<Rejestr_przejazdow, String> columnIloscOsub = new TableColumn<>("Ilosc Osób");
+		columnIloscOsub.setMinWidth(180);
+		columnIloscOsub.setCellValueFactory(new PropertyValueFactory<>("REJ_iloscOsob"));
+	
+
+
+		
+		IdRejstrówPrzejazdówInput = new TextField();
+		IdRejstrówPrzejazdówInput.setPromptText("Id Rejestr Przejazdów");
+		IdRejstrówPrzejazdówInput.setMinWidth(50);
+		
+		reIdKursyInput = new TextField();
+		reIdKursyInput.setPromptText("Id Kursu");
+		reIdKursyInput.setMinWidth(50);
+		
+		rejestdataInput = new TextField();
+		rejestdataInput.setPromptText("Data");
+		rejestdataInput.setMinWidth(50);
+
+		rejestrIloscOsobInput = new TextField();
+		rejestrIloscOsobInput.setPromptText("Ilosc Osób");
+		rejestrIloscOsobInput.setMinWidth(50);
+		
+	
+		
+
+		addbutton7= new Button("Add");
+		addbutton7.setOnAction(e -> addbutton7Clicked());
+		addbutton7.setMinWidth(50);
+		
+		deltebutton7 = new Button("Delete");
+		deltebutton7.setOnAction(e -> deltebutton7Clicked());
+		deltebutton7.setMinWidth(70);
+		
+		hbox7 = new HBox();
+		hbox7.setPadding(new Insets(10, 10, 10, 10));
+		hbox7.setSpacing(10);
+		hbox7.getChildren().addAll(IdRejstrówPrzejazdówInput, reIdKursyInput, rejestdataInput, rejestrIloscOsobInput,  addbutton7, deltebutton7);
 		
 		
+		table7 = new TableView<>();
+		table7.getColumns().addAll(columnIdrejest, columnIDkurs, columnRejestdata, columnIloscOsub);
+		table7.setItems(getProduct7());
+		
+
+
+		
+		treeitem = new TreeItem<>("Spis opcji");
+		treeitem.setExpanded(true);
+		trasy = makeBranch("Trasy", treeitem);
+		przystanki = makeBranch("Przystanki", treeitem);
+	    kierowcy = makeBranch("Kierowcy", treeitem);
+		autokary = makeBranch("Autokary", treeitem);
+		kursy = makeBranch("Kursy", treeitem);
+        miejscowosci = makeBranch("Miejscowoœci", treeitem);
 		
 		
+		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
+	
 		
+		//Create Tree
+		
+		tree8 = new TreeView<>(treeitem);
+		tree8.setShowRoot(true);
+		
+		
+		tree8.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue)-> {
+		if(newValue !=null){
+			String nazwa = newValue.getValue();
+			wyborbazydanych(nazwa);
+		
+		}
+		});
+		
+		VBox layout7= new VBox();
+		layout7.getChildren().addAll(table7, hbox7);
+		
+		bordePaneDlaOkna10.setTop(menuBar8);
+		bordePaneDlaOkna10.setLeft(tree8);
+		bordePaneDlaOkna10.setCenter(layout7);
+		
+
 		
 		
 		
@@ -1206,6 +1313,33 @@ private String MIE_Gmina;
 
 }
 	
+public void addbutton7Clicked(){
+	Rejestr_przejazdow rejestr = new Rejestr_przejazdow();
+	
+	rejestr.setREJ_KEY(Integer.parseInt(IdRejstrówPrzejazdówInput.getText()));
+	rejestr.setKUR_KEY(Integer.parseInt(reIdKursyInput.getText()));
+	rejestr.setREJ_data(rejestdataInput.getText());
+	rejestr.setREJ_iloscOsob(Integer.parseInt(rejestrIloscOsobInput.getText()));
+
+
+	table7.getItems().add(rejestr);
+
+	/*
+	private int REJ_KEY;
+	private int KUR_KEY;
+	private String REJ_data;
+	private int REJ_iloscOsob;	
+	IdRejstrówPrzejazdówInput, reIdKursyInput, rejestdataInput, rejestrIloscOsobInput
+	columnIdrejest, columnIDkurs, columnRejestdata, columnIloscOsub
+	*/
+	IdRejstrówPrzejazdówInput.clear();
+	reIdKursyInput.clear();
+	rejestdataInput.clear();
+	rejestrIloscOsobInput.clear();
+
+
+}
+
 	public void deltebuttonClicked(){
 		ObservableList<Kierowcy> productSelected, allProducts;
 		allProducts= table.getItems();
@@ -1249,6 +1383,7 @@ private String MIE_Gmina;
 		productSelected.forEach(allProducts::remove);
 		
 	}
+	
 	public void deltebutton6Clicked(){
 		ObservableList<Miejscowosci> productSelected, allProducts;
 		allProducts= table6.getItems();
@@ -1258,35 +1393,51 @@ private String MIE_Gmina;
 		
 	}
 	
+	public void deltebutton7Clicked(){
+		ObservableList<Rejestr_przejazdow> productSelected, allProducts;
+		allProducts= table7.getItems();
+		productSelected= table7.getSelectionModel().getSelectedItems();
+		
+		productSelected.forEach(allProducts::remove);
+		
+	}
 	public void wyborbazydanych(String wartosc){
 		
 		switch(wartosc){
+		
 		case "Kierowcy":
 			window.setScene(scene3);
 			break;
 			
-		case "Przystanki":
-		window.setScene(scene5);
-		break;
+				case "Przystanki":
+					window.setScene(scene5);
+					break;
 		
-			case "Trasy":
-			window.setScene(scene6);
-			break;
+							case "Trasy":
+								window.setScene(scene6);
+								break;
 			
-			case "Autokary":
-				window.setScene(scene7);
-				break;
+										case "Autokary":
+											window.setScene(scene7);
+											break;
 			
-			case "Kursy":
-				window.setScene(scene8);
-				break;
+													case "Kursy":
+														window.setScene(scene8);
+														break;
 				
-			case "Miejscowoœci":
-				window.setScene(scene9);
-				break;
+																case "Miejscowoœci":
+																	window.setScene(scene9);
+																	break;
+																	
+																			case "Rejestr Przejazdów":
+																				window.setScene(scene10);
+																				break;
 	}
 		
 	}
+	
+	
+	
 	
 public ObservableList<Kierowcy> getProduct(){
 	ObservableList<Kierowcy> products= FXCollections.observableArrayList();
@@ -1305,7 +1456,7 @@ public ObservableList<Przystanki> getProduct2(){
 }
 public ObservableList<Trasa> getProduct3(){
 	ObservableList<Trasa> products= FXCollections.observableArrayList();
-	products.add(new Trasa(1,1,1,"wies", "dasd", "sda"));
+	products.add(new Trasa(1,1,1,"wies", "dasd", "dfs"));
 
 	
 	return products;
@@ -1329,6 +1480,12 @@ public ObservableList<Kursy> getProduct5(){
 public ObservableList<Miejscowosci> getProduct6(){
 	ObservableList<Miejscowosci> products= FXCollections.observableArrayList();
 	products.add(new Miejscowosci(1,"wies", "sda","sasdf","sds"));
+	
+	return products;
+}
+public ObservableList<Rejestr_przejazdow> getProduct7(){
+	ObservableList<Rejestr_przejazdow> products= FXCollections.observableArrayList();
+	products.add(new Rejestr_przejazdow(1,1, "sda",1));
 	
 	return products;
 }
