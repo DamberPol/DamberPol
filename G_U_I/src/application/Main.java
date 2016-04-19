@@ -33,11 +33,11 @@ public class Main extends Application {
 	
 	Stage window;
 	Scene scene, scene2,scene3,scene4,scene5,scene6, scene7, scene8, scene9, scene10;
-	Button przyciskDoPaneluLogowania, przyciskDoOknaKlienta,wyszukajpolaczen;
+	Button przyciskDoPaneluLogowania, przyciskDoOknaKlienta,wyszukajpolaczen,cofnijButton;
 	Label labelPowitalny, odstep, odstep1, odstep2, labelRozk³adJazdy, przyjazdlabel,odjazdLabel;
 	BorderPane oknoPowitalne, layout2, bordePaneDlaOkna3, bordePaneDlaOkna4, bordePaneDlaOkna5, bordePaneDlaOkna6, bordePaneDlaOkna7, bordePaneDlaOkna8, bordePaneDlaOkna9, bordePaneDlaOkna10;
 	VBox box, boxprzyjazd, boxodjazd;
-	HBox hbox,hbox2,hbox3, hbox4, hbox5, hbox6, hbox7, hbox8;
+	HBox hbox,hbox2,hbox3, hbox4, hbox5, hbox6, hbox7, hbox8, hboxklijent;
 	TilePane tilepanel1;
 	Menu filemenu2,filemenu,editMenu;
 	MenuItem newFile,paste;
@@ -94,7 +94,7 @@ public class Main extends Application {
 		//labelPowitalny =new Label("Witamy");
 		labelPowitalny= new  Label("Witamy w programie firmy Damberpol \n");
 		odstep= new  Label(" ");
-		odstep1= new  Label(" ");
+		odstep1= new  Label("                                                                             ");
 		odstep2= new  Label(" ");
 		labelPowitalny.setStyle("-fx-text-fill:aliceblue");
 		//button
@@ -156,7 +156,8 @@ public class Main extends Application {
 		layout2.setPadding(new Insets(20,20,20,20));
 		scene2 = new Scene(layout2,800,600);
 		scene2.getStylesheets().add("application/Rozk³ad_Jazdy.css");
-		
+		hboxklijent= new HBox();
+		Label lol = new Label(" ");
 		labelRozk³adJazdy =new Label("Rozk³ad Jazdy");
 		labelRozk³adJazdy.setStyle("-fx-text-fill:aliceblue; -fx-font-size: 60px;");
 	
@@ -170,9 +171,7 @@ public class Main extends Application {
 		przyjazdlabel.setStyle("-fx-text-fill:aliceblue; -fx-font-size: 15px; ");
 		ChoiceBox<String> przyjazd = new ChoiceBox<>();
 		
-		przyjazd.getItems().addAll("Miasto", "01:00", "02:00","03:00","03:00","05:00","06:00",
-				"07:00","08:00","09:00","11:00","12:00","13:00","14:00","15:00","16:00",
-				"17:00","18:00","19:00","20:00","21:00","22:00","23:00");
+		przyjazd.getItems().addAll("Miasto");
 		
 		przyjazd.setValue("Miasto");
 	
@@ -180,7 +179,13 @@ public class Main extends Application {
 		
 		
 		wyszukajpolaczen = new Button("Wyszukaj");
+		cofnijButton = new Button("Cofnij");
+		cofnijButton.setOnAction(e -> window.setScene(scene));
+			
+			
 	
+		hboxklijent.getChildren().addAll(odstep1, wyszukajpolaczen, lol , cofnijButton);
+		
 		boxodjazd = new VBox();
 		
 		odjazdLabel = new Label("Odjazd");
@@ -190,9 +195,7 @@ public class Main extends Application {
 		ChoiceBox<String> odjazd = new ChoiceBox<>();
 		przyjazd.setStyle(" -fx-font-size: 12px;");
 		
-		odjazd.getItems().addAll("Miasto", "01:00", "02:00","03:00","03:00","05:00","06:00",
-				"07:00","08:00","09:00","11:00","12:00","13:00","14:00","15:00","16:00",
-				"17:00","18:00","19:00","20:00","21:00","22:00","23:00");
+		odjazd.getItems().addAll("Miasto");
 		
 		odjazd.setValue("Miasto");
 		boxodjazd.getChildren().addAll(odjazdLabel,odjazd);
@@ -207,8 +210,8 @@ public class Main extends Application {
 		layout2.setCenter(tilepanel1);
 		layout2.setAlignment(tilepanel1, Pos.TOP_CENTER);
 		
-		layout2.setBottom(wyszukajpolaczen);
-		layout2.setAlignment(wyszukajpolaczen, Pos.TOP_CENTER);
+		layout2.setBottom(hboxklijent);
+		layout2.setAlignment(hboxklijent, Pos.TOP_RIGHT);
 		
 
 
@@ -1153,10 +1156,8 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		bordePaneDlaOkna10.setLeft(tree8);
 		bordePaneDlaOkna10.setCenter(layout7);
 		
-
-		
-		
-		
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		
 		window.setTitle("Damberpol");
