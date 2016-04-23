@@ -396,7 +396,14 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		addbutton= new Button("Add");
 		addbutton.setOnAction(e -> addbuttonClicked());
 		deltebutton = new Button("Delete");
-		deltebutton.setOnAction(e -> deltebuttonClicked());
+		deltebutton.setOnAction(e ->	{	
+			
+			rezultat=checkbox.display();
+		if(rezultat==true){
+			
+	deltebuttonClicked();
+	}
+		});
 		
 		
 		hbox = new HBox();
@@ -507,7 +514,15 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		addbutton2= new Button("Add");
 		addbutton2.setOnAction(e -> addbutton2Clicked());
 		deltebutton2 = new Button("Delete");
-		deltebutton2.setOnAction(e -> deltebutton2Clicked());
+		deltebutton2.setOnAction(e -> {	
+			
+			rezultat=checkbox.display();
+		if(rezultat==true){
+			
+	deltebutton2Clicked();
+	}
+		});
+		
 		
 		
 		hbox2 = new HBox();
@@ -636,7 +651,15 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		addbutton3= new Button("Add");
 		addbutton3.setOnAction(e -> addbutton3Clicked());
 		deltebutton3 = new Button("Delete");
-		deltebutton3.setOnAction(e -> deltebutton3Clicked());
+		deltebutton3.setOnAction(e -> {	
+			
+			rezultat=checkbox.display();
+		if(rezultat==true){
+			
+	deltebutton3Clicked();
+	}
+		});
+		
 		
 		
 		hbox3 = new HBox();
@@ -785,7 +808,15 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		addbutton4.setOnAction(e -> addbutton4Clicked());
 		addbutton4.setMinWidth(50);
 		deltebutton4 = new Button("Delete");
-		deltebutton4.setOnAction(e -> deltebutton4Clicked());
+		deltebutton4.setOnAction(e -> {	
+			
+			rezultat=checkbox.display();
+		if(rezultat==true){
+			
+	deltebutton4Clicked();
+	}
+		});
+		
 		deltebutton4.setMinWidth(70);
 		
 		hbox4 = new HBox();
@@ -921,7 +952,15 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		addbutton5.setMinWidth(50);
 		
 		deltebutton5 = new Button("Delete");
-		deltebutton5.setOnAction(e -> deltebutton5Clicked());
+		deltebutton5.setOnAction(e -> {	
+			
+			rezultat=checkbox.display();
+		if(rezultat==true){
+			
+	deltebutton5Clicked();
+	}
+		});
+		
 		deltebutton5.setMinWidth(70);
 		
 		hbox5 = new HBox();
@@ -1044,7 +1083,15 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		addbutton6.setMinWidth(50);
 		
 		deltebutton6 = new Button("Delete");
-		deltebutton6.setOnAction(e -> deltebutton6Clicked());
+		deltebutton6.setOnAction(e -> {	
+			
+			rezultat=checkbox.display();
+		if(rezultat==true){
+			
+	deltebutton6Clicked();
+	}
+		});
+		
 		deltebutton6.setMinWidth(70);
 		
 		hbox6 = new HBox();
@@ -1156,7 +1203,15 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		addbutton7.setMinWidth(50);
 		
 		deltebutton7 = new Button("Delete");
-		deltebutton7.setOnAction(e -> deltebutton7Clicked());
+		deltebutton7.setOnAction(e -> {	
+			
+			rezultat=checkbox.display();
+		if(rezultat==true){
+			
+	deltebutton7Clicked();
+	}
+		});
+		
 		deltebutton7.setMinWidth(70);
 		
 		hbox7 = new HBox();
@@ -1392,6 +1447,7 @@ public void addbutton7Clicked(){
 }
 
 	public void deltebuttonClicked(){
+		
 		ObservableList<Kierowcy> productSelected, allProducts;
 		allProducts= table.getItems();
 		productSelected= table.getSelectionModel().getSelectedItems();
