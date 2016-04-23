@@ -23,7 +23,7 @@ public class Loguj {
 		grid.setVgap(8);
 		grid.setHgap(12);
 		HBox box= new HBox();
-		Label separator= new Label(" ");
+		Label separator= new Label("     ");
 		//name
 		Label nameLabel= new Label("Login");
 		GridPane.setConstraints( nameLabel, 0, 0);
@@ -43,6 +43,7 @@ public class Loguj {
 	
 		
 		Button loginButton=new Button("Zaloguj");
+		loginButton.setMinWidth(100);
 		
 		loginButton.setOnAction(e ->{
 		/*	if(login==nameLabel.getText())
@@ -77,12 +78,12 @@ public class Loguj {
 		
 		
 	
-		box.getChildren().addAll(loginButton,separator,closeButton);
+		box.getChildren().addAll(separator,loginButton);
 		GridPane.setConstraints( box, 1, 2);
 	grid.getChildren().addAll(nameLabel, nameInput, passwordLabel, passwordInput,box );
 
 	layout.setCenter(grid);
-	Scene scene= new Scene(layout,250,120);
+	Scene scene= new Scene(layout,270,120);
 	scene.getStylesheets().add("application/Panel_logowania.css");
 	window.setScene(scene);
 

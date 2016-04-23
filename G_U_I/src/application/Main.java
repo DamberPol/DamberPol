@@ -39,7 +39,7 @@ public class Main extends Application {
 	VBox box, boxprzyjazd, boxodjazd;
 	HBox hbox,hbox2,hbox3, hbox4, hbox5, hbox6, hbox7, hbox8, hboxklijent;
 	TilePane tilepanel1;
-	Menu filemenu2,filemenu,editMenu;
+	Menu filemenu2,filemenu;
 	MenuItem newFile,paste;
 	MenuBar menuBar, menuBar1, menuBar3, menuBar4, menuBar5, menuBar6, menuBar7, menuBar8;
 	Boolean rezultat;
@@ -51,13 +51,14 @@ public class Main extends Application {
 	TableView<Kursy> table5;
 	TableView<Miejscowosci> table6;
 	TableView<Rejestr_przejazdow> table7;
+	TableView<Rozk³ad_Jazdy> table8;
 	TextField nameInput, idInput, nazwiskoInput, peselInput, dataInput, iDPrzystaniki, iDMiejscowsci, inputulica, idprzystaniki,	
 	idkursyinput , idtrasyinput, dzentygodniainput, godzinainput, uwaginput, idAutokaruInput, modelInput, markaInput, rokProdukcjiInput,
 	pojemnoscSilnikaInput,  spalanieInput, katAutokaruInput, iloscMiejsInput, numerRejestracyjny,IdKursInput, idAutaInput, idKierowcyInput,
 	kursSygnaturaKursuInput, kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput, IdMiejscowosciInput, nazwaMiejscowosciInput, wojewodztwoInput,
 	powiatInput, gminaInput, IdRejstrówPrzejazdówInput, reIdKursyInput, rejestdataInput, rejestrIloscOsobInput ;
 	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3, addbutton4, deltebutton4, addbutton5, deltebutton5, addbutton6, deltebutton6, addbutton7, deltebutton7;
-	Hyperlink link;
+	Hyperlink link, doRozkladuJazdy,powrot;
 	
 	public static void main(String[] args){
 		
@@ -82,8 +83,9 @@ public class Main extends Application {
 		link = new Hyperlink();
 		link.setText("Zaloguj");
 		
-		
-		
+		doRozkladuJazdy = new Hyperlink();
+		doRozkladuJazdy.setText("Do rozk³adu jazdy");
+		doRozkladuJazdy.setOnAction(e -> window.setScene(scene2));
 		
 		//Layout
 		oknoPowitalne= new BorderPane();
@@ -94,7 +96,7 @@ public class Main extends Application {
 		//labelPowitalny =new Label("Witamy");
 		labelPowitalny= new  Label("Witamy w programie firmy Damberpol \n");
 		odstep= new  Label(" ");
-		odstep1= new  Label("                                                                             ");
+		odstep1= new  Label("                                                                  ");
 		odstep2= new  Label(" ");
 		labelPowitalny.setStyle("-fx-text-fill:aliceblue");
 		//button
@@ -123,7 +125,7 @@ public class Main extends Application {
 				});
 //Vbox
 		box.setAlignment(Pos.BASELINE_CENTER);
-		box.getChildren().addAll(odstep,labelPowitalny,odstep2, przyciskDoOknaKlienta);
+		box.getChildren().addAll(odstep,labelPowitalny,odstep2, doRozkladuJazdy);
 
 
 	
@@ -158,13 +160,20 @@ public class Main extends Application {
 		scene2.getStylesheets().add("application/Rozk³ad_Jazdy.css");
 		hboxklijent= new HBox();
 		Label lol = new Label(" ");
-		labelRozk³adJazdy =new Label("Rozk³ad Jazdy");
-		labelRozk³adJazdy.setStyle("-fx-text-fill:aliceblue; -fx-font-size: 60px;");
+		labelRozk³adJazdy =new Label("ROZK£AD JAZDY");
+		labelRozk³adJazdy.setStyle("-fx-text-fill:aliceblue; -fx-font-size: 40px;");
 	
+		Label odstepp = new Label(" "); 
 		tilepanel1 = new TilePane();
 		tilepanel1 .setAlignment(Pos.BASELINE_CENTER);
 		tilepanel1.setHgap(160);
 		 
+		
+		powrot = new Hyperlink();
+		powrot.setText("Do okna poczatkowego");
+		powrot.setOnAction(e -> window.setScene(scene));	
+		
+		
 		boxprzyjazd = new VBox();
 		 
 		przyjazdlabel = new Label("Przyjazd");
@@ -182,13 +191,42 @@ public class Main extends Application {
 		cofnijButton = new Button("Cofnij");
 		cofnijButton.setOnAction(e -> window.setScene(scene));
 			
-			
 	
-		hboxklijent.getChildren().addAll(odstep1, wyszukajpolaczen, lol , cofnijButton);
+		TableColumn<Rozk³ad_Jazdy, String> rJ_MarkaColumn= new TableColumn<>("Marka autokaru");
+		rJ_MarkaColumn.setMinWidth(100);
+		rJ_MarkaColumn.setCellValueFactory(new PropertyValueFactory<>("RJ_Marka"));
+
+		TableColumn<Rozk³ad_Jazdy, String> rJ_ModelColumn= new TableColumn<>("Model autokaru");
+		rJ_ModelColumn.setMinWidth(100);
+		rJ_ModelColumn.setCellValueFactory(new PropertyValueFactory<>("RJ_Model"));
+		
+		TableColumn<Rozk³ad_Jazdy, String> rJ_RelacjaColumn= new TableColumn<>("Relacja");
+		 rJ_RelacjaColumn.setMinWidth(200);
+		 rJ_RelacjaColumn.setCellValueFactory(new PropertyValueFactory<>("RJ_Relacja"));
+		
+		
+		TableColumn<Rozk³ad_Jazdy, String> rJ_PrzyjazdColumn = new TableColumn<>("Godzina przyjazdu");
+		rJ_PrzyjazdColumn.setMinWidth(150);
+		rJ_PrzyjazdColumn.setCellValueFactory(new PropertyValueFactory<>("RJ_Przyjazd"));
+		
+		TableColumn<Rozk³ad_Jazdy, String> rJ_odjazdColumn = new TableColumn<>("Godzina odjazdu");
+		rJ_odjazdColumn.setMinWidth(150);
+		rJ_odjazdColumn.setCellValueFactory(new PropertyValueFactory<>("RJ_odjazd"));
+		
+		
+		
+		table8 = new TableView<>();
+		table8.setItems(getProduct8());
+		table8.getColumns().addAll(rJ_MarkaColumn, rJ_ModelColumn, rJ_RelacjaColumn, rJ_PrzyjazdColumn, rJ_odjazdColumn);
+		
+		
+		
+	
+		hboxklijent.getChildren().addAll(odstep1, powrot);
 		
 		boxodjazd = new VBox();
 		
-		odjazdLabel = new Label("Odjazd");
+		odjazdLabel = new Label(" Odjazd");
 		odjazdLabel.setStyle("-fx-text-fill:aliceblue; -fx-font-size: 15px; ");
 	
 		
@@ -202,13 +240,15 @@ public class Main extends Application {
 		
 		
 		tilepanel1 .getChildren().addAll( boxprzyjazd, boxodjazd);
+		VBox centter = new VBox();
 		
+		centter.getChildren().addAll(tilepanel1,  odstepp, table8 );
 		layout2.setTop(labelRozk³adJazdy);
 		layout2.setAlignment(labelRozk³adJazdy, Pos.TOP_CENTER);
 		
 		
-		layout2.setCenter(tilepanel1);
-		layout2.setAlignment(tilepanel1, Pos.TOP_CENTER);
+		layout2.setCenter(centter);
+		layout2.setAlignment(centter, Pos.TOP_CENTER);
 		
 		layout2.setBottom(hboxklijent);
 		layout2.setAlignment(hboxklijent, Pos.TOP_RIGHT);
@@ -225,31 +265,57 @@ public class Main extends Application {
 		
 		
 		bordePaneDlaOkna3= new BorderPane();
-		scene3 = new Scene(bordePaneDlaOkna3, 1250,500);
+		scene3 = new Scene(bordePaneDlaOkna3, 1250,480);
 		scene3.getStylesheets().add("application/Panel_Dy¿urnego.css");
 		
-        filemenu2= new Menu("Plik");
+
 		
-		newFile= new MenuItem("nowy...");
-		newFile.setOnAction(e -> System.out.println("cos"));
-		filemenu2.getItems().add(newFile);
-		filemenu2.getItems().add(new MenuItem("Nowy raport"));
-		filemenu2.getItems().add(new SeparatorMenuItem());
-		filemenu2.getItems().add(new MenuItem("Dodaj ..."));
-		filemenu2.getItems().add(new SeparatorMenuItem());
-		filemenu2.getItems().add(new MenuItem("Usuñ ..."));
-		filemenu2.getItems().add(new SeparatorMenuItem());
-		filemenu2.getItems().add(new MenuItem("Wyjœcie"));
+		   filemenu= new Menu("Plik");
+			MenuItem trasymi = new MenuItem("Trasy");
+			trasymi.setOnAction(e -> window.setScene(scene4));
+			filemenu.getItems().add(trasymi);
+		   
+			MenuItem przystankimi = new MenuItem("Przystanik");
+			przystankimi.setOnAction(e -> window.setScene(scene5));
+			filemenu.getItems().add(przystankimi);
 		
-		editMenu= new Menu("Edytuj");
-		editMenu.getItems().add(new MenuItem("Kopiuj"));
-		editMenu.getItems().add(new MenuItem("Wytnij"));
-		paste= new MenuItem("Wklej.");
-		paste.setOnAction(e -> System.out.println("cos"));
-		editMenu.getItems().add(paste);
+		   
+			MenuItem kierowcymi = new MenuItem("Kierowcy");
+			kierowcymi.setOnAction(e -> window.setScene(scene6));
+			filemenu.getItems().add(kierowcymi);
 		
+		   
+			MenuItem autokarymi = new MenuItem("Autokary");
+			autokarymi.setOnAction(e -> window.setScene(scene7));
+			filemenu.getItems().add(autokarymi);
+		
+		   
+			MenuItem kursymi = new MenuItem("Kursy");
+			kursymi.setOnAction(e -> window.setScene(scene8));
+			filemenu.getItems().add(kursymi);
+		
+			MenuItem miejscowoscimi = new MenuItem("Miejscowoœci");
+			miejscowoscimi.setOnAction(e -> window.setScene(scene9));
+			filemenu.getItems().add(miejscowoscimi);
+			
+			MenuItem rejestrmi = new MenuItem("Rejestr przejazdów");
+			rejestrmi.setOnAction(e -> window.setScene(scene10));
+			filemenu.getItems().add(rejestrmi);
+			
+			filemenu.getItems().add(new SeparatorMenuItem());
+			
+			MenuItem wyloguj = new MenuItem("Wyloguj");
+			wyloguj.setOnAction(e ->  window.setScene(scene));
+			filemenu.getItems().add(wyloguj);
+			
+			filemenu.getItems().add(new SeparatorMenuItem());
+			
+			MenuItem wyjscie = new MenuItem("Wyjscie");
+			wyjscie.setOnAction(e -> window.close());
+			filemenu.getItems().add(wyjscie);
+
 		menuBar= new MenuBar();
-		menuBar.getMenus().addAll(filemenu2,editMenu);
+		menuBar.getMenus().addAll(filemenu);
 		
 		
 		
@@ -312,11 +378,11 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 	
 		
 		nameInput = new TextField();
-		nameInput.setPromptText("Nazwisko");
+		nameInput.setPromptText("Imie");
 		nameInput.setMinWidth(150);
 		
 		nazwiskoInput = new TextField();
-		nazwiskoInput.setPromptText("Imie");
+		nazwiskoInput.setPromptText("Nazwisko");
 		nazwiskoInput.setMinWidth(150);
 		
 		peselInput = new TextField();
@@ -367,28 +433,12 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		bordePaneDlaOkna4= new BorderPane();
 		scene4 = new Scene(bordePaneDlaOkna4, 1250,480);
 		scene4.getStylesheets().add("application/Panel_Dy¿urnego.css");
-        filemenu= new Menu("Plik");
+       
+
 		
-		newFile= new MenuItem("nowy...");
-		newFile.setOnAction(e -> System.out.println("cos"));
-		filemenu.getItems().add(newFile);
-		filemenu.getItems().add(new MenuItem("Nowy raport"));
-		filemenu.getItems().add(new SeparatorMenuItem());
-		filemenu.getItems().add(new MenuItem("Dodaj ..."));
-		filemenu.getItems().add(new SeparatorMenuItem());
-		filemenu.getItems().add(new MenuItem("Usuñ ..."));
-		filemenu.getItems().add(new SeparatorMenuItem());
-		filemenu.getItems().add(new MenuItem("Wyjœcie"));
-		
-		editMenu= new Menu("Edytuj");
-		editMenu.getItems().add(new MenuItem("Kopiuj"));
-		editMenu.getItems().add(new MenuItem("Wytnij"));
-		paste= new MenuItem("Wklej.");
-		paste.setOnAction(e -> System.out.println("cos"));
-		editMenu.getItems().add(paste);
-		
+
 		menuBar1= new MenuBar();
-		menuBar1.getMenus().addAll(filemenu,editMenu);
+		menuBar1.getMenus().addAll(filemenu);
 		
 		
 		
@@ -416,11 +466,11 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
 		bordePaneDlaOkna5= new BorderPane();
-		scene5 = new Scene(bordePaneDlaOkna5, 870,480);
+		scene5 = new Scene(bordePaneDlaOkna5, 870,470);
 		scene5.getStylesheets().add("application/Panel_Dy¿urnego.css");
 		
 		menuBar3= new MenuBar();
-		menuBar3.getMenus().addAll(filemenu,editMenu);
+		menuBar3.getMenus().addAll(filemenu);
 		
 
 		TableColumn<Przystanki, String> idPrzystaniki= new TableColumn<>("ID_Przystanki");
@@ -527,7 +577,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		scene6.getStylesheets().add("application/Panel_Dy¿urnego.css");
 		
 		menuBar4= new MenuBar();
-		menuBar4.getMenus().addAll(filemenu,editMenu);
+		menuBar4.getMenus().addAll(filemenu);
 		
 
 
@@ -651,7 +701,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		scene7.getStylesheets().add("application/Panel_Dy¿urnego.css");
 		
 		menuBar5= new MenuBar();
-		menuBar5.getMenus().addAll(filemenu,editMenu);
+		menuBar5.getMenus().addAll(filemenu);
 		
 
 		TableColumn<Autokary, String> idAutokarucolumn= new TableColumn<>("ID_Autokaru");
@@ -801,7 +851,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		scene8.getStylesheets().add("application/Panel_Dy¿urnego.css");
 		
 		menuBar6= new MenuBar();
-		menuBar6.getMenus().addAll(filemenu,editMenu);
+		menuBar6.getMenus().addAll(filemenu);
 		
 
 		TableColumn<Kursy, String> columnIdKurs= new TableColumn<>("ID_Kurs");
@@ -935,7 +985,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		scene9.getStylesheets().add("application/Panel_Dy¿urnego.css");
 		
 		menuBar7= new MenuBar();
-		menuBar7.getMenus().addAll(filemenu,editMenu);
+		menuBar7.getMenus().addAll(filemenu);
 		
 
 		TableColumn<Miejscowosci, String> columnIDmiejscow= new TableColumn<>("ID_Miejscowoœæ");
@@ -1060,7 +1110,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		scene10.getStylesheets().add("application/Panel_Dy¿urnego.css");
 		
 		menuBar8= new MenuBar();
-		menuBar8.getMenus().addAll(filemenu,editMenu);
+		menuBar8.getMenus().addAll(filemenu);
 		
 
 		TableColumn<Rejestr_przejazdow, String> columnIdrejest = new TableColumn<>("ID_Rejestr_Przejazdów");
@@ -1179,7 +1229,7 @@ TreeItem<String> treeitem, trasy, przystanki, kierowcy, miejscowosci, rejestr_pr
 		Kierowcy kierowca = new Kierowcy();
 		kierowca.setId(Integer.parseInt(idInput.getText()));
 		kierowca.setName(nameInput.getText());
-		kierowca.setNazwisko(nameInput.getText());
+		kierowca.setNazwisko(nazwiskoInput.getText());
 		kierowca.setPesel(Integer.parseInt(peselInput.getText()));
 		kierowca.setDatazatrudnienia(dataInput.getText());
 		table.getItems().add(kierowca);
@@ -1487,6 +1537,13 @@ public ObservableList<Miejscowosci> getProduct6(){
 public ObservableList<Rejestr_przejazdow> getProduct7(){
 	ObservableList<Rejestr_przejazdow> products= FXCollections.observableArrayList();
 	products.add(new Rejestr_przejazdow(1,1, "sda",1));
+	
+	return products;
+}
+
+public ObservableList<Rozk³ad_Jazdy> getProduct8(){
+	ObservableList<Rozk³ad_Jazdy> products= FXCollections.observableArrayList();
+	products.add(new Rozk³ad_Jazdy("Tu ","pojawi ", "siê ","wynik ","wyszukiwania. "));
 	
 	return products;
 }
