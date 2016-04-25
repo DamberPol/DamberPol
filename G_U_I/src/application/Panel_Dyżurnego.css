@@ -1,9 +1,9 @@
 .root{
-	-fx-background-image: url("PanelDyz.png");
+	-fx-background-image: url("tlobazyd.png");
 	
 }
 .button{
-	-fx-background-color: linear-gradient(#dc9656, #ab4642) ;
+  -fx-background-color: linear-gradient( #002D6E, #4169E1);
 	-fx-text-fill: #FFFFFF;
 	  -fx-font-size: 14px;
 }
@@ -13,34 +13,35 @@
 	-fx-font-weight: bold;
 }
 .menu-bar{
-  -fx-background-color: linear-gradient(#dc9656, #ab4642);
-
+  -fx-background-color: linear-gradient( #002D6E, #4169E1);
+	-fx-text-fill: #FFFFFF;
 
 }
 
 .menu-bar .label {
     -fx-font-size: 14 pt;
     -fx-font-family: "Segoe UI Light";
-		-fx-text-fill: #000000;
+		-fx-text-fill: #ffffff;
 
 }
 
 
 .menu:hover {
     -fx-background-color: linear-gradient(#dc9656, #ab4642);
+    	-fx-text-fill: #ffffff;
 }
 .menu-item .label{
      -fx-font-size: 14 pt;
- 
+ 	-fx-text-fill: #000000;
       
 }
 
 .tree-view, .tree-cell {
-    -fx-background-color:  #404040 ;
+    -fx-background-color: #002D6E ;
     -fx-text-fill: white ;
 }
 .tree-cell:expanded, .tree-cell:sub-tree-item {
-    -fx-background-color: #404040 ;
+    -fx-background-color: #002D6E;
 }
 .tree-cell:selected {
     -fx-font-weight: bold ;
