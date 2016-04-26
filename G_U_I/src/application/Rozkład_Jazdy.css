@@ -4,14 +4,14 @@
 }
 .button{
 	-fx-background-color: linear-gradient(#dc9656, #ab4642) ;
-	-fx-text-fill: #FFFFFF;
+	-fx-text-fill: #000000;
 	  -fx-font-size: 14px;
 }
 .label
 {
 	-fx-font-family: "Verdana";
 	-fx-font-weight: bold;
-
+	-fx-text-fill: #000000;
  
 }
 .choiceBox{
@@ -22,6 +22,7 @@
 }
 .hyperlink{
 
-	
-		-fx-font-size: 19px;
+		
+		-fx-font-size: 25px;
+		-fx-font-weight: bold;
 }

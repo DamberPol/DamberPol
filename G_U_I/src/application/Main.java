@@ -125,7 +125,8 @@ public class Main extends Application {
 				});
 //Vbox
 		box.setAlignment(Pos.BASELINE_CENTER);
-		box.getChildren().addAll(odstep,labelPowitalny,odstep2, doRozkladuJazdy);
+		box.getChildren().addAll(odstep, odstep1, labelPowitalny,odstep2, doRozkladuJazdy);
+		
 
 
 	
@@ -138,7 +139,7 @@ public class Main extends Application {
 		oknoPowitalne.setCenter(box);
 		
 		
-		scene = new Scene(oknoPowitalne,500,200);
+		scene = new Scene(oknoPowitalne,500,300);
 		scene.getStylesheets().add("application/application.css");
 		
 		
@@ -161,7 +162,8 @@ public class Main extends Application {
 		hboxklijent= new HBox();
 		Label lol = new Label(" ");
 		labelRozk³adJazdy =new Label("ROZK£AD JAZDY");
-		labelRozk³adJazdy.setStyle("-fx-text-fill:aliceblue; -fx-font-size: 40px;");
+		labelRozk³adJazdy.setStyle("-fx-text-fill:aliceblue;"
+				+ "-fx-font-size: 40px;");
 	
 		Label odstepp = new Label(" "); 
 		tilepanel1 = new TilePane();
@@ -222,7 +224,7 @@ public class Main extends Application {
 		
 		
 	
-		hboxklijent.getChildren().addAll(odstep1, powrot);
+		hboxklijent.getChildren().addAll( powrot);
 		
 		boxodjazd = new VBox();
 		
@@ -272,7 +274,7 @@ public class Main extends Application {
 		
 		   filemenu= new Menu("Plik");
 			MenuItem trasymi = new MenuItem("Trasy");
-			trasymi.setOnAction(e -> window.setScene(scene4));
+			trasymi.setOnAction(e -> window.setScene(scene6));
 			filemenu.getItems().add(trasymi);
 		   
 			MenuItem przystankimi = new MenuItem("Przystanik");
@@ -281,7 +283,7 @@ public class Main extends Application {
 		
 		   
 			MenuItem kierowcymi = new MenuItem("Kierowcy");
-			kierowcymi.setOnAction(e -> window.setScene(scene6));
+			kierowcymi.setOnAction(e -> window.setScene(scene3));
 			filemenu.getItems().add(kierowcymi);
 		
 		   
