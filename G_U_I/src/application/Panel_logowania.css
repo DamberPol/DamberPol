@@ -10,9 +10,9 @@
 .label
 {
 	-fx-font-family: arial, verdana, sans-serif; 
-	-fx-font-weight: bold;
+
 	-fx-text-fill:aliceblue;
-   -fx-font-size: 20px;
+   -fx-font-size: 15px;
 }
 .separator{
 	
