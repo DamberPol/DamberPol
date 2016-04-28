@@ -27,6 +27,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -82,10 +83,12 @@ public class Main extends Application {
 		 //Hyperlink
 		link = new Hyperlink();
 		link.setText("Zaloguj");
+		link.setFont(Font.loadFont("file:src/application/Lobster.otf", 20));
 		
 		doRozkladuJazdy = new Hyperlink();
 		doRozkladuJazdy.setText("Do rozk³adu jazdy");
 		doRozkladuJazdy.setOnAction(e -> window.setScene(scene2));
+		doRozkladuJazdy.setFont(Font.loadFont("file:src/application/Lobster.otf", 20));
 		
 		//Layout
 		oknoPowitalne= new BorderPane();
@@ -95,10 +98,12 @@ public class Main extends Application {
 	
 		//labelPowitalny =new Label("Witamy");
 		labelPowitalny= new  Label("Witamy w programie firmy Damberpol \n");
+		labelPowitalny.setFont(Font.loadFont("file:src/application/Lobster.otf", 25));
 		odstep= new  Label(" ");
 		odstep1= new  Label("                                                                  ");
 		odstep2= new  Label(" ");
-		labelPowitalny.setStyle("-fx-text-fill:aliceblue");
+		Label odstep3= new  Label(" ");
+		//labelPowitalny.setStyle("-fx-text-fill:aliceblue");
 		//button
 		przyciskDoOknaKlienta = new Button("Rozk³ad Jazdy");
 		przyciskDoOknaKlienta.setMaxWidth(100);
@@ -125,7 +130,7 @@ public class Main extends Application {
 				});
 //Vbox
 		box.setAlignment(Pos.BASELINE_CENTER);
-		box.getChildren().addAll(odstep, odstep1, labelPowitalny,odstep2, doRozkladuJazdy);
+		box.getChildren().addAll(odstep, odstep1, labelPowitalny,odstep2,odstep3, doRozkladuJazdy);
 		
 
 
@@ -161,11 +166,16 @@ public class Main extends Application {
 		scene2.getStylesheets().add("application/Rozk³ad_Jazdy.css");
 		hboxklijent= new HBox();
 		Label lol = new Label(" ");
-		labelRozk³adJazdy =new Label("ROZK£AD JAZDY");
-		labelRozk³adJazdy.setStyle("-fx-text-fill:aliceblue;"
-				+ "-fx-font-size: 40px;");
+		labelRozk³adJazdy =new Label("               Rozk³ad jazdy");
+		labelRozk³adJazdy.setFont(Font.loadFont("file:src/application/Lobster.otf", 60));
+
+		labelRozk³adJazdy.setStyle(" -fx-text-fill: #FFFFFF;");
+		//labelRozk³adJazdy.setFont(Font.loadFont("file:resorces/font/three_arrows.ttf", 120));
 	
 		Label odstepp = new Label(" "); 
+		Label odstepp1 = new Label(" "); 
+		Label odstepp2 = new Label(" "); 
+		Label odstepp3 = new Label(" "); 
 		tilepanel1 = new TilePane();
 		tilepanel1 .setAlignment(Pos.BASELINE_CENTER);
 		tilepanel1.setHgap(160);
@@ -173,20 +183,22 @@ public class Main extends Application {
 		
 		powrot = new Hyperlink();
 		powrot.setText("Do okna poczatkowego");
+		powrot.setFont(Font.loadFont("file:src/application/Lobster.otf", 28));
 		powrot.setOnAction(e -> window.setScene(scene));	
 		
 		
-		boxprzyjazd = new VBox();
+		HBox boxprzyjazd1 = new HBox();
 		 
 		przyjazdlabel = new Label("Przyjazd");
-		przyjazdlabel.setStyle("-fx-text-fill:aliceblue; -fx-font-size: 15px; ");
+		przyjazdlabel.setFont(Font.loadFont("file:src/application/Lobster.otf", 19));
+		przyjazdlabel.setStyle("-fx-text-fill:#FFFFFF; ");
 		ChoiceBox<String> przyjazd = new ChoiceBox<>();
 		
-		przyjazd.getItems().addAll("Miasto");
+		przyjazd.getItems().addAll("Przystanek");
 		
-		przyjazd.setValue("Miasto");
+		przyjazd.setValue("Przystanek");
 	
-		boxprzyjazd.getChildren().addAll(przyjazdlabel,przyjazd);
+		boxprzyjazd1.getChildren().addAll(przyjazdlabel,odstepp1,przyjazd);
 		
 		
 		wyszukajpolaczen = new Button("Wyszukaj");
@@ -226,27 +238,35 @@ public class Main extends Application {
 	
 		hboxklijent.getChildren().addAll( powrot);
 		
-		boxodjazd = new VBox();
+		HBox boxodjazd1 = new HBox();
 		
 		odjazdLabel = new Label(" Odjazd");
-		odjazdLabel.setStyle("-fx-text-fill:aliceblue; -fx-font-size: 15px; ");
+		odjazdLabel.setFont(Font.loadFont("file:src/application/Lobster.otf", 19));
+		odjazdLabel.setStyle("-fx-text-fill:#FFFFFF;  ");
 	
 		
 		ChoiceBox<String> odjazd = new ChoiceBox<>();
 		przyjazd.setStyle(" -fx-font-size: 12px;");
 		
-		odjazd.getItems().addAll("Miasto");
-		
-		odjazd.setValue("Miasto");
-		boxodjazd.getChildren().addAll(odjazdLabel,odjazd);
+	
 		
 		
-		tilepanel1 .getChildren().addAll( boxprzyjazd, boxodjazd);
+		odjazd.getItems().addAll("Przystanek");
+		
+		odjazd.setValue("Przystanek");
+		boxodjazd1.getChildren().addAll(odjazdLabel,odstepp2,odjazd);
+		
+		
+		tilepanel1 .getChildren().addAll( boxprzyjazd1, boxodjazd1);
 		VBox centter = new VBox();
 		
 		centter.getChildren().addAll(tilepanel1,  odstepp, table8 );
-		layout2.setTop(labelRozk³adJazdy);
-		layout2.setAlignment(labelRozk³adJazdy, Pos.TOP_CENTER);
+	
+		VBox boxxx = new VBox();
+		boxxx.getChildren().addAll(labelRozk³adJazdy,  odstepp3 );
+		
+		layout2.setTop(boxxx);
+		layout2.setAlignment( boxxx, Pos.TOP_CENTER);
 		
 		
 		layout2.setCenter(centter);

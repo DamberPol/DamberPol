@@ -3,6 +3,7 @@ package application;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 
@@ -14,7 +15,7 @@ public class Loguj {
 		String login="user";
 		String has³o="user";
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("LOGUJ");
+		window.setTitle("Zaloguj");
 		window.setMinHeight(120);
 		window.setMinWidth(120);
 	BorderPane layout = new BorderPane(); 
@@ -26,6 +27,7 @@ public class Loguj {
 		Label separator= new Label("     ");
 		//name
 		Label nameLabel= new Label("Login");
+		nameLabel.setFont(Font.loadFont("file:src/application/Lobster.otf", 21));
 		GridPane.setConstraints( nameLabel, 0, 0);
 		
 		//name input
@@ -35,7 +37,7 @@ public class Loguj {
 		//possword
 		Label passwordLabel= new Label("Has³o");
 		GridPane.setConstraints( passwordLabel, 0, 1);
-		
+		passwordLabel.setFont(Font.loadFont("file:src/application/Lobster.otf", 21));
 		//password input
 		TextField passwordInput= new TextField();
 		passwordInput.setPromptText("Has³o");
@@ -44,6 +46,7 @@ public class Loguj {
 		
 		Button loginButton=new Button("Zaloguj");
 		loginButton.setMinWidth(100);
+		loginButton.setFont(Font.loadFont("file:src/application/Lobster.otf", 15));
 		
 		loginButton.setOnAction(e ->{
 		/*	if(login==nameLabel.getText())

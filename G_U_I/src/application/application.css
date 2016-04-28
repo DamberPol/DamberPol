@@ -11,16 +11,15 @@
 .hyperlink{
 
 
-	-fx-font-size: 25px;
+
 	-fx-border-style:none;
-	-fx-font-style: italic;
-	
--fx-text-fill: #FFFFFF;
+
+	-fx-text-fill: #FFFFFF;
 	-fx-focus-color: transparent;
 }
 .label
 {
-	-fx-font-family: "Times New Roman";
+	-fx-text-fill: #FFFFFF;
 	
-   -fx-font-size: 24px;
+
 }
