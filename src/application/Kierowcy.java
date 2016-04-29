@@ -4,7 +4,7 @@ public class Kierowcy {
 	private int Id;
 	private String name;
 	private String nazwisko;
-	private int pesel;
+	private String pesel;
 	private String datazatrudnienia;
 
 	
@@ -12,12 +12,12 @@ public class Kierowcy {
 		this.Id=0;
 		this.name="";
 		this.nazwisko="";
-		this.pesel= 0;
+		this.pesel= null;
 		this.datazatrudnienia="";
 		
 	}
 	
-	public Kierowcy(int Id, String name, String nazwisko, int pesel, String datazatrudnienia)
+	public Kierowcy(int Id, String name, String nazwisko, String pesel, String datazatrudnienia)
 	{
 
 		this.Id= Id;
@@ -52,11 +52,11 @@ public class Kierowcy {
 		this.nazwisko = nazwisko;
 	}
 
-	public int getPesel() {
+	public String getPesel() {
 		return pesel;
 	}
 
-	public void setPesel(int pesel) {
+	public void setPesel(String pesel) {
 		this.pesel = pesel;
 	}
 
