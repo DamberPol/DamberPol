@@ -60,12 +60,13 @@ public class Main extends Application {
 			katAutokaruInput, iloscMiejsInput, numerRejestracyjny, IdKursInput, idAutaInput, idKierowcyInput,
 			kursSygnaturaKursuInput, kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput, IdMiejscowosciInput,
 			nazwaMiejscowosciInput, wojewodztwoInput, powiatInput, gminaInput, IdRejstrówPrzejazdówInput,
-			reIdKursyInput, txtColRejestrDataStart,txtColRejestrPrzystanek,txtColRejestrDataKoniec, rejestrIloscOsobInput;
+			reIdKursyInput, txtColRejestrDataStart, txtColRejestrPrzystanek, txtColRejestrDataKoniec,
+			rejestrIloscOsobInput;
 	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3, addbutton4, deltebutton4,
 			addbutton5, deltebutton5, addbutton6, deltebutton6, addbutton7, deltebutton7;
 	Hyperlink link, doRozkladuJazdy, powrot;
 
-	SelectQueries selectQuery = new SelectQueries();
+	Queries queries = new Queries();
 
 	public static void main(String[] args) {
 
@@ -519,7 +520,7 @@ public class Main extends Application {
 		menuBar4.getMenus().addAll(filemenu);
 
 		TableColumn<Trasa, String> idTrasy = new TableColumn<>("Klucz trasy");
-		idTrasy.setMinWidth(200);
+		idTrasy.setMinWidth(40);
 		idTrasy.setCellValueFactory(new PropertyValueFactory<>("TR_KEY"));
 
 		TableColumn<Trasa, String> IdKursy = new TableColumn<>("Relacja");
@@ -527,15 +528,15 @@ public class Main extends Application {
 		IdKursy.setCellValueFactory(new PropertyValueFactory<>("KUR_Sygnatura_Kursu"));
 
 		TableColumn<Trasa, String> IdPrzystanki = new TableColumn<>("Nazwa Miejscowosci");
-		IdPrzystanki.setMinWidth(200);
+		IdPrzystanki.setMinWidth(150);
 		IdPrzystanki.setCellValueFactory(new PropertyValueFactory<>("PR_Ulica"));
 
 		TableColumn<Trasa, String> godzinacolumn = new TableColumn<>("Godzina przyjazdu");
-		godzinacolumn.setMinWidth(200);
+		godzinacolumn.setMinWidth(100);
 		godzinacolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina"));
 
 		TableColumn<Trasa, String> dzientygcolumn = new TableColumn<>("Dzieñ tygodnia");
-		dzientygcolumn.setMinWidth(200);
+		dzientygcolumn.setMinWidth(100);
 		dzientygcolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Dzieñ_tyg"));
 
 		TableColumn<Trasa, String> uwagicolumn = new TableColumn<>("Uwagi");
@@ -544,27 +545,27 @@ public class Main extends Application {
 
 		idprzystaniki = new TextField();
 		idprzystaniki.setPromptText("Id Przystanki");
-		idprzystaniki.setMinWidth(150);
+		idprzystaniki.setMinWidth(40);
 
 		idkursyinput = new TextField();
 		idkursyinput.setPromptText("Id Kursy");
-		idkursyinput.setMinWidth(150);
+		idkursyinput.setMinWidth(40);
 
 		idtrasyinput = new TextField();
 		idtrasyinput.setPromptText("Id Trasy");
-		idtrasyinput.setMinWidth(150);
+		idtrasyinput.setMinWidth(40);
 
 		dzentygodniainput = new TextField();
 		dzentygodniainput.setPromptText("Dzieñ Tygodnia");
-		dzentygodniainput.setMinWidth(150);
+		dzentygodniainput.setMinWidth(100);
 
 		godzinainput = new TextField();
 		godzinainput.setPromptText("Godzina");
-		godzinainput.setMinWidth(150);
+		godzinainput.setMinWidth(60);
 
 		idprzystanekUlica = new TextField();
 		idprzystanekUlica.setPromptText("Godzina");
-		idprzystanekUlica.setMinWidth(150);
+		idprzystanekUlica.setMinWidth(60);
 
 		uwaginput = new TextField();
 		uwaginput.setPromptText("Uwagi");
@@ -1040,13 +1041,13 @@ public class Main extends Application {
 		columnIDkurs.setCellValueFactory(new PropertyValueFactory<>("KUR_Miejsc_Startowa"));
 
 		TableColumn<Rejestr_przejazdow, String> columnRejestdata = new TableColumn<>("Dokad");
-		columnRejestdata.setMinWidth(180);//TODO
+		columnRejestdata.setMinWidth(180);// TODO
 		columnRejestdata.setCellValueFactory(new PropertyValueFactory<>("PR_Ulica"));
-		
+
 		TableColumn<Rejestr_przejazdow, String> columnOdDnia = new TableColumn<>("Od dnia");
 		columnOdDnia.setMinWidth(180);
 		columnOdDnia.setCellValueFactory(new PropertyValueFactory<>("REJ_Data_start"));
-		
+
 		TableColumn<Rejestr_przejazdow, String> columnDoDnia = new TableColumn<>("Do dnia");
 		columnDoDnia.setMinWidth(180);
 		columnDoDnia.setCellValueFactory(new PropertyValueFactory<>("REJ_Data_konc"));
@@ -1062,11 +1063,11 @@ public class Main extends Application {
 		reIdKursyInput = new TextField();
 		reIdKursyInput.setPromptText("Skad");
 		reIdKursyInput.setMinWidth(50);
-		
+
 		txtColRejestrPrzystanek = new TextField();
 		txtColRejestrPrzystanek.setPromptText("Dokad");
 		txtColRejestrPrzystanek.setMinWidth(50);
-		
+
 		txtColRejestrDataStart = new TextField();
 		txtColRejestrDataStart.setPromptText("Od dnia");
 		txtColRejestrDataStart.setMinWidth(50);
@@ -1074,7 +1075,7 @@ public class Main extends Application {
 		txtColRejestrDataKoniec = new TextField();
 		txtColRejestrDataKoniec.setPromptText("Do dnia");
 		txtColRejestrDataKoniec.setMinWidth(50);
-		
+
 		rejestrIloscOsobInput = new TextField();
 		rejestrIloscOsobInput.setPromptText("Ilosc Osób");
 		rejestrIloscOsobInput.setMinWidth(50);
@@ -1098,11 +1099,12 @@ public class Main extends Application {
 		hbox7 = new HBox();
 		hbox7.setPadding(new Insets(10, 10, 10, 10));
 		hbox7.setSpacing(10);
-		hbox7.getChildren().addAll(IdRejstrówPrzejazdówInput, reIdKursyInput,txtColRejestrPrzystanek, txtColRejestrDataStart,txtColRejestrDataKoniec, rejestrIloscOsobInput,
-				addbutton7, deltebutton7);
+		hbox7.getChildren().addAll(IdRejstrówPrzejazdówInput, reIdKursyInput, txtColRejestrPrzystanek,
+				txtColRejestrDataStart, txtColRejestrDataKoniec, rejestrIloscOsobInput, addbutton7, deltebutton7);
 
 		table7 = new TableView<>();
-		table7.getColumns().addAll(columnIdrejest, columnIDkurs,columnRejestdata, columnOdDnia, columnDoDnia, columnIloscOsub);
+		table7.getColumns().addAll(columnIdrejest, columnIDkurs, columnRejestdata, columnOdDnia, columnDoDnia,
+				columnIloscOsub);
 		table7.setItems(getProduct7());
 
 		treeitem = new TreeItem<>("Spis opcji");
@@ -1202,16 +1204,19 @@ public class Main extends Application {
 	public void addbutton4Clicked() {
 		Autokary autokary = new Autokary();
 
-		autokary.setAUT_KEY(Integer.parseInt(idAutokaruInput.getText()));
-		autokary.setAUT_Marka(modelInput.getText());
-		autokary.setAUT_Model(markaInput.getText());
-		autokary.setAUT_Rok_Prod(Integer.parseInt(rokProdukcjiInput.getText()));
+		// TODO pole do wpisywania ID do usuniecia
+		// autokary.setAUT_KEY(Integer.parseInt(idAutokaruInput.getText()));
 
-		autokary.setAUT_Poj_silnik(Integer.parseInt(idkursyinput.getText()));
-		autokary.setAUT_Spalamie_lkm(Integer.parseInt(pojemnoscSilnikaInput.getText()));
-		autokary.setAUT_Kat_autokaru(dzentygodniainput.getText());
-		autokary.setAUT_Ilosc_miejsc(Integer.parseInt(iloscMiejsInput.getText()));
-		autokary.setAUT_Nr_rejestracji(numerRejestracyjny.getText());
+		String AUT_Marka = "'" + autokary.setAUT_Marka(modelInput.getText()) + "'";
+		String AUT_Model = "'" + autokary.setAUT_Model(markaInput.getText()) + "'";
+		int AUT_Rok_Prod = autokary.setAUT_Rok_Prod(Integer.parseInt(rokProdukcjiInput.getText()));
+		int AUT_Poj_Silnik = autokary.setAUT_Poj_silnik(Integer.parseInt(pojemnoscSilnikaInput.getText()));
+		int AUT_Spalanie = autokary.setAUT_Spalamie_lkm(Integer.parseInt(spalanieInput.getText()));
+		String AUT_Kategoria = "'" + autokary.setAUT_Kat_autokaru(katAutokaruInput.getText()) + "'";
+		int AUT_Ilosc_Miejsc = autokary.setAUT_Ilosc_miejsc(Integer.parseInt(iloscMiejsInput.getText()));
+		String AUT_NR_Rej = "'" + autokary.setAUT_Nr_rejestracji(numerRejestracyjny.getText()) + "')";
+		queries.insertDataToAutokary(AUT_Marka, AUT_Model, AUT_Rok_Prod, AUT_Poj_Silnik, AUT_Spalanie, AUT_Kategoria,
+				AUT_Ilosc_Miejsc, AUT_NR_Rej);
 		table4.getItems().add(autokary);
 
 		idAutokaruInput.clear();
@@ -1266,11 +1271,14 @@ public class Main extends Application {
 	public void addbutton6Clicked() {
 		Miejscowosci miejscowosci = new Miejscowosci();
 
-		miejscowosci.setMIE_KEY(Integer.parseInt(IdMiejscowosciInput.getText()));
-		miejscowosci.setMIE_Nazwa_Miejscow(nazwaMiejscowosciInput.getText());
-		miejscowosci.setMIE_Wojewodztwo(wojewodztwoInput.getText());
-		miejscowosci.setMIE_Powiat(powiatInput.getText());
-		miejscowosci.setMIE_Gmina(gminaInput.getText());
+		// TODO pole do wpisywania ID do usuniecia
+		// miejscowosci.setMIE_KEY(Integer.parseInt(IdMiejscowosciInput.getText()));
+
+		String MIE_Nazwa_Miejscow = "'" + miejscowosci.setMIE_Nazwa_Miejscow(nazwaMiejscowosciInput.getText()) + "'";
+		String MIE_Wojewodztwo = "'" + miejscowosci.setMIE_Wojewodztwo(wojewodztwoInput.getText()) + "'";
+		String MIE_Powiat = "'" + miejscowosci.setMIE_Powiat(powiatInput.getText()) + "'";
+		String MIE_Gmina = "'" + miejscowosci.setMIE_Gmina(gminaInput.getText()) + "'";
+		queries.insertDataToMiejscowosci(MIE_Nazwa_Miejscow, MIE_Wojewodztwo, MIE_Powiat, MIE_Gmina);
 
 		/*
 		 * private int MIE_KEY; private String MIE_Nazwa_Miejscow; private
@@ -1291,7 +1299,9 @@ public class Main extends Application {
 	public void addbutton7Clicked() {
 		Rejestr_przejazdow rejestr = new Rejestr_przejazdow();
 
-		rejestr.setREJ_KEY(Integer.parseInt(IdRejstrówPrzejazdówInput.getText()));
+		// TODO pole do wpisywania ID do usuniecia
+		// rejestr.setREJ_KEY(Integer.parseInt(IdRejstrówPrzejazdówInput.getText()));
+
 		rejestr.setKUR_Miejsc_Startowa(reIdKursyInput.getText());
 		rejestr.setPR_Ulica(txtColRejestrPrzystanek.getText());
 		rejestr.setREJ_data_start(txtColRejestrDataStart.getText());
@@ -1320,9 +1330,15 @@ public class Main extends Application {
 		ObservableList<Kierowcy> productSelected, allProducts;
 		allProducts = table.getItems();
 		productSelected = table.getSelectionModel().getSelectedItems();
+		Kierowcy selectedKierowcy = productSelected.get(0);
+		int id = selectedKierowcy.getId();
 
-		productSelected.forEach(allProducts::remove);
-
+		try {
+			queries.deleteByIdKierowcy(id);
+			productSelected.forEach(allProducts::remove);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void deltebutton2Clicked() {
@@ -1330,17 +1346,30 @@ public class Main extends Application {
 		allProducts = table2.getItems();
 		productSelected = table2.getSelectionModel().getSelectedItems();
 
-		productSelected.forEach(allProducts::remove);
+		Przystanki selectedPrzystanki = productSelected.get(0);
+		int id = selectedPrzystanki.getPR_KEY();
 
+		try {
+			queries.deleteByIdPrzystanki(id);
+			productSelected.forEach(allProducts::remove);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void deltebutton3Clicked() {
 		ObservableList<Trasa> productSelected, allProducts;
 		allProducts = table3.getItems();
 		productSelected = table3.getSelectionModel().getSelectedItems();
+		Trasa selectedTrasa = productSelected.get(0);
+		int id = selectedTrasa.getTR_KEY();
 
-		productSelected.forEach(allProducts::remove);
-
+		try {
+			queries.deleteByIdTrasy(id);
+			productSelected.forEach(allProducts::remove);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void deltebutton4Clicked() {
@@ -1348,7 +1377,15 @@ public class Main extends Application {
 		allProducts = table4.getItems();
 		productSelected = table4.getSelectionModel().getSelectedItems();
 
-		productSelected.forEach(allProducts::remove);
+		Autokary selectedAutokary = productSelected.get(0);
+		int id = selectedAutokary.getAUT_KEY();
+
+		try {
+			queries.deleteByIdAutokary(id);
+			productSelected.forEach(allProducts::remove);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -1357,7 +1394,15 @@ public class Main extends Application {
 		allProducts = table5.getItems();
 		productSelected = table5.getSelectionModel().getSelectedItems();
 
-		productSelected.forEach(allProducts::remove);
+		Kursy selectedKursy = productSelected.get(0);
+		int id = selectedKursy.getKUR_KEY();
+
+		try {
+			queries.deleteByIdKursy(id);
+			productSelected.forEach(allProducts::remove);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -1366,7 +1411,15 @@ public class Main extends Application {
 		allProducts = table6.getItems();
 		productSelected = table6.getSelectionModel().getSelectedItems();
 
-		productSelected.forEach(allProducts::remove);
+		Miejscowosci selectedMiejscowosci = productSelected.get(0);
+		int id = selectedMiejscowosci.getMIE_KEY();
+
+		try {
+			queries.deleteByIdMiejscowosci(id);
+			productSelected.forEach(allProducts::remove);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -1375,7 +1428,15 @@ public class Main extends Application {
 		allProducts = table7.getItems();
 		productSelected = table7.getSelectionModel().getSelectedItems();
 
-		productSelected.forEach(allProducts::remove);
+		Rejestr_przejazdow selectedRejestrPrzejazdow = productSelected.get(0);
+		int id = selectedRejestrPrzejazdow.getREJ_KEY();
+
+		try {
+			queries.deleteByIdRejestrPrzejazdow(id);
+			productSelected.forEach(allProducts::remove);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -1416,7 +1477,7 @@ public class Main extends Application {
 
 	public ObservableList<Kierowcy> getProduct() throws SQLException {
 		ObservableList<Kierowcy> products = FXCollections.observableArrayList();
-		ResultSet rsKierowcy = selectQuery.showAllTableKierowcy();
+		ResultSet rsKierowcy = queries.showAllTableKierowcy();
 		int id = 0;
 		String imie = null;
 		String nazwisko = null;
@@ -1436,7 +1497,7 @@ public class Main extends Application {
 
 	public ObservableList<Przystanki> getProduct2() throws SQLException {
 		ObservableList<Przystanki> products = FXCollections.observableArrayList();
-		ResultSet rsPrzystanki = selectQuery.showAllTablePrzystanki();
+		ResultSet rsPrzystanki = queries.showAllTablePrzystanki();
 		int PR_KEY = 0;
 		int MIE_KEY = 0;
 		String PR_Ulica = null;
@@ -1453,7 +1514,7 @@ public class Main extends Application {
 
 	public ObservableList<Trasa> getProduct3() throws SQLException {
 		ObservableList<Trasa> products = FXCollections.observableArrayList();
-		ResultSet rsPrzystanki = selectQuery.showAllTableTrasy();
+		ResultSet rsPrzystanki = queries.showAllTableTrasy();
 		int TR_KEY = 0;
 		String KUR_Sygnatura_Kursu = null;
 		String MIE_Nazwa_Miejscow = null;
@@ -1478,7 +1539,7 @@ public class Main extends Application {
 
 	public ObservableList<Autokary> getProduct4() throws SQLException {
 		ObservableList<Autokary> products = FXCollections.observableArrayList();
-		ResultSet rsAutokary = selectQuery.showAllTableAutokary();
+		ResultSet rsAutokary = queries.showAllTableAutokary();
 		int AUT_KEY = 0;
 		String AUT_Marka = null;
 		String AUT_Model = null;
@@ -1514,13 +1575,12 @@ public class Main extends Application {
 
 	public ObservableList<Miejscowosci> getProduct6() throws SQLException {
 		ObservableList<Miejscowosci> products = FXCollections.observableArrayList();
-		ResultSet rsMiejscowosci = selectQuery.showAllTableMiejscowosci();
+		ResultSet rsMiejscowosci = queries.showAllTableMiejscowosci();
 		int MIE_KEY = 0;
 		String MIE_Nazwa_Miejscow = null;
 		String MIE_Wojewodztwo = null;
 		String MIE_Powiat = null;
 		String MIE_Gmina = null;
-
 
 		while (rsMiejscowosci.next()) {
 			MIE_KEY = rsMiejscowosci.getInt(1);
@@ -1533,17 +1593,16 @@ public class Main extends Application {
 		return products;
 	}
 
-	public ObservableList<Rejestr_przejazdow> getProduct7() throws SQLException{
+	public ObservableList<Rejestr_przejazdow> getProduct7() throws SQLException {
 		ObservableList<Rejestr_przejazdow> products = FXCollections.observableArrayList();
 
-		ResultSet rsRejestrPrzejazdow = selectQuery.showAllTableRejestrPrzejazdow();
+		ResultSet rsRejestrPrzejazdow = queries.showAllTableRejestrPrzejazdow();
 		int REJ_KEY = 0;
 		String KUR_Miejsc_Startowa = null;
 		String PR_Ulica = null;
 		String REJ_data_start = null;
 		String REJ_data_konc = null;
 		int REJ_iloscOsob = 0;
-
 
 		while (rsRejestrPrzejazdow.next()) {
 			REJ_KEY = rsRejestrPrzejazdow.getInt(1);
@@ -1552,7 +1611,8 @@ public class Main extends Application {
 			REJ_data_start = rsRejestrPrzejazdow.getString(4);
 			REJ_data_konc = rsRejestrPrzejazdow.getString(5);
 			REJ_iloscOsob = rsRejestrPrzejazdow.getInt(6);
-			products.add(new Rejestr_przejazdow(REJ_KEY, KUR_Miejsc_Startowa, PR_Ulica, REJ_data_start, REJ_data_konc,REJ_iloscOsob));
+			products.add(new Rejestr_przejazdow(REJ_KEY, KUR_Miejsc_Startowa, PR_Ulica, REJ_data_start, REJ_data_konc,
+					REJ_iloscOsob));
 		}
 		return products;
 	}

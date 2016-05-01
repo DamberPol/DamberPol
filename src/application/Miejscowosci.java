@@ -38,32 +38,32 @@ public class Miejscowosci {
 		return MIE_Nazwa_Miejscow;
 	}
 
-	public void setMIE_Nazwa_Miejscow(String mIE_Nazwa_Miejscow) {
-		MIE_Nazwa_Miejscow = mIE_Nazwa_Miejscow;
+	public String setMIE_Nazwa_Miejscow(String mIE_Nazwa_Miejscow) {
+		return MIE_Nazwa_Miejscow = mIE_Nazwa_Miejscow;
 	}
 
 	public String getMIE_Wojewodztwo() {
 		return MIE_Wojewodztwo;
 	}
 
-	public void setMIE_Wojewodztwo(String mIE_Wojewodztwo) {
-		MIE_Wojewodztwo = mIE_Wojewodztwo;
+	public String setMIE_Wojewodztwo(String mIE_Wojewodztwo) {
+		return MIE_Wojewodztwo = mIE_Wojewodztwo;
 	}
 
 	public String getMIE_Powiat() {
 		return MIE_Powiat;
 	}
 
-	public void setMIE_Powiat(String mIE_Powiat) {
-		MIE_Powiat = mIE_Powiat;
+	public String setMIE_Powiat(String mIE_Powiat) {
+		return MIE_Powiat = mIE_Powiat;
 	}
 
 	public String getMIE_Gmina() {
 		return MIE_Gmina;
 	}
 
-	public void setMIE_Gmina(String mIE_Gmina) {
-		MIE_Gmina = mIE_Gmina;
+	public String setMIE_Gmina(String mIE_Gmina) {
+		return MIE_Gmina = mIE_Gmina;
 	}
 	
 }
