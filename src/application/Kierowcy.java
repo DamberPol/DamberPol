@@ -40,32 +40,32 @@ public class Kierowcy {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String setName(String name) {
+		return this.name = name;
 	}
 
 	public String getNazwisko() {
 		return nazwisko;
 	}
 
-	public void setNazwisko(String nazwisko) {
-		this.nazwisko = nazwisko;
+	public String setNazwisko(String nazwisko) {
+		return this.nazwisko = nazwisko;
 	}
 
 	public String getPesel() {
 		return pesel;
 	}
 
-	public void setPesel(String pesel) {
-		this.pesel = pesel;
+	public String setPesel(String pesel) {
+		return this.pesel = pesel;
 	}
 
 	public String getDatazatrudnienia() {
 		return datazatrudnienia;
 	}
 
-	public void setDatazatrudnienia(String datazatrudnienia) {
-		this.datazatrudnienia = datazatrudnienia;
+	public String setDatazatrudnienia(String datazatrudnienia) {
+		return this.datazatrudnienia = datazatrudnienia;
 	}
 
 

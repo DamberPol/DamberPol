@@ -42,40 +42,40 @@ public class Rejestr_przejazdow {
 		return KUR_Miejsc_Startowa;
 	}
 
-	public void setKUR_Miejsc_Startowa(String kUR_Miejsc_Startowa) {
-		KUR_Miejsc_Startowa = kUR_Miejsc_Startowa;
+	public String setKUR_Miejsc_Startowa(String kUR_Miejsc_Startowa) {
+		return KUR_Miejsc_Startowa = kUR_Miejsc_Startowa;
 	}
 
 	public String getPR_Ulica() {
 		return PR_Ulica;
 	}
 
-	public void setPR_Ulica(String pR_Ulica) {
-		PR_Ulica = pR_Ulica;
+	public String setPR_Ulica(String pR_Ulica) {
+		return PR_Ulica = pR_Ulica;
 	}
 
 	public String getREJ_data_start() {
 		return REJ_data_start;
 	}
 
-	public void setREJ_data_start(String rEJ_data_start) {
-		REJ_data_start = rEJ_data_start;
+	public String setREJ_data_start(String rEJ_data_start) {
+		return REJ_data_start = rEJ_data_start;
 	}
 
 	public String getREJ_data_konc() {
 		return REJ_data_konc;
 	}
 
-	public void setREJ_data_konc(String rEJ_data_konc) {
-		REJ_data_konc = rEJ_data_konc;
+	public String setREJ_data_konc(String rEJ_data_konc) {
+		return REJ_data_konc = rEJ_data_konc;
 	}
 
 	public int getREJ_iloscOsob() {
 		return REJ_iloscOsob;
 	}
 
-	public void setREJ_iloscOsob(int rEJ_iloscOsob) {
-		REJ_iloscOsob = rEJ_iloscOsob;
+	public int setREJ_iloscOsob(int rEJ_iloscOsob) {
+		return REJ_iloscOsob = rEJ_iloscOsob;
 	}
 
 }

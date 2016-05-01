@@ -1,7 +1,9 @@
 package application;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -54,14 +56,13 @@ public class Main extends Application {
 	TableView<Miejscowosci> table6;
 	TableView<Rejestr_przejazdow> table7;
 	TableView<Rozk³ad_Jazdy> table8;
-	TextField nameInput, idInput, nazwiskoInput, peselInput, dataInput, iDPrzystaniki, iDMiejscowsci, inputulica,
-			idprzystaniki, idprzystanekUlica, idkursyinput, idtrasyinput, dzentygodniainput, godzinainput, uwaginput,
-			idAutokaruInput, modelInput, markaInput, rokProdukcjiInput, pojemnoscSilnikaInput, spalanieInput,
-			katAutokaruInput, iloscMiejsInput, numerRejestracyjny, IdKursInput, idAutaInput, idKierowcyInput,
-			kursSygnaturaKursuInput, kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput, IdMiejscowosciInput,
-			nazwaMiejscowosciInput, wojewodztwoInput, powiatInput, gminaInput, IdRejstrówPrzejazdówInput,
-			reIdKursyInput, txtColRejestrDataStart, txtColRejestrPrzystanek, txtColRejestrDataKoniec,
-			rejestrIloscOsobInput;
+	TextField nameInput, nazwiskoInput, peselInput, dataInput, iDPrzystaniki, iDMiejscowsci, inputulica, idprzystaniki,
+			idprzystanekUlica, idkursyinput, idtrasyinput, dzentygodniainput, godzinainput, uwaginput, idAutokaruInput,
+			modelInput, markaInput, rokProdukcjiInput, pojemnoscSilnikaInput, spalanieInput, katAutokaruInput,
+			iloscMiejsInput, numerRejestracyjny, IdKursInput, idAutaInput, idKierowcyInput, kursSygnaturaKursuInput,
+			kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput, IdMiejscowosciInput, nazwaMiejscowosciInput,
+			wojewodztwoInput, powiatInput, gminaInput, IdRejstrówPrzejazdówInput, reIdKursyInput,
+			txtColRejestrDataStart, txtColRejestrPrzystanek, txtColRejestrDataKoniec, rejestrIloscOsobInput;
 	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3, addbutton4, deltebutton4,
 			addbutton5, deltebutton5, addbutton6, deltebutton6, addbutton7, deltebutton7;
 	Hyperlink link, doRozkladuJazdy, powrot;
@@ -177,9 +178,14 @@ public class Main extends Application {
 		przyjazdlabel.setStyle("-fx-text-fill:#FFFFFF; ");
 		ChoiceBox<String> przyjazd = new ChoiceBox<>();
 
-		przyjazd.getItems().addAll("Przystanek");
-
 		przyjazd.setValue("Przystanek");
+		ResultSet rsMiejscowosci = queries.showAllTableMiejscowosci();
+
+		while (rsMiejscowosci.next()) {
+			String em = rsMiejscowosci.getString("MIE_Nazwa_Miejscow");
+			String arr = em.replace("\n", ",");
+			przyjazd.getItems().add(arr);
+		}
 
 		boxprzyjazd1.getChildren().addAll(przyjazdlabel, odstepp1, przyjazd);
 
@@ -226,6 +232,14 @@ public class Main extends Application {
 		odjazd.getItems().addAll("Przystanek");
 
 		odjazd.setValue("Przystanek");
+		ResultSet rsMiejscowosciOdjazd = queries.showAllTableMiejscowosci();
+
+		while (rsMiejscowosciOdjazd.next()) {
+			String em = rsMiejscowosciOdjazd.getString("MIE_Nazwa_Miejscow");
+			String arr = em.replace("\n", ",");
+			odjazd.getItems().add(arr);
+		}
+
 		boxodjazd1.getChildren().addAll(odjazdLabel, odstepp2, odjazd);
 
 		tilepanel1.getChildren().addAll(boxprzyjazd1, boxodjazd1);
@@ -344,9 +358,9 @@ public class Main extends Application {
 		dataColumn.setMinWidth(200);
 		dataColumn.setCellValueFactory(new PropertyValueFactory<>("datazatrudnienia"));
 
-		idInput = new TextField();
-		idInput.setPromptText("Id");
-		idInput.setMinWidth(150);
+		// idInput = new TextField();
+		// idInput.setPromptText("Id");
+		// idInput.setMinWidth(150);
 
 		nameInput = new TextField();
 		nameInput.setPromptText("Imie");
@@ -377,7 +391,7 @@ public class Main extends Application {
 		hbox = new HBox();
 		hbox.setPadding(new Insets(10, 10, 10, 10));
 		hbox.setSpacing(10);
-		hbox.getChildren().addAll(idInput, nameInput, nazwiskoInput, peselInput, dataInput, addbutton, deltebutton);
+		hbox.getChildren().addAll(nameInput, nazwiskoInput, peselInput, dataInput, addbutton, deltebutton);
 
 		table = new TableView<>();
 		table.setItems(getProduct());
@@ -673,9 +687,9 @@ public class Main extends Application {
 		nrRejstracjiColumn.setMinWidth(150);
 		nrRejstracjiColumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Nr_rejestracji"));
 
-		idAutokaruInput = new TextField();
-		idAutokaruInput.setPromptText("Id Autokaru");
-		idAutokaruInput.setMinWidth(40);
+		// idAutokaruInput = new TextField();
+		// idAutokaruInput.setPromptText("Id Autokaru");
+		// idAutokaruInput.setMinWidth(40);
 
 		markaInput = new TextField();
 		markaInput.setPromptText("Marka");
@@ -694,15 +708,15 @@ public class Main extends Application {
 		pojemnoscSilnikaInput.setMinWidth(60);
 
 		spalanieInput = new TextField();
-		spalanieInput.setPromptText("Silnik");
+		spalanieInput.setPromptText("Spalanie");
 		spalanieInput.setMinWidth(40);
 
 		katAutokaruInput = new TextField();
 		katAutokaruInput.setPromptText("Kategoria");
-		katAutokaruInput.setMinWidth(125);
+		katAutokaruInput.setMinWidth(100);
 
 		iloscMiejsInput = new TextField();
-		iloscMiejsInput.setPromptText("Imie");
+		iloscMiejsInput.setPromptText("Iloœæ miejsc");
 		iloscMiejsInput.setMinWidth(40);
 
 		numerRejestracyjny = new TextField();
@@ -727,8 +741,8 @@ public class Main extends Application {
 		hbox4 = new HBox();
 		hbox4.setPadding(new Insets(10, 10, 10, 10));
 		hbox4.setSpacing(10);
-		hbox4.getChildren().addAll(idAutokaruInput, modelInput, markaInput, rokProdukcjiInput, pojemnoscSilnikaInput,
-				spalanieInput, katAutokaruInput, iloscMiejsInput, numerRejestracyjny, addbutton4, deltebutton4);
+		hbox4.getChildren().addAll(markaInput, modelInput, rokProdukcjiInput, pojemnoscSilnikaInput, spalanieInput,
+				katAutokaruInput, iloscMiejsInput, numerRejestracyjny, addbutton4, deltebutton4);
 
 		table4 = new TableView<>();
 		table4.getColumns().addAll(idAutokarucolumn, Markacolumn, Modelcolumn, rokProdukcjicolumn,
@@ -1156,13 +1170,13 @@ public class Main extends Application {
 
 	public void addbuttonClicked() {
 		Kierowcy kierowca = new Kierowcy();
-		kierowca.setId(Integer.parseInt(idInput.getText()));
-		kierowca.setName(nameInput.getText());
-		kierowca.setNazwisko(nazwiskoInput.getText());
-		kierowca.setPesel(peselInput.getText());
-		kierowca.setDatazatrudnienia(dataInput.getText());
+		// kierowca.setId(Integer.parseInt(idInput.getText()));
+		String KIE_Imie = "'" + kierowca.setName(nameInput.getText()) + "'";
+		String KIE_Nazwisko = "'" + kierowca.setNazwisko(nazwiskoInput.getText()) + "'";
+		String KIE_Pesel = "'" + kierowca.setPesel(peselInput.getText()) + "'";
+		String KIE_Data_zatr = "'" + kierowca.setDatazatrudnienia(dataInput.getText()) + "'";
+		queries.insertDataToKierowcy(KIE_Imie, KIE_Nazwisko, KIE_Pesel, KIE_Data_zatr);
 		table.getItems().add(kierowca);
-		idInput.clear();
 		nameInput.clear();
 		nazwiskoInput.clear();
 		peselInput.clear();
@@ -1302,12 +1316,12 @@ public class Main extends Application {
 		// TODO pole do wpisywania ID do usuniecia
 		// rejestr.setREJ_KEY(Integer.parseInt(IdRejstrówPrzejazdówInput.getText()));
 
-		rejestr.setKUR_Miejsc_Startowa(reIdKursyInput.getText());
-		rejestr.setPR_Ulica(txtColRejestrPrzystanek.getText());
-		rejestr.setREJ_data_start(txtColRejestrDataStart.getText());
-		rejestr.setREJ_data_konc(txtColRejestrDataKoniec.getText());
-		rejestr.setREJ_iloscOsob(Integer.parseInt(rejestrIloscOsobInput.getText()));
-
+		String KUR_Miejsc_Startowa = "'" + rejestr.setKUR_Miejsc_Startowa(reIdKursyInput.getText()) + "'";
+		String KUR_Miejsc_Konco = "'" + rejestr.setPR_Ulica(txtColRejestrPrzystanek.getText()) + "'";
+		String REJ_data_start = "'" + rejestr.setREJ_data_start(txtColRejestrDataStart.getText()) + "'";
+		String REJ_data_konc = "'" + rejestr.setREJ_data_konc(txtColRejestrDataKoniec.getText()) + "'";
+		int REJ_iloscOsob = rejestr.setREJ_iloscOsob(Integer.parseInt(rejestrIloscOsobInput.getText()));
+		queries.insertDataToRaport(KUR_Miejsc_Startowa, KUR_Miejsc_Konco, REJ_data_start, REJ_data_konc, REJ_iloscOsob);
 		table7.getItems().add(rejestr);
 
 		/*
@@ -1620,7 +1634,7 @@ public class Main extends Application {
 	public ObservableList<Rozk³ad_Jazdy> getProduct8() {
 		ObservableList<Rozk³ad_Jazdy> products = FXCollections.observableArrayList();
 		products.add(new Rozk³ad_Jazdy("Tu ", "pojawi ", "siê ", "wynik ", "wyszukiwania. "));
-
+		// TODO
 		return products;
 	}
 }
