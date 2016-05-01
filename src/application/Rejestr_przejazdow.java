@@ -1,6 +1,6 @@
 package application;
 
-public class Rejestr_przejazdow{
+public class Rejestr_przejazdow {
 	private int REJ_KEY;
 	private String KUR_Miejsc_Startowa;
 	private String PR_Ulica;
@@ -8,31 +8,26 @@ public class Rejestr_przejazdow{
 	private String REJ_data_konc;
 	private int REJ_iloscOsob;
 
+	public Rejestr_przejazdow() {
+		this.REJ_KEY = 0;
+		this.KUR_Miejsc_Startowa = null;
+		this.PR_Ulica = "";
+		this.REJ_data_start = null;
+		this.REJ_data_konc = null;
+		this.REJ_iloscOsob = 0;
 
-	
-	public Rejestr_przejazdow(){
-		this.REJ_KEY=0;
-		this.KUR_Miejsc_Startowa=null;
-		this.PR_Ulica="";
-		this.REJ_data_start=null;
-		this.REJ_data_konc=null;
-		this.REJ_iloscOsob=0;
-	
-		
 	}
-	
-	public Rejestr_przejazdow (	int REJ_KEY, String KUR_Miejsc_Startowa,String PR_Ulica,String REJ_data_start,String REJ_data_konc, int REJ_iloscOsob)
-	{
 
-		this.REJ_KEY=REJ_KEY;
-		this.KUR_Miejsc_Startowa=KUR_Miejsc_Startowa;
-		this.PR_Ulica=PR_Ulica;
-		this.REJ_data_start=REJ_data_start;
-		this.REJ_data_konc=REJ_data_konc;
-		this.REJ_iloscOsob=REJ_iloscOsob;
+	public Rejestr_przejazdow(int REJ_KEY, String KUR_Miejsc_Startowa, String PR_Ulica, String REJ_data_start,
+			String REJ_data_konc, int REJ_iloscOsob) {
 
+		this.REJ_KEY = REJ_KEY;
+		this.KUR_Miejsc_Startowa = KUR_Miejsc_Startowa;
+		this.PR_Ulica = PR_Ulica;
+		this.REJ_data_start = REJ_data_start;
+		this.REJ_data_konc = REJ_data_konc;
+		this.REJ_iloscOsob = REJ_iloscOsob;
 
-		
 	}
 
 	public int getREJ_KEY() {
@@ -50,7 +45,7 @@ public class Rejestr_przejazdow{
 	public void setKUR_Miejsc_Startowa(String kUR_Miejsc_Startowa) {
 		KUR_Miejsc_Startowa = kUR_Miejsc_Startowa;
 	}
-	
+
 	public String getPR_Ulica() {
 		return PR_Ulica;
 	}
@@ -58,8 +53,6 @@ public class Rejestr_przejazdow{
 	public void setPR_Ulica(String pR_Ulica) {
 		PR_Ulica = pR_Ulica;
 	}
-	
-	
 
 	public String getREJ_data_start() {
 		return REJ_data_start;
@@ -68,6 +61,7 @@ public class Rejestr_przejazdow{
 	public void setREJ_data_start(String rEJ_data_start) {
 		REJ_data_start = rEJ_data_start;
 	}
+
 	public String getREJ_data_konc() {
 		return REJ_data_konc;
 	}
