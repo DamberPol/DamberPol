@@ -13,6 +13,7 @@ public class Trasa {
 		this.TR_KEY = 0;
 		this.KUR_Sygnatura_Kursu = null;
 		this.MIE_Nazwa_Miejscow = null;
+		this.PR_Ulica = null;
 		this.TR_Dzien_tyg = null;
 		this.TR_Godzina = null;
 		this.TR_Uwagi = null;

@@ -25,8 +25,8 @@ public interface QueriesInterface {
 	public void insertDataToKierowcy(String KIE_Imie, String KIE_Nazwisko, String KIE_Pesel, String KIE_Data_zatr)
 			throws SQLException;
 
-	public void insertDataToKursy(String imieKierowcy, String nazwiskoKierowcy, String numerRejAutokaru,
-			String KUR_Sygnatura_Kursu, String KUR_Opis, String KUR_Czas_Odjazdu, String KUR_Czas_Przyjazdu)
+	public void insertDataToKursy(String KIE_Pesel, String numerRejAutokary, String KUR_Sygnatura_Kursu,
+			String KUR_Miejsc_Start, String KUR_Miejsc_Konco, String KUR_Czas_Odjazdu, String KUR_Czas_Przyjazdu)
 			throws SQLException;
 
 	public void insertDataToMiejscowosci(String MIE_Nazwa_Miejscow, String MIE_Województwo, String MIE_Powiat,
@@ -34,10 +34,11 @@ public interface QueriesInterface {
 
 	public void insertDataToPrzystanki(String MIE_Nazwa_Miejscow, String PR_Ulica) throws SQLException;
 
-	public void insertDataToTrasy(String KUR_Opis, String PR_Ulica , String TR_Dzieñ_tyg, String TR_Godzina, String TR_Uwagi)
-			throws SQLException;
-	public void insertDataToRaport (String KUR_Miejsc_Startowa,String KUR_Miejsc_Konco, String REJ_data_start, String REJ_data_konc, int REJ_iloscOsob) throws SQLException;
+	public void insertDataToTrasy(String KUR_Opis, String PR_Ulica, String TR_Dzieñ_tyg, String TR_Godzina,
+			String TR_Uwagi) throws SQLException;
 
+	public void insertDataToRaport(String KUR_Miejsc_Startowa, String KUR_Miejsc_Konco, String REJ_data_start,
+			String REJ_data_konc, int REJ_iloscOsob) throws SQLException;
 
 	public void deleteByIdAutokary(int id) throws SQLException;
 

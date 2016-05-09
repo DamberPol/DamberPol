@@ -10,14 +10,14 @@ import java.sql.Connection;
 
 import javafx.geometry.*;
 
-public class Loguj extends ConnectionToDB{
+public class Loguj extends ConnectionToDB {
 	static boolean ansver;
 
 	public static boolean display() {
 		Stage window = new Stage();
 
-	//	String login = "user";
-		//String has³o = "user";
+		// String login = "user";
+		// String has³o = "user";
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("Zaloguj");
 		window.setMinHeight(120);
@@ -55,14 +55,11 @@ public class Loguj extends ConnectionToDB{
 			String user = nameInput.getText().toString().trim();
 			ConnectionToDB connect = new ConnectionToDB();
 			Connection connection = connect.getConnection(user);
-			if(connection != null)
-			{
+			if (connection != null) {
 				ansver = true;
 				window.close();
-			}
-			else
-			{
-				//TODO Powiadomienie w labelu o niepoprawnym loginie/hasle
+			} else {
+				// TODO Powiadomienie w labelu o niepoprawnym loginie/hasle
 				ansver = false;
 			}
 

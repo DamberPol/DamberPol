@@ -1,9 +1,7 @@
 package application;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -60,9 +58,10 @@ public class Main extends Application {
 			idprzystanekUlica, idkursyinput, idtrasyinput, dzentygodniainput, godzinainput, uwaginput, idAutokaruInput,
 			modelInput, markaInput, rokProdukcjiInput, pojemnoscSilnikaInput, spalanieInput, katAutokaruInput,
 			iloscMiejsInput, numerRejestracyjny, IdKursInput, idAutaInput, idKierowcyInput, kursSygnaturaKursuInput,
-			kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput, IdMiejscowosciInput, nazwaMiejscowosciInput,
-			wojewodztwoInput, powiatInput, gminaInput, IdRejstrówPrzejazdówInput, reIdKursyInput,
-			txtColRejestrDataStart, txtColRejestrPrzystanek, txtColRejestrDataKoniec, rejestrIloscOsobInput;
+			kursOpisInput, kursMiejscStartowa, kursCzasOdjazduInput, kursCzasPrzyjazduInput, IdMiejscowosciInput,
+			nazwaMiejscowosciInput, wojewodztwoInput, powiatInput, gminaInput, IdRejstrówPrzejazdówInput,
+			reIdKursyInput, txtColRejestrDataStart, txtColRejestrPrzystanek, txtColRejestrDataKoniec,
+			rejestrIloscOsobInput;
 	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3, addbutton4, deltebutton4,
 			addbutton5, deltebutton5, addbutton6, deltebutton6, addbutton7, deltebutton7;
 	Hyperlink link, doRozkladuJazdy, powrot;
@@ -150,7 +149,6 @@ public class Main extends Application {
 		scene2 = new Scene(layout2, 800, 600);
 		scene2.getStylesheets().add("application/Rozk³ad_Jazdy.css");
 		hboxklijent = new HBox();
-		Label lol = new Label(" ");
 		labelRozk³adJazdy = new Label("               Rozk³ad jazdy");
 		labelRozk³adJazdy.setFont(Font.loadFont("file:src/application/Lobster.otf", 60));
 
@@ -354,7 +352,7 @@ public class Main extends Application {
 		peselColumn.setMinWidth(200);
 		peselColumn.setCellValueFactory(new PropertyValueFactory<>("pesel"));
 
-		TableColumn<Kierowcy, String> dataColumn = new TableColumn<>("Data");
+		TableColumn<Kierowcy, String> dataColumn = new TableColumn<>("Data zatrudnienia");
 		dataColumn.setMinWidth(200);
 		dataColumn.setCellValueFactory(new PropertyValueFactory<>("datazatrudnienia"));
 
@@ -442,28 +440,28 @@ public class Main extends Application {
 		menuBar3 = new MenuBar();
 		menuBar3.getMenus().addAll(filemenu);
 
-		TableColumn<Przystanki, String> idPrzystaniki = new TableColumn<>("ID_Przystanki");
+		TableColumn<Przystanki, String> idPrzystaniki = new TableColumn<>("Klucz przystanku");
 		idPrzystaniki.setMinWidth(200);
 		idPrzystaniki.setCellValueFactory(new PropertyValueFactory<>("PR_KEY"));
 
-		TableColumn<Przystanki, String> IdMiejscowsci = new TableColumn<>("ID_Miejscowosci");
+		TableColumn<Przystanki, String> IdMiejscowsci = new TableColumn<>("Nazwa miejscowosci");
 		IdMiejscowsci.setMinWidth(200);
 		IdMiejscowsci.setCellValueFactory(new PropertyValueFactory<>("MIE_KEY"));
 
-		TableColumn<Przystanki, Float> ulicacolumn = new TableColumn<>("Ulica");
+		TableColumn<Przystanki, Float> ulicacolumn = new TableColumn<>("Nazwa przystanku");
 		ulicacolumn.setMinWidth(200);
 		ulicacolumn.setCellValueFactory(new PropertyValueFactory<>("PR_Ulica"));
 
-		iDPrzystaniki = new TextField();
-		iDPrzystaniki.setPromptText("ID Przystanku");
-		iDPrzystaniki.setMinWidth(150);
+		// iDPrzystaniki = new TextField();
+		// iDPrzystaniki.setPromptText("Nazwa miejscowoœci");
+		// iDPrzystaniki.setMinWidth(150);
 
 		iDMiejscowsci = new TextField();
-		iDMiejscowsci.setPromptText("ID Miejscowosci");
+		iDMiejscowsci.setPromptText("Nazwa miejscowoœci");
 		iDMiejscowsci.setMinWidth(150);
 
 		inputulica = new TextField();
-		inputulica.setPromptText("Ulica");
+		inputulica.setPromptText("Nazwa przystanku");
 		inputulica.setMinWidth(150);
 
 		addbutton2 = new Button("Add");
@@ -481,7 +479,7 @@ public class Main extends Application {
 		hbox2 = new HBox();
 		hbox2.setPadding(new Insets(10, 10, 10, 10));
 		hbox2.setSpacing(10);
-		hbox2.getChildren().addAll(iDPrzystaniki, iDMiejscowsci, addbutton2, deltebutton2);
+		hbox2.getChildren().addAll(iDMiejscowsci, inputulica, addbutton2, deltebutton2);
 
 		table2 = new TableView<>();
 		table2.getColumns().addAll(idPrzystaniki, IdMiejscowsci, ulicacolumn);
@@ -537,21 +535,25 @@ public class Main extends Application {
 		idTrasy.setMinWidth(40);
 		idTrasy.setCellValueFactory(new PropertyValueFactory<>("TR_KEY"));
 
-		TableColumn<Trasa, String> IdKursy = new TableColumn<>("Relacja");
+		TableColumn<Trasa, String> IdKursy = new TableColumn<>("Przystanek startowy");
 		IdKursy.setMinWidth(200);
 		IdKursy.setCellValueFactory(new PropertyValueFactory<>("KUR_Sygnatura_Kursu"));
 
-		TableColumn<Trasa, String> IdPrzystanki = new TableColumn<>("Nazwa Miejscowosci");
+		TableColumn<Trasa, String> IdMiejscKonco = new TableColumn<>("Miejscowoœæ koñcowa");
+		IdMiejscKonco.setMinWidth(150);
+		IdMiejscKonco.setCellValueFactory(new PropertyValueFactory<>("MIE_Nazwa_Miejscow"));
+
+		TableColumn<Trasa, String> IdPrzystanki = new TableColumn<>("Przystanek koñcowy");
 		IdPrzystanki.setMinWidth(150);
 		IdPrzystanki.setCellValueFactory(new PropertyValueFactory<>("PR_Ulica"));
 
 		TableColumn<Trasa, String> godzinacolumn = new TableColumn<>("Godzina przyjazdu");
 		godzinacolumn.setMinWidth(100);
-		godzinacolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina"));
+		godzinacolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Dzien_tyg"));
 
 		TableColumn<Trasa, String> dzientygcolumn = new TableColumn<>("Dzieñ tygodnia");
 		dzientygcolumn.setMinWidth(100);
-		dzientygcolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Dzieñ_tyg"));
+		dzientygcolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina"));
 
 		TableColumn<Trasa, String> uwagicolumn = new TableColumn<>("Uwagi");
 		uwagicolumn.setMinWidth(200);
@@ -604,7 +606,8 @@ public class Main extends Application {
 				dzentygodniainput, uwaginput, addbutton3, deltebutton3);
 
 		table3 = new TableView<>();
-		table3.getColumns().addAll(idTrasy, IdKursy, IdPrzystanki, dzientygcolumn, godzinacolumn, uwagicolumn);
+		table3.getColumns().addAll(idTrasy, IdKursy, IdMiejscKonco, IdPrzystanki, godzinacolumn, dzientygcolumn,
+				uwagicolumn);
 		table3.setItems(getProduct3());
 
 		treeitem = new TreeItem<>("Spis opcji");
@@ -673,7 +676,7 @@ public class Main extends Application {
 
 		TableColumn<Autokary, String> spalaniecolumn = new TableColumn<>("Spalanie");
 		spalaniecolumn.setMinWidth(40);
-		spalaniecolumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Spalanie_l/km"));
+		spalaniecolumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Spalamie_lkm"));
 
 		TableColumn<Autokary, String> KatAutokarucolumn = new TableColumn<>("Klasa Autokaru");
 		KatAutokarucolumn.setMinWidth(125);
@@ -686,10 +689,6 @@ public class Main extends Application {
 		TableColumn<Autokary, String> nrRejstracjiColumn = new TableColumn<>("Numer Rejestracyjny");
 		nrRejstracjiColumn.setMinWidth(150);
 		nrRejstracjiColumn.setCellValueFactory(new PropertyValueFactory<>("AUT_Nr_rejestracji"));
-
-		// idAutokaruInput = new TextField();
-		// idAutokaruInput.setPromptText("Id Autokaru");
-		// idAutokaruInput.setMinWidth(40);
 
 		markaInput = new TextField();
 		markaInput.setPromptText("Marka");
@@ -794,31 +793,35 @@ public class Main extends Application {
 		menuBar6.getMenus().addAll(filemenu);
 
 		TableColumn<Kursy, String> columnIdKurs = new TableColumn<>("ID_Kurs");
-		columnIdKurs.setMinWidth(100);
+		columnIdKurs.setMinWidth(50);
 		columnIdKurs.setCellValueFactory(new PropertyValueFactory<>("KUR_KEY"));
 
-		TableColumn<Kursy, String> columnIdAuta = new TableColumn<>("ID_Auta");
-		columnIdAuta.setMinWidth(100);
+		TableColumn<Kursy, String> columnIdAuta = new TableColumn<>("Numer rej autokaru");
+		columnIdAuta.setMinWidth(80);
 		columnIdAuta.setCellValueFactory(new PropertyValueFactory<>("AUT_KEY"));
 
-		TableColumn<Kursy, String> columnKierowcyInput = new TableColumn<>("ID_Kierowcy");
-		columnKierowcyInput.setMinWidth(100);
+		TableColumn<Kursy, String> columnKierowcyInput = new TableColumn<>("Pesel kierowcy");
+		columnKierowcyInput.setMinWidth(80);
 		columnKierowcyInput.setCellValueFactory(new PropertyValueFactory<>("KIE_KEY"));
 
 		TableColumn<Kursy, String> columnSygnaturaKursu = new TableColumn<>("Sygnatury Kursu");
-		columnSygnaturaKursu.setMinWidth(120);
+		columnSygnaturaKursu.setMinWidth(100);
 		columnSygnaturaKursu.setCellValueFactory(new PropertyValueFactory<>("KUR_Sygnatura_Kursu"));
 
-		TableColumn<Kursy, String> columnkursOpis = new TableColumn<>("Opis");
-		columnkursOpis.setMinWidth(250);
-		columnkursOpis.setCellValueFactory(new PropertyValueFactory<>("KUR_Opis"));
+		TableColumn<Kursy, String> columnMiejscStartowa = new TableColumn<>("Przystanek startowy");
+		columnMiejscStartowa.setMinWidth(150);
+		columnMiejscStartowa.setCellValueFactory(new PropertyValueFactory<>("KUR_Miejsc_Konco"));
+
+		TableColumn<Kursy, String> columnMiejscKoncowa = new TableColumn<>("Przystanek koñcowy");
+		columnMiejscKoncowa.setMinWidth(150);
+		columnMiejscKoncowa.setCellValueFactory(new PropertyValueFactory<>("KUR_Opis"));
 
 		TableColumn<Kursy, String> columnKursCzasOdjazd = new TableColumn<>("Czas Odjazdu");
-		columnKursCzasOdjazd.setMinWidth(125);
+		columnKursCzasOdjazd.setMinWidth(80);
 		columnKursCzasOdjazd.setCellValueFactory(new PropertyValueFactory<>("KUR_Czas_Odjazdu"));
 
 		TableColumn<Kursy, String> columnKursCzasprzyjazdu = new TableColumn<>("Czas Przyjazdu");
-		columnKursCzasprzyjazdu.setMinWidth(125);
+		columnKursCzasprzyjazdu.setMinWidth(80);
 		columnKursCzasprzyjazdu.setCellValueFactory(new PropertyValueFactory<>("KUR_Czas_Przyjazdu"));
 
 		/*
@@ -830,25 +833,26 @@ public class Main extends Application {
 		 * kursCzasPrzyjazduInput
 		 * 
 		 */
-		IdKursInput = new TextField();
-		IdKursInput.setPromptText("Id Kurs");
-		IdKursInput.setMinWidth(50);
 
 		idAutaInput = new TextField();
-		idAutaInput.setPromptText("Id Autokaru");
+		idAutaInput.setPromptText("Numer rej autokaru");
 		idAutaInput.setMinWidth(50);
 
 		idKierowcyInput = new TextField();
-		idKierowcyInput.setPromptText("Id Kierowcy");
+		idKierowcyInput.setPromptText("Pesel kierowcy");
 		idKierowcyInput.setMinWidth(50);
 
 		kursSygnaturaKursuInput = new TextField();
 		kursSygnaturaKursuInput.setPromptText("Sygnatura Kursu");
 		kursSygnaturaKursuInput.setMinWidth(50);
 
+		kursMiejscStartowa = new TextField();
+		kursMiejscStartowa.setPromptText("Przystanek startowy");
+		kursMiejscStartowa.setMinWidth(100);
+
 		kursOpisInput = new TextField();
-		kursOpisInput.setPromptText("Opis");
-		kursOpisInput.setMinWidth(150);
+		kursOpisInput.setPromptText("Przystanek koñcowy");
+		kursOpisInput.setMinWidth(100);
 
 		kursCzasOdjazduInput = new TextField();
 		kursCzasOdjazduInput.setPromptText("Czas Odjazdu");
@@ -877,12 +881,12 @@ public class Main extends Application {
 		hbox5 = new HBox();
 		hbox5.setPadding(new Insets(10, 10, 10, 10));
 		hbox5.setSpacing(10);
-		hbox5.getChildren().addAll(IdKursInput, idAutaInput, idKierowcyInput, kursSygnaturaKursuInput, kursOpisInput,
-				kursCzasOdjazduInput, kursCzasPrzyjazduInput, addbutton5, deltebutton5);
+		hbox5.getChildren().addAll(idAutaInput, idKierowcyInput, kursSygnaturaKursuInput, kursMiejscStartowa,
+				kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput, addbutton5, deltebutton5);
 
 		table5 = new TableView<>();
 		table5.getColumns().addAll(columnIdKurs, columnIdAuta, columnKierowcyInput, columnSygnaturaKursu,
-				columnkursOpis, columnKursCzasOdjazd, columnKursCzasprzyjazdu);
+				columnMiejscStartowa, columnMiejscKoncowa, columnKursCzasOdjazd, columnKursCzasprzyjazdu);
 		table5.setItems(getProduct5());
 
 		treeitem = new TreeItem<>("Spis opcji");
@@ -933,7 +937,7 @@ public class Main extends Application {
 		columnIDmiejscow.setMinWidth(180);
 		columnIDmiejscow.setCellValueFactory(new PropertyValueFactory<>("MIE_KEY"));
 
-		TableColumn<Miejscowosci, String> columnNazwaMiejscowosci = new TableColumn<>("Nazwa Miejscowosci");
+		TableColumn<Miejscowosci, String> columnNazwaMiejscowosci = new TableColumn<>("Nazwa Miejscowoœci");
 		columnNazwaMiejscowosci.setMinWidth(180);
 		columnNazwaMiejscowosci.setCellValueFactory(new PropertyValueFactory<>("MIE_Nazwa_Miejscow"));
 
@@ -955,9 +959,6 @@ public class Main extends Application {
 		 * MIE_Gmina; ,IdMiejscowosciInput, nazwaMiejscowosciInput,
 		 * wojewodztwoInput, powiatInput, gminaInput
 		 */
-		IdMiejscowosciInput = new TextField();
-		IdMiejscowosciInput.setPromptText("Id Miejscowosci");
-		IdMiejscowosciInput.setMinWidth(50);
 
 		nazwaMiejscowosciInput = new TextField();
 		nazwaMiejscowosciInput.setPromptText("Nazwa");
@@ -994,8 +995,8 @@ public class Main extends Application {
 		hbox6 = new HBox();
 		hbox6.setPadding(new Insets(10, 10, 10, 10));
 		hbox6.setSpacing(10);
-		hbox6.getChildren().addAll(IdMiejscowosciInput, nazwaMiejscowosciInput, wojewodztwoInput, powiatInput,
-				gminaInput, addbutton6, deltebutton6);
+		hbox6.getChildren().addAll(nazwaMiejscowosciInput, wojewodztwoInput, powiatInput, gminaInput, addbutton6,
+				deltebutton6);
 
 		table6 = new TableView<>();
 		table6.getColumns().addAll(columnIDmiejscow, columnNazwaMiejscowosci, columnWojewodztwo, columnPowiat,
@@ -1055,24 +1056,20 @@ public class Main extends Application {
 		columnIDkurs.setCellValueFactory(new PropertyValueFactory<>("KUR_Miejsc_Startowa"));
 
 		TableColumn<Rejestr_przejazdow, String> columnRejestdata = new TableColumn<>("Dokad");
-		columnRejestdata.setMinWidth(180);// TODO
+		columnRejestdata.setMinWidth(180);
 		columnRejestdata.setCellValueFactory(new PropertyValueFactory<>("PR_Ulica"));
 
 		TableColumn<Rejestr_przejazdow, String> columnOdDnia = new TableColumn<>("Od dnia");
 		columnOdDnia.setMinWidth(180);
-		columnOdDnia.setCellValueFactory(new PropertyValueFactory<>("REJ_Data_start"));
+		columnOdDnia.setCellValueFactory(new PropertyValueFactory<>("REJ_data_start"));
 
 		TableColumn<Rejestr_przejazdow, String> columnDoDnia = new TableColumn<>("Do dnia");
 		columnDoDnia.setMinWidth(180);
-		columnDoDnia.setCellValueFactory(new PropertyValueFactory<>("REJ_Data_konc"));
+		columnDoDnia.setCellValueFactory(new PropertyValueFactory<>("REJ_data_konc"));
 
 		TableColumn<Rejestr_przejazdow, String> columnIloscOsub = new TableColumn<>("Ilosc Osób");
 		columnIloscOsub.setMinWidth(180);
 		columnIloscOsub.setCellValueFactory(new PropertyValueFactory<>("REJ_iloscOsob"));
-
-		IdRejstrówPrzejazdówInput = new TextField();
-		IdRejstrówPrzejazdówInput.setPromptText("Numer rejestru");
-		IdRejstrówPrzejazdówInput.setMinWidth(50);
 
 		reIdKursyInput = new TextField();
 		reIdKursyInput.setPromptText("Skad");
@@ -1113,8 +1110,8 @@ public class Main extends Application {
 		hbox7 = new HBox();
 		hbox7.setPadding(new Insets(10, 10, 10, 10));
 		hbox7.setSpacing(10);
-		hbox7.getChildren().addAll(IdRejstrówPrzejazdówInput, reIdKursyInput, txtColRejestrPrzystanek,
-				txtColRejestrDataStart, txtColRejestrDataKoniec, rejestrIloscOsobInput, addbutton7, deltebutton7);
+		hbox7.getChildren().addAll(reIdKursyInput, txtColRejestrPrzystanek, txtColRejestrDataStart,
+				txtColRejestrDataKoniec, rejestrIloscOsobInput, addbutton7, deltebutton7);
 
 		table7 = new TableView<>();
 		table7.getColumns().addAll(columnIdrejest, columnIDkurs, columnRejestdata, columnOdDnia, columnDoDnia,
@@ -1170,7 +1167,7 @@ public class Main extends Application {
 
 	public void addbuttonClicked() {
 		Kierowcy kierowca = new Kierowcy();
-		// kierowca.setId(Integer.parseInt(idInput.getText()));
+
 		String KIE_Imie = "'" + kierowca.setName(nameInput.getText()) + "'";
 		String KIE_Nazwisko = "'" + kierowca.setNazwisko(nazwiskoInput.getText()) + "'";
 		String KIE_Pesel = "'" + kierowca.setPesel(peselInput.getText()) + "'";
@@ -1186,11 +1183,12 @@ public class Main extends Application {
 
 	public void addbutton2Clicked() {
 		Przystanki przystanki = new Przystanki();
-		przystanki.setPR_KEY(Integer.parseInt(iDPrzystaniki.getText()));
-		przystanki.setMIE_KEY(Integer.parseInt(iDMiejscowsci.getText()));
-		przystanki.setPR_Ulica(inputulica.getText());
+		// przystanki.setPR_KEY(Integer.parseInt(iDPrzystaniki.getText()));
+		String MIE_Nazwa_Miejscow = "'"+przystanki.setMIE_KEY(iDMiejscowsci.getText())+"'";
+		String PR_Ulica = "'"+przystanki.setPR_Ulica(inputulica.getText())+"'";
 		table2.getItems().add(przystanki);
-		iDPrzystaniki.clear();
+//TODO INSERT przystanki
+		queries.insertDataToPrzystanki(MIE_Nazwa_Miejscow, PR_Ulica);
 		iDMiejscowsci.clear();
 		inputulica.clear();
 
@@ -1205,6 +1203,7 @@ public class Main extends Application {
 		trasa.setTR_Dzien_tyg(dzentygodniainput.getText());
 		trasa.setTR_Godzina(godzinainput.getText());
 		trasa.setTR_Uwagi(uwaginput.getText());
+
 		table3.getItems().add(trasa);
 		idtrasyinput.clear();
 		idkursyinput.clear();
@@ -1218,9 +1217,6 @@ public class Main extends Application {
 	public void addbutton4Clicked() {
 		Autokary autokary = new Autokary();
 
-		// TODO pole do wpisywania ID do usuniecia
-		// autokary.setAUT_KEY(Integer.parseInt(idAutokaruInput.getText()));
-
 		String AUT_Marka = "'" + autokary.setAUT_Marka(modelInput.getText()) + "'";
 		String AUT_Model = "'" + autokary.setAUT_Model(markaInput.getText()) + "'";
 		int AUT_Rok_Prod = autokary.setAUT_Rok_Prod(Integer.parseInt(rokProdukcjiInput.getText()));
@@ -1233,7 +1229,7 @@ public class Main extends Application {
 				AUT_Ilosc_Miejsc, AUT_NR_Rej);
 		table4.getItems().add(autokary);
 
-		idAutokaruInput.clear();
+		// idAutokaruInput.clear();
 		modelInput.clear();
 		markaInput.clear();
 		rokProdukcjiInput.clear();
@@ -1253,21 +1249,23 @@ public class Main extends Application {
 	public void addbutton5Clicked() {
 		Kursy kursy = new Kursy();
 
-		kursy.setKUR_KEY(Integer.parseInt(IdKursInput.getText()));
-		kursy.setAUT_KEY(Integer.parseInt(idAutaInput.getText()));
-		kursy.setKIE_KEY(Integer.parseInt(idKierowcyInput.getText()));
+		String numerRejAutokary = "'" + kursy.setAUT_KEY(idAutaInput.getText()) + "'";
+		String KIE_Pesel = "'" + kursy.setKIE_KEY(idKierowcyInput.getText()) + "'";
+		String KUR_Sygnatura_Kursu = "'" + kursy.setKUR_Sygnatura_Kursu(kursSygnaturaKursuInput.getText()) + "'";
+		String KUR_Miejsc_Start = "'" + kursy.setKUR_Opis(kursMiejscStartowa.getText()) + "'";
+		String KUR_Miejsc_Konco = "'" + kursy.setKUR_Miejsc_Konco(kursOpisInput.getText()) + "'";
+		String KUR_Czas_Odjazdu = "'" + kursy.setKUR_Czas_Odjazdu(kursCzasOdjazduInput.getText()) + "'";
+		String KUR_Czas_Przyjazdu = "'" + kursy.setKUR_Czas_Przyjazdu(kursCzasPrzyjazduInput.getText()) + "'";
 
-		kursy.setKUR_Sygnatura_Kursu(kursSygnaturaKursuInput.getText());
-		kursy.setKUR_Opis(kursOpisInput.getText());
-		kursy.setKUR_Czas_Odjazdu(kursCzasOdjazduInput.getText());
-		kursy.setKUR_Czas_Przyjazdu(kursCzasPrzyjazduInput.getText());
-
+		queries.insertDataToKursy(KIE_Pesel, numerRejAutokary, KUR_Sygnatura_Kursu, KUR_Miejsc_Start, KUR_Miejsc_Konco,
+				KUR_Czas_Odjazdu, KUR_Czas_Przyjazdu);
 		table5.getItems().add(kursy);
-
-		IdKursInput.clear();
+		// TODO Dodaje poprawnie do bazy, niepoprawnie do kolumn
+		// IdKursInput.clear();
 		idAutaInput.clear();
 		idKierowcyInput.clear();
 		kursSygnaturaKursuInput.clear();
+		kursMiejscStartowa.clear();
 		kursOpisInput.clear();
 		kursCzasOdjazduInput.clear();
 		kursCzasPrzyjazduInput.clear();
@@ -1284,9 +1282,6 @@ public class Main extends Application {
 
 	public void addbutton6Clicked() {
 		Miejscowosci miejscowosci = new Miejscowosci();
-
-		// TODO pole do wpisywania ID do usuniecia
-		// miejscowosci.setMIE_KEY(Integer.parseInt(IdMiejscowosciInput.getText()));
 
 		String MIE_Nazwa_Miejscow = "'" + miejscowosci.setMIE_Nazwa_Miejscow(nazwaMiejscowosciInput.getText()) + "'";
 		String MIE_Wojewodztwo = "'" + miejscowosci.setMIE_Wojewodztwo(wojewodztwoInput.getText()) + "'";
@@ -1312,9 +1307,6 @@ public class Main extends Application {
 
 	public void addbutton7Clicked() {
 		Rejestr_przejazdow rejestr = new Rejestr_przejazdow();
-
-		// TODO pole do wpisywania ID do usuniecia
-		// rejestr.setREJ_KEY(Integer.parseInt(IdRejstrówPrzejazdówInput.getText()));
 
 		String KUR_Miejsc_Startowa = "'" + rejestr.setKUR_Miejsc_Startowa(reIdKursyInput.getText()) + "'";
 		String KUR_Miejsc_Konco = "'" + rejestr.setPR_Ulica(txtColRejestrPrzystanek.getText()) + "'";
@@ -1513,12 +1505,12 @@ public class Main extends Application {
 		ObservableList<Przystanki> products = FXCollections.observableArrayList();
 		ResultSet rsPrzystanki = queries.showAllTablePrzystanki();
 		int PR_KEY = 0;
-		int MIE_KEY = 0;
+		String MIE_KEY = null;
 		String PR_Ulica = null;
 
 		while (rsPrzystanki.next()) {
 			PR_KEY = rsPrzystanki.getInt(1);
-			MIE_KEY = rsPrzystanki.getInt(2);
+			MIE_KEY = rsPrzystanki.getString(2);
 			PR_Ulica = rsPrzystanki.getString(3);
 			products.add(new Przystanki(PR_KEY, MIE_KEY, PR_Ulica));
 		}
@@ -1530,7 +1522,7 @@ public class Main extends Application {
 		ObservableList<Trasa> products = FXCollections.observableArrayList();
 		ResultSet rsPrzystanki = queries.showAllTableTrasy();
 		int TR_KEY = 0;
-		String KUR_Sygnatura_Kursu = null;
+		String KUR_Miejsc_Startowa = null;
 		String MIE_Nazwa_Miejscow = null;
 		String PR_Ulica = null;
 		String TR_Godzina = null;
@@ -1539,13 +1531,13 @@ public class Main extends Application {
 
 		while (rsPrzystanki.next()) {
 			TR_KEY = rsPrzystanki.getInt(1);
-			KUR_Sygnatura_Kursu = rsPrzystanki.getString(2);
+			KUR_Miejsc_Startowa = rsPrzystanki.getString(2);
 			MIE_Nazwa_Miejscow = rsPrzystanki.getString(3);
 			PR_Ulica = rsPrzystanki.getString(4);
 			TR_Godzina = rsPrzystanki.getString(5);
 			TR_Dzien_tyg = rsPrzystanki.getString(6);
 			TR_Uwagi = rsPrzystanki.getString(7);
-			products.add(new Trasa(TR_KEY, KUR_Sygnatura_Kursu, MIE_Nazwa_Miejscow, PR_Ulica, TR_Godzina, TR_Dzien_tyg,
+			products.add(new Trasa(TR_KEY, KUR_Miejsc_Startowa, MIE_Nazwa_Miejscow, PR_Ulica, TR_Godzina, TR_Dzien_tyg,
 					TR_Uwagi));
 		}
 		return products;
@@ -1580,9 +1572,29 @@ public class Main extends Application {
 		return products;
 	}
 
-	public ObservableList<Kursy> getProduct5() {
+	public ObservableList<Kursy> getProduct5() throws SQLException {
 		ObservableList<Kursy> products = FXCollections.observableArrayList();
-		products.add(new Kursy(1, 1, 1, "wies", "sda", "sasdf", "sds"));
+		ResultSet rsKursy = queries.showAllTableKursy();
+		int KUR_KEY = 0;
+		String AUT_KEY = null;
+		String KIE_KEY = null;
+		String KUR_Sygnatura_Kursu = null;
+		String KUR_Opis = null;
+		String KUR_Miejsc_Konco = null;
+		String KUR_Czas_Odjazdu = null;
+		String KUR_Czas_Przyjazdu = null;
+		while (rsKursy.next()) {
+			KUR_KEY = rsKursy.getInt(1);
+			AUT_KEY = rsKursy.getString(2);
+			KIE_KEY = rsKursy.getString(3);
+			KUR_Sygnatura_Kursu = rsKursy.getString(4);
+			KUR_Opis = rsKursy.getString(5);
+			KUR_Miejsc_Konco = rsKursy.getString(6);
+			KUR_Czas_Odjazdu = rsKursy.getString(7);
+			KUR_Czas_Przyjazdu = rsKursy.getString(8);
+			products.add(new Kursy(KUR_KEY, AUT_KEY, KIE_KEY, KUR_Sygnatura_Kursu, KUR_Opis, KUR_Miejsc_Konco,
+					KUR_Czas_Odjazdu, KUR_Czas_Przyjazdu));
+		}
 
 		return products;
 	}
