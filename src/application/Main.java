@@ -54,14 +54,14 @@ public class Main extends Application {
 	TableView<Miejscowosci> table6;
 	TableView<Rejestr_przejazdow> table7;
 	TableView<Rozk³ad_Jazdy> table8;
-	TextField nameInput, nazwiskoInput, peselInput, dataInput, iDPrzystaniki, iDMiejscowsci, inputulica, idprzystaniki,
-			idprzystanekUlica, idkursyinput, idtrasyinput, dzentygodniainput, godzinainput, uwaginput, idAutokaruInput,
-			modelInput, markaInput, rokProdukcjiInput, pojemnoscSilnikaInput, spalanieInput, katAutokaruInput,
-			iloscMiejsInput, numerRejestracyjny, IdKursInput, idAutaInput, idKierowcyInput, kursSygnaturaKursuInput,
-			kursOpisInput, kursMiejscStartowa, kursCzasOdjazduInput, kursCzasPrzyjazduInput, IdMiejscowosciInput,
-			nazwaMiejscowosciInput, wojewodztwoInput, powiatInput, gminaInput, IdRejstrówPrzejazdówInput,
-			reIdKursyInput, txtColRejestrDataStart, txtColRejestrPrzystanek, txtColRejestrDataKoniec,
-			rejestrIloscOsobInput;
+	TextField nameInput, nazwiskoInput, peselInput, dataInput, iDPrzystaniki, iDMiejscowsci, inputulica,
+			trasaMiejscStart, idprzystanekUlica, trasaMiejscKoncowa, trasaPrzystanekKoncowy, dzentygodniainput,
+			godzinaOdjazduinput, godzinainput, uwaginput, idAutokaruInput, modelInput, markaInput, rokProdukcjiInput,
+			pojemnoscSilnikaInput, spalanieInput, katAutokaruInput, iloscMiejsInput, numerRejestracyjny, IdKursInput,
+			idAutaInput, idKierowcyInput, kursSygnaturaKursuInput, kursOpisInput, kursMiejscStartowa,
+			kursCzasOdjazduInput, kursCzasPrzyjazduInput, IdMiejscowosciInput, nazwaMiejscowosciInput, wojewodztwoInput,
+			powiatInput, gminaInput, IdRejstrówPrzejazdówInput, reIdKursyInput, txtColRejestrDataStart,
+			txtColRejestrPrzystanek, txtColRejestrDataKoniec, rejestrIloscOsobInput;
 	Button addbutton, deltebutton, addbutton2, deltebutton2, addbutton3, deltebutton3, addbutton4, deltebutton4,
 			addbutton5, deltebutton5, addbutton6, deltebutton6, addbutton7, deltebutton7;
 	Hyperlink link, doRozkladuJazdy, powrot;
@@ -547,41 +547,49 @@ public class Main extends Application {
 		IdPrzystanki.setMinWidth(150);
 		IdPrzystanki.setCellValueFactory(new PropertyValueFactory<>("PR_Ulica"));
 
+		TableColumn<Trasa, String> godzinaOdjazducolumn = new TableColumn<>("Godzina odjazdu");
+		godzinaOdjazducolumn.setMinWidth(100);
+		godzinaOdjazducolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina"));
+
 		TableColumn<Trasa, String> godzinacolumn = new TableColumn<>("Godzina przyjazdu");
 		godzinacolumn.setMinWidth(100);
 		godzinacolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Dzien_tyg"));
 
 		TableColumn<Trasa, String> dzientygcolumn = new TableColumn<>("Dzieñ tygodnia");
 		dzientygcolumn.setMinWidth(100);
-		dzientygcolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina"));
+		dzientygcolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina_odjazdu"));
 
 		TableColumn<Trasa, String> uwagicolumn = new TableColumn<>("Uwagi");
 		uwagicolumn.setMinWidth(200);
 		uwagicolumn.setCellValueFactory(new PropertyValueFactory<>("TR_Uwagi"));
 
-		idprzystaniki = new TextField();
-		idprzystaniki.setPromptText("Id Przystanki");
-		idprzystaniki.setMinWidth(40);
+		trasaMiejscStart = new TextField();
+		trasaMiejscStart.setPromptText("Przystanek startowy");
+		trasaMiejscStart.setMinWidth(40);
 
-		idkursyinput = new TextField();
-		idkursyinput.setPromptText("Id Kursy");
-		idkursyinput.setMinWidth(40);
+		trasaMiejscKoncowa = new TextField();
+		trasaMiejscKoncowa.setPromptText("Miejscowoœæ koñcowa");
+		trasaMiejscKoncowa.setMinWidth(40);
 
-		idtrasyinput = new TextField();
-		idtrasyinput.setPromptText("Id Trasy");
-		idtrasyinput.setMinWidth(40);
+		trasaPrzystanekKoncowy = new TextField();
+		trasaPrzystanekKoncowy.setPromptText("Przystanek koñcowy");
+		trasaPrzystanekKoncowy.setMinWidth(40);
 
 		dzentygodniainput = new TextField();
 		dzentygodniainput.setPromptText("Dzieñ Tygodnia");
 		dzentygodniainput.setMinWidth(100);
 
+		godzinaOdjazduinput = new TextField();
+		godzinaOdjazduinput.setPromptText("Godzina");
+		godzinaOdjazduinput.setMinWidth(60);
+
 		godzinainput = new TextField();
 		godzinainput.setPromptText("Godzina");
 		godzinainput.setMinWidth(60);
 
-		idprzystanekUlica = new TextField();
-		idprzystanekUlica.setPromptText("Godzina");
-		idprzystanekUlica.setMinWidth(60);
+		// idprzystanekUlica = new TextField();
+		// idprzystanekUlica.setPromptText("Przystanek");
+		// idprzystanekUlica.setMinWidth(60);
 
 		uwaginput = new TextField();
 		uwaginput.setPromptText("Uwagi");
@@ -602,12 +610,12 @@ public class Main extends Application {
 		hbox3 = new HBox();
 		hbox3.setPadding(new Insets(10, 10, 10, 10));
 		hbox3.setSpacing(10);
-		hbox3.getChildren().addAll(idprzystaniki, idkursyinput, idtrasyinput, idprzystanekUlica, godzinainput,
-				dzentygodniainput, uwaginput, addbutton3, deltebutton3);
+		hbox3.getChildren().addAll(trasaMiejscStart, trasaMiejscKoncowa, trasaPrzystanekKoncowy, godzinaOdjazduinput,
+				godzinainput, dzentygodniainput, uwaginput, addbutton3, deltebutton3);
 
 		table3 = new TableView<>();
-		table3.getColumns().addAll(idTrasy, IdKursy, IdMiejscKonco, IdPrzystanki, godzinacolumn, dzientygcolumn,
-				uwagicolumn);
+		table3.getColumns().addAll(idTrasy, IdKursy, IdMiejscKonco, IdPrzystanki, godzinaOdjazducolumn, godzinacolumn,
+				dzientygcolumn, uwagicolumn);
 		table3.setItems(getProduct3());
 
 		treeitem = new TreeItem<>("Spis opcji");
@@ -1184,10 +1192,10 @@ public class Main extends Application {
 	public void addbutton2Clicked() {
 		Przystanki przystanki = new Przystanki();
 		// przystanki.setPR_KEY(Integer.parseInt(iDPrzystaniki.getText()));
-		String MIE_Nazwa_Miejscow = "'"+przystanki.setMIE_KEY(iDMiejscowsci.getText())+"'";
-		String PR_Ulica = "'"+przystanki.setPR_Ulica(inputulica.getText())+"'";
+		String MIE_Nazwa_Miejscow = "'" + przystanki.setMIE_KEY(iDMiejscowsci.getText()) + "'";
+		String PR_Ulica = "'" + przystanki.setPR_Ulica(inputulica.getText()) + "'";
 		table2.getItems().add(przystanki);
-//TODO INSERT przystanki
+		// TODO INSERT przystanki
 		queries.insertDataToPrzystanki(MIE_Nazwa_Miejscow, PR_Ulica);
 		iDMiejscowsci.clear();
 		inputulica.clear();
@@ -1196,18 +1204,19 @@ public class Main extends Application {
 
 	public void addbutton3Clicked() {
 		Trasa trasa = new Trasa();
-		trasa.setTR_KEY(Integer.parseInt(idtrasyinput.getText()));
-		trasa.setKUR_Sygnatura_Kursu(idkursyinput.getText());
-		trasa.setMIE_Nazwa_Miejscow(idprzystaniki.getText());
-		trasa.setPR_Ulica(idprzystanekUlica.getText());
-		trasa.setTR_Dzien_tyg(dzentygodniainput.getText());
-		trasa.setTR_Godzina(godzinainput.getText());
-		trasa.setTR_Uwagi(uwaginput.getText());
+		// trasa.setTR_KEY(Integer.parseInt(trasaPrzystanekKoncowy.getText()));
+		String miejscKoncowa = "'" + trasa.setKUR_Sygnatura_Kursu(trasaMiejscKoncowa.getText()) + "'";
+		String miejscStartowa = "'" + trasa.setMIE_Nazwa_Miejscow(trasaMiejscStart.getText()) + "'";
+		String przystanekUlica = "'" + trasa.setPR_Ulica(trasaPrzystanekKoncowy.getText()) + "'";
+		String TR_Dzien_tyg = "'" + trasa.setTR_Dzien_tyg(dzentygodniainput.getText()) + "'";
+		String TR_Godzina = "'" + trasa.setTR_Godzina(godzinainput.getText()) + "'";
+		String TR_Uwagi = "'" + trasa.setTR_Uwagi(uwaginput.getText()) + "'";
 
+		queries.insertDataToTrasy(miejscStartowa, miejscKoncowa, przystanekUlica, TR_Dzien_tyg, TR_Godzina, TR_Uwagi);
 		table3.getItems().add(trasa);
-		idtrasyinput.clear();
-		idkursyinput.clear();
-		idprzystaniki.clear();
+		// trasaPrzystanekKoncowy.clear();
+		trasaMiejscKoncowa.clear();
+		trasaMiejscStart.clear();
 		dzentygodniainput.clear();
 		godzinainput.clear();
 		uwaginput.clear();
@@ -1525,6 +1534,7 @@ public class Main extends Application {
 		String KUR_Miejsc_Startowa = null;
 		String MIE_Nazwa_Miejscow = null;
 		String PR_Ulica = null;
+		String TR_Godzina_odjazdu = null;
 		String TR_Godzina = null;
 		String TR_Dzien_tyg = null;
 		String TR_Uwagi = null;
@@ -1534,11 +1544,12 @@ public class Main extends Application {
 			KUR_Miejsc_Startowa = rsPrzystanki.getString(2);
 			MIE_Nazwa_Miejscow = rsPrzystanki.getString(3);
 			PR_Ulica = rsPrzystanki.getString(4);
-			TR_Godzina = rsPrzystanki.getString(5);
-			TR_Dzien_tyg = rsPrzystanki.getString(6);
-			TR_Uwagi = rsPrzystanki.getString(7);
-			products.add(new Trasa(TR_KEY, KUR_Miejsc_Startowa, MIE_Nazwa_Miejscow, PR_Ulica, TR_Godzina, TR_Dzien_tyg,
-					TR_Uwagi));
+			TR_Godzina_odjazdu = rsPrzystanki.getString(5);
+			TR_Godzina = rsPrzystanki.getString(6);
+			TR_Dzien_tyg = rsPrzystanki.getString(7);
+			TR_Uwagi = rsPrzystanki.getString(8);
+			products.add(new Trasa(TR_KEY, KUR_Miejsc_Startowa, MIE_Nazwa_Miejscow, PR_Ulica, TR_Godzina_odjazdu,
+					TR_Godzina, TR_Dzien_tyg, TR_Uwagi));
 		}
 		return products;
 	}

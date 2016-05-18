@@ -51,7 +51,8 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	public ResultSet showAllTableKursy() throws SQLException {
 		Statement stmt = makeStatement();
-		stmt.execute("SELECT KURSY.KUR_KEY, AUTOKARY.AUT_Nr_rejestracji, KIEROWCY.KIE_Pesel, KURSY.KUR_Sygnatura_Kursu, KURSY.KUR_Miejsc_Startowa, KURSY.KUR_Miejsc_Konco, KURSY.KUR_Czas_Odjazdu,  KURSY.KUR_Czas_Przyjazdu FROM KURSY INNER JOIN AUTOKARY ON KURSY.AUT_KEY = AUTOKARY.AUT_KEY INNER JOIN KIEROWCY ON KURSY.KIE_KEY = KIEROWCY.KIE_KEY");
+		stmt.execute(
+				"SELECT KURSY.KUR_KEY, AUTOKARY.AUT_Nr_rejestracji, KIEROWCY.KIE_Pesel, KURSY.KUR_Sygnatura_Kursu, KURSY.KUR_Miejsc_Startowa, KURSY.KUR_Miejsc_Konco, KURSY.KUR_Czas_Odjazdu,  KURSY.KUR_Czas_Przyjazdu FROM KURSY INNER JOIN AUTOKARY ON KURSY.AUT_KEY = AUTOKARY.AUT_KEY INNER JOIN KIEROWCY ON KURSY.KIE_KEY = KIEROWCY.KIE_KEY");
 		ResultSet rsKursy = stmt.getResultSet();
 
 		return rsKursy;
@@ -77,7 +78,7 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	public ResultSet showAllTableRejestrPrzejazdow() throws SQLException {
 		Statement stmt = makeStatement();
 		stmt.execute(
-				"SELECT REJESTR_PRZEJAZDOW.REJ_KEY, KURSY.KUR_Miejsc_Startowa, PRZYSTANKI.PR_Ulica, REJESTR_PRZEJAZDOW.REJ_data_start, REJESTR_PRZEJAZDOW.REJ_data_konc,  REJESTR_PRZEJAZDOW.REJ_iloscOsob FROM REJESTR_PRZEJAZDOW INNER JOIN KURSY ON REJESTR_PRZEJAZDOW.KUR_KEY = KURSY.KUR_KEY INNER JOIN TRASA ON KURSY.KUR_KEY = TRASA.KUR_KEY INNER JOIN PRZYSTANKI ON TRASA.PR_KEY = PRZYSTANKI.PR_KEY");
+				"SELECT REJESTR_PRZEJAZDOW.REJ_KEY, KURSY.KUR_Miejsc_Startowa, KURSY.KUR_Miejsc_Konco, REJESTR_PRZEJAZDOW.REJ_data_start, REJESTR_PRZEJAZDOW.REJ_data_konc,  REJESTR_PRZEJAZDOW.REJ_iloscOsob FROM REJESTR_PRZEJAZDOW INNER JOIN KURSY ON REJESTR_PRZEJAZDOW.KUR_KEY = KURSY.KUR_KEY");
 		ResultSet rsRejestrPrzejazdow = stmt.getResultSet();
 
 		return rsRejestrPrzejazdow;
@@ -85,7 +86,7 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	public ResultSet showAllTableTrasy() throws SQLException {
 		Statement stmt = makeStatement();
-		String query = "SELECT TRASA.TR_KEY, KURSY.KUR_Miejsc_Startowa, MIEJSCOWOSCI.MIE_Nazwa_Miejscow, PRZYSTANKI.PR_Ulica, TRASA.TR_Dzieñ_tyg, TRASA.TR_Godzina, TRASA.TR_Uwagi FROM TRASA INNER JOIN KURSY ON TRASA.KUR_KEY = KURSY.KUR_KEY INNER JOIN PRZYSTANKI ON TRASA.PR_KEY = PRZYSTANKI.PR_KEY INNER JOIN MIEJSCOWOSCI ON PRZYSTANKI.MIE_KEY = MIEJSCOWOSCI.MIE_KEY";
+		String query = "SELECT TRASA.TR_KEY, KURSY.KUR_Miejsc_Startowa, MIEJSCOWOSCI.MIE_Nazwa_Miejscow, PRZYSTANKI.PR_Ulica, TRASA.TR_Dzieñ_tyg,TRASA.TR_Godzina_odjazdu, TRASA.TR_Godzina, TRASA.TR_Uwagi FROM TRASA INNER JOIN KURSY ON TRASA.KUR_KEY = KURSY.KUR_KEY INNER JOIN PRZYSTANKI ON TRASA.PR_KEY = PRZYSTANKI.PR_KEY INNER JOIN MIEJSCOWOSCI ON PRZYSTANKI.MIE_KEY = MIEJSCOWOSCI.MIE_KEY";
 		System.out.println(query);
 		stmt.execute(query);
 
@@ -302,10 +303,10 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 		getConnection(user);
 		try {
 			Statement stmt1 = connectionToDB.createStatement();
-			
+
 			String MIE_KEY = "SELECT MIE_KEY FROM [dbo].[MIEJSCOWOSCI] WHERE MIE_Nazwa_Miejscow = "
 					+ MIE_Nazwa_Miejscow;
-			
+
 			stmt1.execute(MIE_KEY);
 			ResultSet rsMIE_KEY = stmt1.getResultSet();
 			int inMIE_KEY = 0;
@@ -326,8 +327,8 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	}
 
 	@Override
-	public void insertDataToTrasy(String KUR_Opis, String przystanekUlica, String TR_Dzien_tyg, String TR_Godzina,
-			String TR_Uwagi) throws SQLException {
+	public void insertDataToTrasy(String miejscStartowa, String miejscKoncowa, String przystanekUlica,
+			String TR_Dzien_tyg, String TR_Godzina, String TR_Uwagi) {
 		getConnection(user);
 		try {
 			Statement stmt = connectionToDB.createStatement();
@@ -339,8 +340,10 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 			while (rsPR_KEY.next()) {
 				PR_KEY = rsPR_KEY.getInt("PR_KEY");
 			}
-			String queryKUR_KEY = "SELECT [KUR_KEY] FROM [dbo].[KURSY] WHERE [KUR_Opis] = " + KUR_Opis;
+			String queryKUR_KEY = "SELECT [KUR_KEY] FROM [dbo].[KURSY] WHERE [KUR_Miejsc_Startowa] = " + miejscStartowa
+					+ "AND [KUR_Miejsc_Konco] = " + miejscKoncowa;
 			stmt.execute(queryKUR_KEY);
+			System.out.println(queryKUR_KEY);
 			ResultSet rsKUR_KEY = stmt.getResultSet();
 			int KUR_KEY = 0;
 			while (rsKUR_KEY.next()) {
