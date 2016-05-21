@@ -34,8 +34,8 @@ public interface QueriesInterface {
 
 	public void insertDataToPrzystanki(String MIE_Nazwa_Miejscow, String PR_Ulica) throws SQLException;
 
-	public void insertDataToTrasy(String miejscStartowa, String miejscKoncowa, String przystanekUlica, String TR_Dzien_tyg, String TR_Godzina,
-			String TR_Uwagi) throws SQLException;
+	public void insertDataToTrasy(String miejscStartowa, String miejscKoncowa, String TR_Skad,String przystanekUlica,
+			String TR_Dzien_tyg, String TR_Godzina_odjazdu, String TR_Godzina, String TR_Uwagi) throws SQLException;
 
 	public void insertDataToRaport(String KUR_Miejsc_Startowa, String KUR_Miejsc_Konco, String REJ_data_start,
 			String REJ_data_konc, int REJ_iloscOsob) throws SQLException;

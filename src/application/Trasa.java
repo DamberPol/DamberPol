@@ -3,17 +3,19 @@ package application;
 public class Trasa {
 	private int TR_KEY;
 	private String KUR_Sygnatura_Kursu;
+	private String TR_Skad;
 	private String MIE_Nazwa_Miejscow;
 	private String PR_Ulica;
-	private String TR_Dzien_tyg;
 	private String TR_Godzina_odjazdu;
 	private String TR_Godzina;
+	private String TR_Dzien_tyg;
 	private String TR_Uwagi;
 
 	public Trasa() {
 		this.TR_KEY = 0;
 		this.KUR_Sygnatura_Kursu = null;
 		this.MIE_Nazwa_Miejscow = null;
+		this.TR_Skad = null;
 		this.PR_Ulica = null;
 		this.TR_Dzien_tyg = null;
 		this.TR_Godzina = null;
@@ -22,11 +24,12 @@ public class Trasa {
 
 	}
 
-	public Trasa(int TR_KEY, String KUR_Sygnatura_Kursu, String MIE_Nazwa_Miejscow, String PR_Ulica,
+	public Trasa(int TR_KEY, String KUR_Sygnatura_Kursu, String MIE_Nazwa_Miejscow,String TR_Skad, String PR_Ulica,
 			String TR_Godzina_odjazdu, String TR_Godzina, String TR_Dzien_tyg, String TR_Uwagi) {
 		this.TR_KEY = TR_KEY;
 		this.KUR_Sygnatura_Kursu = KUR_Sygnatura_Kursu;
 		this.MIE_Nazwa_Miejscow = MIE_Nazwa_Miejscow;
+		this.TR_Skad = TR_Skad;
 		this.PR_Ulica = PR_Ulica;
 		this.TR_Dzien_tyg = TR_Dzien_tyg;
 		this.TR_Godzina = TR_Godzina;
@@ -35,6 +38,16 @@ public class Trasa {
 
 	}
 
+	public String getTR_Skad()
+	{
+		return TR_Skad;
+		
+	}
+	public String setTR_Skad (String tR_Skad)
+	{
+		return TR_Skad = tR_Skad;
+	}
+	
 	public String getTR_Godzina_odjazdu()
 	{
 		return TR_Godzina_odjazdu;
