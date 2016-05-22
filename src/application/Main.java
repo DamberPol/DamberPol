@@ -3,7 +3,11 @@ package application;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.event.ChangeListener;
+
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -35,7 +39,7 @@ public class Main extends Application {
 	Stage window;
 	Scene scene, scene2, scene3, scene4, scene5, scene6, scene7, scene8, scene9, scene10;
 	Button przyciskDoPaneluLogowania, przyciskDoOknaKlienta, wyszukajpolaczen, cofnijButton;
-	Label labelPowitalny, odstep, odstep1, odstep2, labelRozk³adJazdy, przyjazdlabel, odjazdLabel;
+	Label labelPowitalny, odstep, odstep1, odstep2, labelRozk³adJazdy, odjazdLabel, przyjazdLabel;
 	BorderPane oknoPowitalne, layout2, bordePaneDlaOkna3, bordePaneDlaOkna4, bordePaneDlaOkna5, bordePaneDlaOkna6,
 			bordePaneDlaOkna7, bordePaneDlaOkna8, bordePaneDlaOkna9, bordePaneDlaOkna10;
 	VBox box, boxprzyjazd, boxodjazd;
@@ -69,6 +73,9 @@ public class Main extends Application {
 
 	Queries queries = new Queries();
 
+	public ChoiceBox<String> choiceBoxPrzyjazd;
+	public ChoiceBox<String> choiceBoxOdjazd;
+
 	public static void main(String[] args) {
 
 		launch(args);
@@ -76,15 +83,19 @@ public class Main extends Application {
 
 	public void start(Stage primaryStage) throws Exception {
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/*
+		 * choiceBoxPrzyjazd.getSelectionModel().selectedItemProperty()
+		 * .addListener((ObservableValue<? extends String> observable, String
+		 * oldValue, String miejscowoscStartowa) ->
+		 * choiceBoxOdjazd.getSelectionModel().selectedItemProperty()
+		 * .addListener((ObservableValue<? extends String> obs, String oldV,
+		 * String miejscowoscKoncowa) ->
+		 * queries.getResultForUser(miejscowoscStartowa, miejscowoscKoncowa)));
+		 */
 		////////////// Okno Powitalne ////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		window = primaryStage;
 
-		// Hyperlink
 		link = new Hyperlink();
 		link.setText("Zaloguj");
 		link.setFont(Font.loadFont("file:src/application/Lobster.otf", 20));
@@ -94,19 +105,16 @@ public class Main extends Application {
 		doRozkladuJazdy.setOnAction(e -> window.setScene(scene2));
 		doRozkladuJazdy.setFont(Font.loadFont("file:src/application/Lobster.otf", 20));
 
-		// Layout
 		oknoPowitalne = new BorderPane();
 		oknoPowitalne.setPadding(new Insets(20, 20, 20, 20));
 
-		// labelPowitalny =new Label("Witamy");
 		labelPowitalny = new Label("Witamy w programie firmy Damberpol \n");
 		labelPowitalny.setFont(Font.loadFont("file:src/application/Lobster.otf", 25));
 		odstep = new Label(" ");
 		odstep1 = new Label("                                                                  ");
 		odstep2 = new Label(" ");
 		Label odstep3 = new Label(" ");
-		// labelPowitalny.setStyle("-fx-text-fill:aliceblue");
-		// button
+
 		przyciskDoOknaKlienta = new Button("Rozk³ad Jazdy");
 		przyciskDoOknaKlienta.setMaxWidth(100);
 		przyciskDoOknaKlienta.setMaxHeight(40);
@@ -124,13 +132,11 @@ public class Main extends Application {
 
 			}
 		});
-		// Vbox
+
 		box.setAlignment(Pos.BASELINE_CENTER);
 		box.getChildren().addAll(odstep, odstep1, labelPowitalny, odstep2, odstep3, doRozkladuJazdy);
 
 		BorderPane.setAlignment(link, Pos.TOP_RIGHT);
-
-		// BorderPane.setMargin(button, new Insets(12,12,12,12));
 
 		oknoPowitalne.setTop(link);
 		BorderPane.setAlignment(box, Pos.TOP_CENTER);
@@ -154,8 +160,6 @@ public class Main extends Application {
 		labelRozk³adJazdy.setFont(Font.loadFont("file:src/application/Lobster.otf", 60));
 
 		labelRozk³adJazdy.setStyle(" -fx-text-fill: #FFFFFF;");
-		// labelRozk³adJazdy.setFont(Font.loadFont("file:resorces/font/three_arrows.ttf",
-		// 120));
 
 		Label odstepp = new Label(" ");
 		Label odstepp1 = new Label(" ");
@@ -170,78 +174,104 @@ public class Main extends Application {
 		powrot.setFont(Font.loadFont("file:src/application/Lobster.otf", 28));
 		powrot.setOnAction(e -> window.setScene(scene));
 
-		HBox boxprzyjazd1 = new HBox();
+		HBox boxOdjazd = new HBox();
 
-		przyjazdlabel = new Label("Przyjazd");
-		przyjazdlabel.setFont(Font.loadFont("file:src/application/Lobster.otf", 19));
-		przyjazdlabel.setStyle("-fx-text-fill:#FFFFFF; ");
-		ChoiceBox<String> przyjazd = new ChoiceBox<>();
+		odjazdLabel = new Label("Odjazd");
+		odjazdLabel.setFont(Font.loadFont("file:src/application/Lobster.otf", 19));
+		odjazdLabel.setStyle("-fx-text-fill:#FFFFFF; ");
+		choiceBoxOdjazd = new ChoiceBox<>();
 
-		przyjazd.setValue("Przystanek");
+		choiceBoxOdjazd.setValue("Przystanek");
 		ResultSet rsMiejscowosci = queries.showAllTableMiejscowosci();
 
 		while (rsMiejscowosci.next()) {
 			String em = rsMiejscowosci.getString("MIE_Nazwa_Miejscow");
 			String arr = em.replace("\n", ",");
-			przyjazd.getItems().add(arr);
+			choiceBoxOdjazd.getItems().add(arr);
 		}
 
-		boxprzyjazd1.getChildren().addAll(przyjazdlabel, odstepp1, przyjazd);
+		boxOdjazd.getChildren().addAll(odjazdLabel, odstepp1, choiceBoxOdjazd);
 
 		wyszukajpolaczen = new Button("Wyszukaj");
 		cofnijButton = new Button("Cofnij");
 		cofnijButton.setOnAction(e -> window.setScene(scene));
 
-		TableColumn<Rozk³ad_Jazdy, String> rJ_MarkaColumn = new TableColumn<>("Marka autokaru");
-		rJ_MarkaColumn.setMinWidth(100);
-		rJ_MarkaColumn.setCellValueFactory(new PropertyValueFactory<>("RJ_Marka"));
+		TableColumn<Rozk³ad_Jazdy, String> rozkladKluczTrasy = new TableColumn<>("Klucz trasy");
+		rozkladKluczTrasy.setMinWidth(100);
+		rozkladKluczTrasy.setCellValueFactory(new PropertyValueFactory<>("TR_KEY"));
 
-		TableColumn<Rozk³ad_Jazdy, String> rJ_ModelColumn = new TableColumn<>("Model autokaru");
-		rJ_ModelColumn.setMinWidth(100);
-		rJ_ModelColumn.setCellValueFactory(new PropertyValueFactory<>("RJ_Model"));
+		TableColumn<Rozk³ad_Jazdy, String> rozkladSygnaturaKursu = new TableColumn<>("Sygnatura kursu");
+		rozkladSygnaturaKursu.setMinWidth(100);
+		rozkladSygnaturaKursu.setCellValueFactory(new PropertyValueFactory<>("KUR_Sygnatura"));
 
-		TableColumn<Rozk³ad_Jazdy, String> rJ_RelacjaColumn = new TableColumn<>("Relacja");
-		rJ_RelacjaColumn.setMinWidth(200);
-		rJ_RelacjaColumn.setCellValueFactory(new PropertyValueFactory<>("RJ_Relacja"));
+		TableColumn<Rozk³ad_Jazdy, String> rozkladSkad = new TableColumn<>("Skad");
+		rozkladSkad.setMinWidth(200);
+		rozkladSkad.setCellValueFactory(new PropertyValueFactory<>("TR_Skad"));
 
-		TableColumn<Rozk³ad_Jazdy, String> rJ_PrzyjazdColumn = new TableColumn<>("Godzina przyjazdu");
-		rJ_PrzyjazdColumn.setMinWidth(150);
-		rJ_PrzyjazdColumn.setCellValueFactory(new PropertyValueFactory<>("RJ_Przyjazd"));
+		TableColumn<Rozk³ad_Jazdy, String> rozkladDokad = new TableColumn<>("Dokad");
+		rozkladDokad.setMinWidth(150);
+		rozkladDokad.setCellValueFactory(new PropertyValueFactory<>("TR_Dokad"));
 
-		TableColumn<Rozk³ad_Jazdy, String> rJ_odjazdColumn = new TableColumn<>("Godzina odjazdu");
-		rJ_odjazdColumn.setMinWidth(150);
-		rJ_odjazdColumn.setCellValueFactory(new PropertyValueFactory<>("RJ_odjazd"));
+		TableColumn<Rozk³ad_Jazdy, String> rozkladPrzystanek = new TableColumn<>("Przystanek");
+		rozkladPrzystanek.setMinWidth(150);
+		rozkladPrzystanek.setCellValueFactory(new PropertyValueFactory<>("TR_Przystanek "));
 
+		TableColumn<Rozk³ad_Jazdy, String> rozkladWDni = new TableColumn<>("W dni");
+		rozkladWDni.setMinWidth(150);
+		rozkladWDni.setCellValueFactory(new PropertyValueFactory<>("TR_Dni_Tygodnia "));
+
+		TableColumn<Rozk³ad_Jazdy, String> rozkladGodzinaOdjazdu = new TableColumn<>("Godzina odjazdu");
+		rozkladGodzinaOdjazdu.setMinWidth(150);
+		rozkladGodzinaOdjazdu.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina_Odjazdu "));
+
+		TableColumn<Rozk³ad_Jazdy, String> rozkladGodzinaPrzyjazdu = new TableColumn<>("Godzina przyjazdu");
+		rozkladGodzinaPrzyjazdu.setMinWidth(150);
+		rozkladGodzinaPrzyjazdu.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina_Przyjazdu "));
+
+		TableColumn<Rozk³ad_Jazdy, String> rozkladUwagi = new TableColumn<>("Uwagi");
+		rozkladUwagi.setMinWidth(150);
+		rozkladUwagi.setCellValueFactory(new PropertyValueFactory<>("TR_Uwagi "));
+		FillingTables fillTable = new FillingTables();
 		table8 = new TableView<>();
-		table8.setItems(getProduct8());
-		table8.getColumns().addAll(rJ_MarkaColumn, rJ_ModelColumn, rJ_RelacjaColumn, rJ_PrzyjazdColumn,
-				rJ_odjazdColumn);
+		table8.setItems(fillTable.getProduct8());
+		table8.getColumns().addAll(rozkladKluczTrasy, rozkladSygnaturaKursu, rozkladSkad, rozkladDokad,
+				rozkladPrzystanek, rozkladWDni, rozkladGodzinaOdjazdu, rozkladGodzinaPrzyjazdu, rozkladUwagi);
 
 		hboxklijent.getChildren().addAll(powrot);
 
-		HBox boxodjazd1 = new HBox();
+		HBox boxPrzyjazd = new HBox();
 
-		odjazdLabel = new Label(" Odjazd");
-		odjazdLabel.setFont(Font.loadFont("file:src/application/Lobster.otf", 19));
-		odjazdLabel.setStyle("-fx-text-fill:#FFFFFF;  ");
+		przyjazdLabel = new Label(" Przyjazd");
+		przyjazdLabel.setFont(Font.loadFont("file:src/application/Lobster.otf", 19));
+		przyjazdLabel.setStyle("-fx-text-fill:#FFFFFF;  ");
 
-		ChoiceBox<String> odjazd = new ChoiceBox<>();
-		przyjazd.setStyle(" -fx-font-size: 12px;");
+		choiceBoxPrzyjazd = new ChoiceBox<>();
+		choiceBoxPrzyjazd.setValue("Przystanki");
 
-		odjazd.getItems().addAll("Przystanek");
+		// choiceBoxOdjazd.setStyle(" -fx-font-size: 12px;");
+		// choiceBoxPrzyjazd.setStyle(" -fx-font-size: 12px;");
 
-		odjazd.setValue("Przystanek");
+		choiceBoxPrzyjazd.getItems().addAll("Przystanek");
+
+		// TODO
+
+		choiceBoxPrzyjazd.getSelectionModel().selectedItemProperty()
+				.addListener((ObservableValue<? extends String> observable, String oldValue,
+						String miejscowoscStartowa) -> choiceBoxOdjazd.getSelectionModel().selectedItemProperty()
+								.addListener((ObservableValue<? extends String> obs, String old,
+										String miejscowoscKoncowa) -> System.out.println(miejscowoscStartowa)));
+		// TODO
 		ResultSet rsMiejscowosciOdjazd = queries.showAllTableMiejscowosci();
 
 		while (rsMiejscowosciOdjazd.next()) {
 			String em = rsMiejscowosciOdjazd.getString("MIE_Nazwa_Miejscow");
 			String arr = em.replace("\n", ",");
-			odjazd.getItems().add(arr);
+			choiceBoxPrzyjazd.getItems().add(arr);
 		}
 
-		boxodjazd1.getChildren().addAll(odjazdLabel, odstepp2, odjazd);
+		boxPrzyjazd.getChildren().addAll(przyjazdLabel, odstepp2, choiceBoxPrzyjazd);
 
-		tilepanel1.getChildren().addAll(boxprzyjazd1, boxodjazd1);
+		tilepanel1.getChildren().addAll(boxOdjazd, boxPrzyjazd);
 		VBox centter = new VBox();
 
 		centter.getChildren().addAll(tilepanel1, odstepp, table8);
@@ -258,11 +288,7 @@ public class Main extends Application {
 		layout2.setBottom(hboxklijent);
 		layout2.setAlignment(hboxklijent, Pos.TOP_RIGHT);
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		////////////// Baza Kierowcy ////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		bordePaneDlaOkna3 = new BorderPane();
 		scene3 = new Scene(bordePaneDlaOkna3, 1250, 480);
@@ -325,8 +351,6 @@ public class Main extends Application {
 		miejscowosci = makeBranch("Miejscowoœci", treeitem);
 		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
 
-		// Create Tree
-
 		tree2 = new TreeView<>(treeitem);
 		tree2.setShowRoot(true);
 
@@ -356,10 +380,6 @@ public class Main extends Application {
 		TableColumn<Kierowcy, String> dataColumn = new TableColumn<>("Data zatrudnienia");
 		dataColumn.setMinWidth(200);
 		dataColumn.setCellValueFactory(new PropertyValueFactory<>("datazatrudnienia"));
-
-		// idInput = new TextField();
-		// idInput.setPromptText("Id");
-		// idInput.setMinWidth(150);
 
 		nameInput = new TextField();
 		nameInput.setPromptText("Imie");
@@ -393,7 +413,7 @@ public class Main extends Application {
 		hbox.getChildren().addAll(nameInput, nazwiskoInput, peselInput, dataInput, addbutton, deltebutton);
 
 		table = new TableView<>();
-		table.setItems(getProduct());
+		table.setItems(fillTable.getProduct());
 		table.getColumns().addAll(idColumn, nameColumn, nazwiskoColumn, peselColumn, dataColumn);
 
 		VBox layout = new VBox();
@@ -403,11 +423,7 @@ public class Main extends Application {
 		bordePaneDlaOkna3.setLeft(tree2);
 		bordePaneDlaOkna3.setCenter(layout);
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		////////////// Okno bazy danych poczatkowe ////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		bordePaneDlaOkna4 = new BorderPane();
 		scene4 = new Scene(bordePaneDlaOkna4, 1250, 480);
@@ -429,11 +445,7 @@ public class Main extends Application {
 
 		bordePaneDlaOkna4.setTop(menuBar1);
 		bordePaneDlaOkna4.setLeft(tree2);
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		////////////// Okno bazy danych przestanki ////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		bordePaneDlaOkna5 = new BorderPane();
 		scene5 = new Scene(bordePaneDlaOkna5, 870, 470);
 		scene5.getStylesheets().add("application/Panel_Dy¿urnego.css");
@@ -452,10 +464,6 @@ public class Main extends Application {
 		TableColumn<Przystanki, Float> ulicacolumn = new TableColumn<>("Nazwa przystanku");
 		ulicacolumn.setMinWidth(200);
 		ulicacolumn.setCellValueFactory(new PropertyValueFactory<>("PR_Ulica"));
-
-		// iDPrzystaniki = new TextField();
-		// iDPrzystaniki.setPromptText("Nazwa miejscowoœci");
-		// iDPrzystaniki.setMinWidth(150);
 
 		iDMiejscowsci = new TextField();
 		iDMiejscowsci.setPromptText("Nazwa miejscowoœci");
@@ -484,7 +492,7 @@ public class Main extends Application {
 
 		table2 = new TableView<>();
 		table2.getColumns().addAll(idPrzystaniki, IdMiejscowsci, ulicacolumn);
-		table2.setItems(getProduct2());
+		table2.setItems(fillTable.getProduct2());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -497,8 +505,6 @@ public class Main extends Application {
 
 		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
 
-		// Create Tree
-
 		tree3 = new TreeView<>(treeitem);
 		tree3.setShowRoot(true);
 
@@ -510,8 +516,6 @@ public class Main extends Application {
 			}
 		});
 
-		// Create Tree
-
 		VBox layout2 = new VBox();
 		layout2.getChildren().addAll(table2, hbox2);
 
@@ -519,11 +523,7 @@ public class Main extends Application {
 		bordePaneDlaOkna5.setLeft(tree3);
 		bordePaneDlaOkna5.setCenter(layout2);
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		////////////// Okno bazy danych trasy ////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		bordePaneDlaOkna6 = new BorderPane();
 		scene6 = new Scene(bordePaneDlaOkna6, 1450, 480);
@@ -570,35 +570,35 @@ public class Main extends Application {
 
 		trasaKursStart = new TextField();
 		trasaKursStart.setPromptText("Kurs start");
-		trasaKursStart.setMinWidth(40);
+		trasaKursStart.setMinWidth(70);
 
 		trasaKursKoniec = new TextField();
 		trasaKursKoniec.setPromptText("Kurs koniec");
-		trasaKursKoniec.setMinWidth(40);
+		trasaKursKoniec.setMinWidth(70);
 
 		trasaMiejscowoscStartowa = new TextField();
 		trasaMiejscowoscStartowa.setPromptText("Miejscowosc startowa");
-		trasaMiejscowoscStartowa.setMinWidth(40);
+		trasaMiejscowoscStartowa.setMinWidth(70);
 
 		trasaMiejscowoscKoncowa = new TextField();
 		trasaMiejscowoscKoncowa.setPromptText("Miejscowosc koñcowa");
-		trasaMiejscowoscKoncowa.setMinWidth(100);
+		trasaMiejscowoscKoncowa.setMinWidth(70);
 
 		trasaDzienTygodnia = new TextField();
 		trasaDzienTygodnia.setPromptText("Dzieñ tygodnia");
-		trasaDzienTygodnia.setMinWidth(60);
+		trasaDzienTygodnia.setMinWidth(40);
 
 		trasaGodzinaOdjazdu = new TextField();
 		trasaGodzinaOdjazdu.setPromptText("Godzina odjazdu");
-		trasaGodzinaOdjazdu.setMinWidth(60);
+		trasaGodzinaOdjazdu.setMinWidth(30);
 
 		trasaGodzinaPrzyjazdu = new TextField();
 		trasaGodzinaPrzyjazdu.setPromptText("Godzina przyjazdu");
-		trasaGodzinaPrzyjazdu.setMinWidth(60);
+		trasaGodzinaPrzyjazdu.setMinWidth(30);
 
 		trasaUwagi = new TextField();
 		trasaUwagi.setPromptText("Uwagi");
-		trasaUwagi.setMinWidth(150);
+		trasaUwagi.setMinWidth(50);
 
 		trasaAddButton = new Button("Add");
 		trasaAddButton.setOnAction(e -> addbutton3Clicked());
@@ -622,7 +622,7 @@ public class Main extends Application {
 		table3 = new TableView<>();
 		table3.getColumns().addAll(idTrasy, IdKursy, trasyMiejscStartowa, trasyMiejscKonco, IdPrzystanki,
 				godzinaOdjazducolumn, godzinacolumn, dzientygcolumn, uwagicolumn);
-		table3.setItems(getProduct3());
+		table3.setItems(fillTable.getProduct3());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -634,8 +634,6 @@ public class Main extends Application {
 		miejscowosci = makeBranch("Miejscowoœci", treeitem);
 
 		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
-
-		// Create Tree
 
 		tree4 = new TreeView<>(treeitem);
 		tree4.setShowRoot(true);
@@ -655,11 +653,7 @@ public class Main extends Application {
 		bordePaneDlaOkna6.setLeft(tree4);
 		bordePaneDlaOkna6.setCenter(layout3);
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		////////////// Okno bazy danych Autokary ////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		bordePaneDlaOkna7 = new BorderPane();
 		scene7 = new Scene(bordePaneDlaOkna7, 1600, 480);
@@ -760,7 +754,7 @@ public class Main extends Application {
 		table4 = new TableView<>();
 		table4.getColumns().addAll(idAutokarucolumn, Markacolumn, Modelcolumn, rokProdukcjicolumn,
 				pojemnoscSilnikacolumn, spalaniecolumn, KatAutokarucolumn, iloscMiejscColumn, nrRejstracjiColumn);
-		table4.setItems(getProduct4());
+		table4.setItems(fillTable.getProduct4());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -772,8 +766,6 @@ public class Main extends Application {
 		miejscowosci = makeBranch("Miejscowoœci", treeitem);
 
 		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
-
-		// Create Tree
 
 		tree5 = new TreeView<>(treeitem);
 		tree5.setShowRoot(true);
@@ -793,11 +785,7 @@ public class Main extends Application {
 		bordePaneDlaOkna7.setLeft(tree5);
 		bordePaneDlaOkna7.setCenter(layout4);
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		////////////// Okno bazy danych Kursy ////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		bordePaneDlaOkna8 = new BorderPane();
 		scene8 = new Scene(bordePaneDlaOkna8, 1200, 480);
@@ -837,16 +825,6 @@ public class Main extends Application {
 		TableColumn<Kursy, String> columnKursCzasprzyjazdu = new TableColumn<>("Czas Przyjazdu");
 		columnKursCzasprzyjazdu.setMinWidth(80);
 		columnKursCzasprzyjazdu.setCellValueFactory(new PropertyValueFactory<>("KUR_Czas_Przyjazdu"));
-
-		/*
-		 * , AUT_KEY, KIE_KEY, KUR_Sygnatura_Kursu, KUR_Opis, KUR_Czas_Odjazdu,
-		 * KUR_Czas_Przyjazdu; columnIdKurs columnIdAuta, columnKierowcyInput,
-		 * columnSygnaturaKursu, columnkursOpis, columnKursCzasOdjazd,
-		 * columnKursCzasprzyjazdu IdKursInput, idAutaInput, idKierowcyInput,
-		 * kursSygnaturaKursuInput, kursOpisInput, kursCzasOdjazduInput,
-		 * kursCzasPrzyjazduInput
-		 * 
-		 */
 
 		idAutaInput = new TextField();
 		idAutaInput.setPromptText("Numer rej autokaru");
@@ -901,7 +879,7 @@ public class Main extends Application {
 		table5 = new TableView<>();
 		table5.getColumns().addAll(columnIdKurs, columnIdAuta, columnKierowcyInput, columnSygnaturaKursu,
 				columnMiejscStartowa, columnMiejscKoncowa, columnKursCzasOdjazd, columnKursCzasprzyjazdu);
-		table5.setItems(getProduct5());
+		table5.setItems(fillTable.getProduct5());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -913,8 +891,6 @@ public class Main extends Application {
 		miejscowosci = makeBranch("Miejscowoœci", treeitem);
 
 		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
-
-		// Create Tree
 
 		tree6 = new TreeView<>(treeitem);
 		tree6.setShowRoot(true);
@@ -934,11 +910,7 @@ public class Main extends Application {
 		bordePaneDlaOkna8.setLeft(tree6);
 		bordePaneDlaOkna8.setCenter(layout5);
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		////////////// Okno bazy danych Miejscowœci ////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		bordePaneDlaOkna9 = new BorderPane();
 		scene9 = new Scene(bordePaneDlaOkna9, 1200, 480);
@@ -966,13 +938,6 @@ public class Main extends Application {
 		TableColumn<Miejscowosci, String> columnGmina = new TableColumn<>("Gmina");
 		columnGmina.setMinWidth(180);
 		columnGmina.setCellValueFactory(new PropertyValueFactory<>("MIE_Gmina"));
-
-		/*
-		 * private int MIE_KEY; private String MIE_Nazwa_Miejscow; private
-		 * String MIE_Wojewodztwo; private String MIE_Powiat; private String
-		 * MIE_Gmina; ,IdMiejscowosciInput, nazwaMiejscowosciInput,
-		 * wojewodztwoInput, powiatInput, gminaInput
-		 */
 
 		nazwaMiejscowosciInput = new TextField();
 		nazwaMiejscowosciInput.setPromptText("Nazwa");
@@ -1015,7 +980,7 @@ public class Main extends Application {
 		table6 = new TableView<>();
 		table6.getColumns().addAll(columnIDmiejscow, columnNazwaMiejscowosci, columnWojewodztwo, columnPowiat,
 				columnGmina);
-		table6.setItems(getProduct6());
+		table6.setItems(fillTable.getProduct6());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -1048,11 +1013,7 @@ public class Main extends Application {
 		bordePaneDlaOkna9.setLeft(tree7);
 		bordePaneDlaOkna9.setCenter(layout6);
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		////////////// Okno bazy danych Rejestr przejazdów ////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		bordePaneDlaOkna10 = new BorderPane();
 		scene10 = new Scene(bordePaneDlaOkna10, 1200, 480);
@@ -1130,7 +1091,7 @@ public class Main extends Application {
 		table7 = new TableView<>();
 		table7.getColumns().addAll(columnIdrejest, columnIDkurs, columnRejestdata, columnOdDnia, columnDoDnia,
 				columnIloscOsub);
-		table7.setItems(getProduct7());
+		table7.setItems(fillTable.getProduct7());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -1142,8 +1103,6 @@ public class Main extends Application {
 		miejscowosci = makeBranch("Miejscowoœci", treeitem);
 
 		rejestr_przejazdow = makeBranch("Rejestr Przejazdów", treeitem);
-
-		// Create Tree
 
 		tree8 = new TreeView<>(treeitem);
 		tree8.setShowRoot(true);
@@ -1163,14 +1122,31 @@ public class Main extends Application {
 		bordePaneDlaOkna10.setLeft(tree8);
 		bordePaneDlaOkna10.setCenter(layout7);
 
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 		window.setTitle("Damberpol");
 		window.setScene(scene);
 		window.show();
 
 	}
+
+	// TODO
+	/*
+	 * public ResultSet getMiejscowosciFromUser() {
+	 * ReadOnlyObjectProperty<String> pobranyPrzyjazd =
+	 * choiceBoxPrzyjazd.getSelectionModel().selectedItemProperty();
+	 * ReadOnlyObjectProperty<String> pobranyOdjazd =
+	 * choiceBoxOdjazd.getSelectionModel().selectedItemProperty();
+	 * 
+	 * String miejscowoscStartowa = pobranyPrzyjazd.toString(); String
+	 * miejscowoscKoncowa = pobranyOdjazd.toString();
+	 * 
+	 * ResultSet rsResultForUsers = null; try { rsResultForUsers =
+	 * queries.getResultForUser(miejscowoscStartowa, miejscowoscKoncowa); }
+	 * catch (SQLException e) { // TODO Auto-generated catch block
+	 * System.out.println("Zle pobrane wartosci z choiceBoxow");
+	 * e.printStackTrace(); } return rsResultForUsers;
+	 * 
+	 * }
+	 */
 
 	public TreeItem<String> makeBranch(String title, TreeItem<String> parent) {
 		TreeItem<String> item = new TreeItem<>(title);
@@ -1201,7 +1177,6 @@ public class Main extends Application {
 		String MIE_Nazwa_Miejscow = "'" + przystanki.setMIE_KEY(iDMiejscowsci.getText()) + "'";
 		String PR_Ulica = "'" + przystanki.setPR_Ulica(inputulica.getText()) + "'";
 		table2.getItems().add(przystanki);
-		// TODO INSERT przystanki
 		queries.insertDataToPrzystanki(MIE_Nazwa_Miejscow, PR_Ulica);
 		iDMiejscowsci.clear();
 		inputulica.clear();
@@ -1226,13 +1201,14 @@ public class Main extends Application {
 				TR_Godzina_odjazdu, TR_Godzina, TR_Uwagi);
 		table3.getItems().add(trasa);
 		// trasaPrzystanekKoncowy.clear();
-		trasaKursKoniec.clear();
+
 		trasaKursStart.clear();
+		trasaKursKoniec.clear();
 		trasaMiejscowoscStartowa.clear();
 		trasaMiejscowoscKoncowa.clear();
-		trasaPrzystanek.clear();
-		trasaGodzinaPrzyjazdu.clear();
 		trasaGodzinaOdjazdu.clear();
+		trasaGodzinaPrzyjazdu.clear();
+		trasaDzienTygodnia.clear();
 		trasaUwagi.clear();
 
 	}
@@ -1261,12 +1237,6 @@ public class Main extends Application {
 		katAutokaruInput.clear();
 		iloscMiejsInput.clear();
 		numerRejestracyjny.clear();
-
-		/*
-		 * idAutokaruInput, modelInput, markaInput, rokProdukcjiInput,
-		 * pojemnoscSilnikaInput, spalanieInput, katAutokaruInput,
-		 * iloscMiejsInput, numerRejestracyjny
-		 */
 	}
 
 	public void addbutton5Clicked() {
@@ -1292,15 +1262,6 @@ public class Main extends Application {
 		kursOpisInput.clear();
 		kursCzasOdjazduInput.clear();
 		kursCzasPrzyjazduInput.clear();
-
-		/*
-		 * KUR_KEY, AUT_KEY, KIE_KEY, KUR_Sygnatura_Kursu, KUR_Opis,
-		 * KUR_Czas_Odjazdu, KUR_Czas_Przyjazdu; columnIdKurs columnIdAuta,
-		 * columnKierowcyInput, columnSygnaturaKursu, columnkursOpis,
-		 * columnKursCzasOdjazd, columnKursCzasprzyjazdu IdKursInput,
-		 * idAutaInput, idKierowcyInput, kursSygnaturaKursuInput, kursOpisInput,
-		 * kursCzasOdjazduInput, kursCzasPrzyjazduInput
-		 */
 	}
 
 	public void addbutton6Clicked() {
@@ -1311,16 +1272,15 @@ public class Main extends Application {
 		String MIE_Powiat = "'" + miejscowosci.setMIE_Powiat(powiatInput.getText()) + "'";
 		String MIE_Gmina = "'" + miejscowosci.setMIE_Gmina(gminaInput.getText()) + "'";
 		queries.insertDataToMiejscowosci(MIE_Nazwa_Miejscow, MIE_Wojewodztwo, MIE_Powiat, MIE_Gmina);
-
-		/*
-		 * private int MIE_KEY; private String MIE_Nazwa_Miejscow; private
-		 * String MIE_Wojewodztwo; private String MIE_Powiat; private String
-		 * MIE_Gmina; ,IdMiejscowosciInput, nazwaMiejscowosciInput,
-		 * wojewodztwoInput, powiatInput, gminaInput
-		 */
+		
 		table6.getItems().add(miejscowosci);
-
-		IdMiejscowosciInput.clear();
+		FillingTables fillTable = new FillingTables();
+		try {
+			fillTable.getProduct6();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		nazwaMiejscowosciInput.clear();
 		wojewodztwoInput.clear();
 		powiatInput.clear();
@@ -1339,12 +1299,6 @@ public class Main extends Application {
 		queries.insertDataToRaport(KUR_Miejsc_Startowa, KUR_Miejsc_Konco, REJ_data_start, REJ_data_konc, REJ_iloscOsob);
 		table7.getItems().add(rejestr);
 
-		/*
-		 * private int REJ_KEY; private int KUR_KEY; private String REJ_data;
-		 * private int REJ_iloscOsob; IdRejstrówPrzejazdówInput, reIdKursyInput,
-		 * rejestdataInput, rejestrIloscOsobInput columnIdrejest, columnIDkurs,
-		 * columnRejestdata, columnIloscOsub
-		 */
 		IdRejstrówPrzejazdówInput.clear();
 		reIdKursyInput.clear();
 		txtColRejestrPrzystanek.clear();
@@ -1504,176 +1458,4 @@ public class Main extends Application {
 
 	}
 
-	public ObservableList<Kierowcy> getProduct() throws SQLException {
-		ObservableList<Kierowcy> products = FXCollections.observableArrayList();
-		ResultSet rsKierowcy = queries.showAllTableKierowcy();
-		int id = 0;
-		String imie = null;
-		String nazwisko = null;
-		String pesel = null;
-		String dataZatr = null;
-		while (rsKierowcy.next()) {
-			id = rsKierowcy.getInt(1);
-			imie = rsKierowcy.getString(2);
-			nazwisko = rsKierowcy.getString(3);
-			pesel = rsKierowcy.getString(4);
-			dataZatr = rsKierowcy.getString(5);
-			products.add(new Kierowcy(id, imie, nazwisko, pesel, dataZatr));
-		}
-
-		return products;
-	}
-
-	public ObservableList<Przystanki> getProduct2() throws SQLException {
-		ObservableList<Przystanki> products = FXCollections.observableArrayList();
-		ResultSet rsPrzystanki = queries.showAllTablePrzystanki();
-		int PR_KEY = 0;
-		String MIE_KEY = null;
-		String PR_Ulica = null;
-
-		while (rsPrzystanki.next()) {
-			PR_KEY = rsPrzystanki.getInt(1);
-			MIE_KEY = rsPrzystanki.getString(2);
-			PR_Ulica = rsPrzystanki.getString(3);
-			products.add(new Przystanki(PR_KEY, MIE_KEY, PR_Ulica));
-		}
-
-		return products;
-	}
-
-	public ObservableList<Trasa> getProduct3() throws SQLException {
-		ObservableList<Trasa> products = FXCollections.observableArrayList();
-		ResultSet rsPrzystanki = queries.showAllTableTrasy();
-		int TR_KEY = 0;
-		String KUR_Sygnatura = null;
-		String MIE_Nazwa_Miejscow = null;
-		String TR_Skad = null;
-		String PR_Ulica = null;
-		String TR_Godzina_odjazdu = null;
-		String TR_Godzina = null;
-		String TR_Dzien_tyg = null;
-		String TR_Uwagi = null;
-
-		while (rsPrzystanki.next()) {
-			TR_KEY = rsPrzystanki.getInt(1);
-			KUR_Sygnatura = rsPrzystanki.getString(2);
-			TR_Skad = rsPrzystanki.getString(3);
-			MIE_Nazwa_Miejscow = rsPrzystanki.getString(4);
-			PR_Ulica = rsPrzystanki.getString(5);
-			TR_Godzina_odjazdu = rsPrzystanki.getString(6);
-			TR_Godzina = rsPrzystanki.getString(7);
-			TR_Dzien_tyg = rsPrzystanki.getString(8);
-			TR_Uwagi = rsPrzystanki.getString(9);
-			products.add(new Trasa(TR_KEY, KUR_Sygnatura, MIE_Nazwa_Miejscow, TR_Skad, PR_Ulica, TR_Godzina_odjazdu,
-					TR_Godzina, TR_Dzien_tyg, TR_Uwagi));
-		}
-		return products;
-	}
-
-	public ObservableList<Autokary> getProduct4() throws SQLException {
-		ObservableList<Autokary> products = FXCollections.observableArrayList();
-		ResultSet rsAutokary = queries.showAllTableAutokary();
-		int AUT_KEY = 0;
-		String AUT_Marka = null;
-		String AUT_Model = null;
-		int AUT_Rok_Prod = 0;
-		int AUT_Poj_silnik = 0;
-		int AUT_Spalanie = 0;
-		String AUT_Kat_autokaru = null;
-		int AUT_Ilosc_miejsc = 0;
-		String AUT_Nr_rejestracji = null;
-
-		while (rsAutokary.next()) {
-			AUT_KEY = rsAutokary.getInt(1);
-			AUT_Marka = rsAutokary.getString(2);
-			AUT_Model = rsAutokary.getString(3);
-			AUT_Rok_Prod = rsAutokary.getInt(4);
-			AUT_Poj_silnik = rsAutokary.getInt(5);
-			AUT_Spalanie = rsAutokary.getInt(6);
-			AUT_Kat_autokaru = rsAutokary.getString(7);
-			AUT_Ilosc_miejsc = rsAutokary.getInt(8);
-			AUT_Nr_rejestracji = rsAutokary.getString(9);
-			products.add(new Autokary(AUT_KEY, AUT_Marka, AUT_Model, AUT_Rok_Prod, AUT_Poj_silnik, AUT_Spalanie,
-					AUT_Kat_autokaru, AUT_Ilosc_miejsc, AUT_Nr_rejestracji));
-		}
-		return products;
-	}
-
-	public ObservableList<Kursy> getProduct5() throws SQLException {
-		ObservableList<Kursy> products = FXCollections.observableArrayList();
-		ResultSet rsKursy = queries.showAllTableKursy();
-		int KUR_KEY = 0;
-		String AUT_KEY = null;
-		String KIE_KEY = null;
-		String KUR_Sygnatura_Kursu = null;
-		String KUR_Opis = null;
-		String KUR_Miejsc_Konco = null;
-		String KUR_Czas_Odjazdu = null;
-		String KUR_Czas_Przyjazdu = null;
-		while (rsKursy.next()) {
-			KUR_KEY = rsKursy.getInt(1);
-			AUT_KEY = rsKursy.getString(2);
-			KIE_KEY = rsKursy.getString(3);
-			KUR_Sygnatura_Kursu = rsKursy.getString(4);
-			KUR_Opis = rsKursy.getString(5);
-			KUR_Miejsc_Konco = rsKursy.getString(6);
-			KUR_Czas_Odjazdu = rsKursy.getString(7);
-			KUR_Czas_Przyjazdu = rsKursy.getString(8);
-			products.add(new Kursy(KUR_KEY, AUT_KEY, KIE_KEY, KUR_Sygnatura_Kursu, KUR_Opis, KUR_Miejsc_Konco,
-					KUR_Czas_Odjazdu, KUR_Czas_Przyjazdu));
-		}
-
-		return products;
-	}
-
-	public ObservableList<Miejscowosci> getProduct6() throws SQLException {
-		ObservableList<Miejscowosci> products = FXCollections.observableArrayList();
-		ResultSet rsMiejscowosci = queries.showAllTableMiejscowosci();
-		int MIE_KEY = 0;
-		String MIE_Nazwa_Miejscow = null;
-		String MIE_Wojewodztwo = null;
-		String MIE_Powiat = null;
-		String MIE_Gmina = null;
-
-		while (rsMiejscowosci.next()) {
-			MIE_KEY = rsMiejscowosci.getInt(1);
-			MIE_Nazwa_Miejscow = rsMiejscowosci.getString(2);
-			MIE_Wojewodztwo = rsMiejscowosci.getString(3);
-			MIE_Powiat = rsMiejscowosci.getString(4);
-			MIE_Gmina = rsMiejscowosci.getString(5);
-			products.add(new Miejscowosci(MIE_KEY, MIE_Nazwa_Miejscow, MIE_Wojewodztwo, MIE_Powiat, MIE_Gmina));
-		}
-		return products;
-	}
-
-	public ObservableList<Rejestr_przejazdow> getProduct7() throws SQLException {
-		ObservableList<Rejestr_przejazdow> products = FXCollections.observableArrayList();
-
-		ResultSet rsRejestrPrzejazdow = queries.showAllTableRejestrPrzejazdow();
-		int REJ_KEY = 0;
-		String KUR_Miejsc_Startowa = null;
-		String PR_Ulica = null;
-		String REJ_data_start = null;
-		String REJ_data_konc = null;
-		int REJ_iloscOsob = 0;
-
-		while (rsRejestrPrzejazdow.next()) {
-			REJ_KEY = rsRejestrPrzejazdow.getInt(1);
-			KUR_Miejsc_Startowa = rsRejestrPrzejazdow.getString(2);
-			PR_Ulica = rsRejestrPrzejazdow.getString(3);
-			REJ_data_start = rsRejestrPrzejazdow.getString(4);
-			REJ_data_konc = rsRejestrPrzejazdow.getString(5);
-			REJ_iloscOsob = rsRejestrPrzejazdow.getInt(6);
-			products.add(new Rejestr_przejazdow(REJ_KEY, KUR_Miejsc_Startowa, PR_Ulica, REJ_data_start, REJ_data_konc,
-					REJ_iloscOsob));
-		}
-		return products;
-	}
-
-	public ObservableList<Rozk³ad_Jazdy> getProduct8() {
-		ObservableList<Rozk³ad_Jazdy> products = FXCollections.observableArrayList();
-		products.add(new Rozk³ad_Jazdy("Tu ", "pojawi ", "siê ", "wynik ", "wyszukiwania. "));
-		// TODO
-		return products;
-	}
 }

@@ -7,11 +7,33 @@ import java.sql.Statement;
 import com.sun.glass.ui.GestureSupport;
 
 public class Queries extends ConnectionToDB implements QueriesInterface {
-	String user = "sa";
 	Statement stmt = makeStatement();
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see application.QueriesInterface#getResultForUser(java.lang.String,
+	 * java.lang.String)
+	 */
+	@Override
+	public ResultSet getResultForUser(String miejscowoscStartowa, String miejscowoscKoncowa) {
+		String getResultQuery = "SELECT TRASA.TR_KEY AS 'Klucz trasy', KURSY.KUR_Sygnatura_Kursu AS 'Sygnatura kursu', TRASA.TR_Skad AS 'Skad', MIEJSCOWOSCI.MIE_Nazwa_Miejscow AS 'Dokad', PRZYSTANKI.PR_Ulica AS 'Przystanek', TRASA.TR_Dzieñ_tyg AS 'W dni tygodnia',TRASA.TR_Godzina_odjazdu AS 'Godzina odjazdu', TRASA.TR_Godzina AS 'Godzina przyjazdu', TRASA.TR_Uwagi AS 'Uwagi do trasy' FROM TRASA INNER JOIN KURSY ON TRASA.KUR_KEY = KURSY.KUR_KEY INNER JOIN PRZYSTANKI ON TRASA.PR_KEY = PRZYSTANKI.PR_KEY INNER JOIN MIEJSCOWOSCI ON PRZYSTANKI.MIE_KEY = MIEJSCOWOSCI.MIE_KEY WHERE(KURSY.KUR_Miejsc_Startowa = '"
+				+ miejscowoscStartowa + "') AND(KURSY.KUR_Miejsc_Konco = '" + miejscowoscKoncowa
+				+ "') OR(TRASA.TR_Skad = '" + miejscowoscStartowa + "') AND(MIEJSCOWOSCI.MIE_Nazwa_Miejscow = '"
+				+ miejscowoscKoncowa + "')";
+		ResultSet rsResultForUser = null;
+		try {
+			stmt.execute(getResultQuery);
+			rsResultForUser = stmt.getResultSet();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return rsResultForUser;
+	}
+
 	public ResultSet selectKluczTrasy(String KUR_Miejsc_Startowa) throws SQLException {
-		Statement stmt = makeStatement();
 		stmt.execute("SELECT KUR_ID FROM TRASY WHERE KUR_Miejsc_Startowa = " + KUR_Miejsc_Startowa);
 		ResultSet rsKluczTrasy = stmt.getResultSet();
 
@@ -27,7 +49,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	}
 
 	public ResultSet selectPrzystanekUlicaByPR_KEY(String PR_KEY) throws SQLException {
-		Statement stmt = makeStatement();
 		stmt.execute("SELECT PR_Ulica FROM PRZYSTANKI WHERE PR_KEY = " + PR_KEY);
 		ResultSet rsPrzystanekUlica = stmt.getResultSet();
 
@@ -35,7 +56,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	}
 
 	public ResultSet showAllTableKierowcy() throws SQLException {
-		Statement stmt = makeStatement();
 		stmt.execute("SELECT * FROM KIEROWCY");
 		ResultSet rsKierowcy = stmt.getResultSet();
 
@@ -43,7 +63,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	}
 
 	public ResultSet showAllTableAutokary() throws SQLException {
-		Statement stmt = makeStatement();
 		stmt.execute("SELECT  * FROM AUTOKARY");
 		ResultSet rsAutokary = stmt.getResultSet();
 
@@ -51,7 +70,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	}
 
 	public ResultSet showAllTableKursy() throws SQLException {
-		Statement stmt = makeStatement();
 		stmt.execute(
 				"SELECT KURSY.KUR_KEY, AUTOKARY.AUT_Nr_rejestracji, KIEROWCY.KIE_Pesel, KURSY.KUR_Sygnatura_Kursu, KURSY.KUR_Miejsc_Startowa, KURSY.KUR_Miejsc_Konco, KURSY.KUR_Czas_Odjazdu,  KURSY.KUR_Czas_Przyjazdu FROM KURSY INNER JOIN AUTOKARY ON KURSY.AUT_KEY = AUTOKARY.AUT_KEY INNER JOIN KIEROWCY ON KURSY.KIE_KEY = KIEROWCY.KIE_KEY");
 		ResultSet rsKursy = stmt.getResultSet();
@@ -60,7 +78,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	}
 
 	public ResultSet showAllTableMiejscowosci() throws SQLException {
-		Statement stmt = makeStatement();
 		stmt.execute("SELECT * FROM MIEJSCOWOSCI");
 		ResultSet rsMiejscowosci = stmt.getResultSet();
 
@@ -94,8 +111,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdAutokary(int id) throws SQLException {
-		getConnection(user);
-		Statement stmt = connectionToDB.createStatement();
 		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[AUTOKARY] WHERE AUT_KEY= " + id);
@@ -109,8 +124,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdKierowcy(int id) throws SQLException {
-		getConnection(user);
-		Statement stmt = connectionToDB.createStatement();
 		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[KIEROWCY] WHERE KIE_KEY= " + id);
@@ -124,8 +137,8 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdKursy(int id) throws SQLException {
-		getConnection(user);
-		Statement stmt = connectionToDB.createStatement();
+		//getConnection(user);
+		//Statement stmt = connectionToDB.createStatement();
 		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[KURSY] WHERE KUR_KEY= " + id);
@@ -139,8 +152,8 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdMiejscowosci(int id) throws SQLException {
-		getConnection(user);
-		Statement stmt = connectionToDB.createStatement();
+		//getConnection(user);
+		//Statement stmt = connectionToDB.createStatement();
 		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[MIEJSCOWOSCI] WHERE MIE_KEY= " + id);
@@ -154,8 +167,8 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdPrzystanki(int id) throws SQLException {
-		getConnection(user);
-		Statement stmt = connectionToDB.createStatement();
+		//getConnection(user);
+		//Statement stmt = connectionToDB.createStatement();
 		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[PRZYSTANKI] WHERE PR_KEY= " + id);
@@ -169,8 +182,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdTrasy(int id) throws SQLException {
-		getConnection(user);
-		Statement stmt = connectionToDB.createStatement();
 		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[TRASA] WHERE TR_KEY= " + id);
@@ -183,8 +194,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	}
 
 	public void deleteByIdRejestrPrzejazdow(int id) throws SQLException {
-		getConnection(user);
-		Statement stmt = connectionToDB.createStatement();
 		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[REJESTR_PRZEJAZDOW] WHERE REJ_KEY= " + id);
@@ -199,7 +208,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	@Override
 	public void insertDataToAutokary(String AUT_Marka, String AUT_Model, int AUT_Rok_Prod, int AUT_Poj_Silnik,
 			int AUT_Spalanie, String AUT_Kategoria, int AUT_Ilosc_Miejsc, String AUT_NR_Rej) {
-		getConnection(user);
 		try {
 
 			String insertAutokar = "INSERT INTO [dbo].[AUTOKARY]([AUT_Marka]," + "[AUT_Model]," + "[AUT_Rok_Prod],"
@@ -208,7 +216,7 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 					+ AUT_Poj_Silnik + "," + AUT_Spalanie + "," + AUT_Kategoria + "," + AUT_Ilosc_Miejsc + ","
 					+ AUT_NR_Rej;
 			// System.out.println(insertAutokar);
-			Statement stmt = connectionToDB.createStatement();
+			//Statement stmt = connectionToDB.createStatement();
 			stmt.executeUpdate(insertAutokar);
 
 			System.out.println("Dane poprawnie dodane do tabeli");
@@ -220,13 +228,11 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void insertDataToKierowcy(String KIE_Imie, String KIE_Nazwisko, String KIE_Pesel, String KIE_Data_zatr) {
-		getConnection(user);
 		try {
 
 			String insertKierowcy = "INSERT INTO [dbo].[KIEROWCY] ([KIE_Imie],[KIE_Nazwisko],[KIE_Pesel],[KIE_Data_zatr]) VALUES ("
 					+ KIE_Imie + "," + KIE_Nazwisko + "," + KIE_Pesel + "," + KIE_Data_zatr + ")";
 			System.out.println(insertKierowcy);
-			Statement stmt = connectionToDB.createStatement();
 			stmt.executeUpdate(insertKierowcy);
 
 			System.out.println("Dane poprawnie dodane do tabeli");
@@ -239,13 +245,11 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	@Override
 	public void insertDataToKursy(String KIE_Pesel, String numerRejAutokary, String KUR_Sygnatura_Kursu,
 			String KUR_Miejsc_Start, String KUR_Miejsc_Konco, String KUR_Czas_Odjazdu, String KUR_Czas_Przyjazdu) {
-		getConnection(user);
 		try {
 
 			String KIE_KEY = "SELECT KIE_KEY FROM [dbo].KIEROWCY WHERE KIE_Pesel = " + KIE_Pesel;
 			String AUT_KEY = "SELECT AUT_KEY FROM [dbo].AUTOKARY WHERE AUT_Nr_rejestracji = " + numerRejAutokary;
 
-			Statement stmt = connectionToDB.createStatement();
 
 			stmt.execute(AUT_KEY);
 			ResultSet rsAUT_KEY = stmt.getResultSet();
@@ -280,12 +284,10 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	@Override
 	public void insertDataToMiejscowosci(String MIE_Nazwa_Miejscow, String MIE_Wojewodztwo, String MIE_Powiat,
 			String MIE_Gmina) {
-		getConnection(user);
 		try {
 
 			String insertMiejscowosci = "INSERT INTO [dbo].[MIEJSCOWOSCI]([MIE_Nazwa_Miejscow],[MIE_Województwo],[MIE_Powiat],[MIE_Gmina]) VALUES ("
 					+ MIE_Nazwa_Miejscow + "," + MIE_Wojewodztwo + "," + MIE_Powiat + "," + MIE_Gmina + ")";
-			Statement stmt = connectionToDB.createStatement();
 			stmt.executeUpdate(insertMiejscowosci);
 
 			System.out.println("Dane poprawnie dodane do tabeli");
@@ -297,15 +299,13 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void insertDataToPrzystanki(String MIE_Nazwa_Miejscow, String PR_Ulica) {
-		getConnection(user);
 		try {
-			Statement stmt1 = connectionToDB.createStatement();
 
 			String MIE_KEY = "SELECT MIE_KEY FROM [dbo].[MIEJSCOWOSCI] WHERE MIE_Nazwa_Miejscow = "
 					+ MIE_Nazwa_Miejscow;
 
-			stmt1.execute(MIE_KEY);
-			ResultSet rsMIE_KEY = stmt1.getResultSet();
+			stmt.execute(MIE_KEY);
+			ResultSet rsMIE_KEY = stmt.getResultSet();
 			int inMIE_KEY = 0;
 			while (rsMIE_KEY.next()) {
 				inMIE_KEY = rsMIE_KEY.getInt("MIE_KEY");
@@ -313,7 +313,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 			String insertPrzystanki = "INSERT INTO [dbo].[PRZYSTANKI]([MIE_KEY],[PR_Ulica]) VALUES (" + inMIE_KEY + ","
 					+ PR_Ulica + ")";
-			Statement stmt = connectionToDB.createStatement();
 			stmt.executeUpdate(insertPrzystanki);
 
 			System.out.println("Dane poprawnie dodane do tabeli");
@@ -327,9 +326,7 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	public void insertDataToTrasy(String trasaKursStartowa, String trasaKursKoncowa, String TR_Skad,
 			String MIE_Nazwa_Miejscow, String TR_Dzien_tyg, String TR_Godzina_odjazdu, String TR_Godzina,
 			String TR_Uwagi) {
-		getConnection(user);
 		try {
-			Statement stmt = connectionToDB.createStatement();
 			String queryPR_KEY = "SELECT DISTINCT PR_KEY FROM PRZYSTANKI INNER JOIN MIEJSCOWOSCI ON PRZYSTANKI.MIE_KEY = MIEJSCOWOSCI.MIE_KEY WHERE MIE_Nazwa_Miejscow = "
 					+ MIE_Nazwa_Miejscow;
 			System.out.println(queryPR_KEY);
@@ -366,11 +363,9 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	@Override
 	public void insertDataToRaport(String KUR_Miejsc_Startowa, String KUR_Miejsc_Konco, String REJ_data_start,
 			String REJ_data_konc, int REJ_iloscOsob) {
-		getConnection(user);
 		try {
 			int KUR_KEY = 0;
 
-			Statement stmt = connectionToDB.createStatement();
 
 			String queryKUR_KEY = "SELECT KUR_KEY FROM KURSY WHERE KUR_Miejsc_Startowa = " + KUR_Miejsc_Startowa
 					+ "AND KUR_Miejsc_Konco = " + KUR_Miejsc_Konco;

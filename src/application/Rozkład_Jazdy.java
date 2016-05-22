@@ -1,72 +1,115 @@
 package application;
 
 public class Rozk³ad_Jazdy {
-		private String RJ_Marka;
-		private String RJ_Model;
-		private String RJ_Relacja;
-		private String RJ_Przyjazd;
-		private String RJ_odjazd;
+	private int TR_KEY;
+	private String KUR_Sygnatura;
+	private String TR_Skad;
+	private String TR_Dokad;
+	private String TR_Przystanek;
+	private String TR_Dni_Tygodnia;
+	private String TR_Godzina_Odjazdu;
+	private String TR_Godzina_Przyjazdu;
+	private String TR_Uwagi;
 
+	public Rozk³ad_Jazdy() {
+		this.TR_KEY = 0;
+		this.KUR_Sygnatura = "";
+		this.TR_Skad = "";
+		this.TR_Dokad = "";
+		this.TR_Przystanek = "";
+		this.TR_Dni_Tygodnia = "";
+		this.TR_Godzina_Odjazdu = "";
+		this.TR_Godzina_Przyjazdu = "";
+		this.TR_Uwagi = "";
 
-		
-		public  Rozk³ad_Jazdy(){
-			this.RJ_Marka= "";
-			this.RJ_Model = "";
-			this.RJ_Relacja= "";
-			this.RJ_Przyjazd= "";
-			this.RJ_odjazd = "";
-		}
-		
-	public   Rozk³ad_Jazdy( String RJ_Marka, String RJ_Model, String RJ_Relacja, String RJ_Przyjazd, String RJ_odjazd)
-		{
-	 
-		this.RJ_Marka= RJ_Marka;
-		this.RJ_Model = RJ_Model;
-		this.RJ_Relacja= RJ_Relacja;
-		this.RJ_Przyjazd= RJ_Przyjazd;
-		this.RJ_odjazd = RJ_odjazd;
-
-			
-		}
-
-	public String getRJ_Marka() {
-		return RJ_Marka;
 	}
 
-	public void setRJ_Marka(String rJ_Marka) {
-		RJ_Marka = rJ_Marka;
+	public Rozk³ad_Jazdy(int TR_KEY, String KUR_Sygnatura, String TR_Skad, String TR_Dokad, String TR_Przystanek,
+			String TR_Dni_Tygodnia, String TR_Godzina_Odjazdu, String TR_Godzina_Przyjazdu, String TR_Uwagi) {
+
+		this.TR_KEY = TR_KEY;
+		this.KUR_Sygnatura = KUR_Sygnatura;
+		this.TR_Skad = TR_Skad;
+		this.TR_Dokad = TR_Dokad;
+		this.TR_Przystanek = TR_Przystanek;
+		this.TR_Dni_Tygodnia = TR_Dni_Tygodnia;
+		this.TR_Godzina_Odjazdu = TR_Godzina_Odjazdu;
+		this.TR_Godzina_Przyjazdu = TR_Godzina_Przyjazdu;
+		this.TR_Uwagi = TR_Uwagi;
+
+
 	}
 
-	public String getRJ_Model() {
-		return RJ_Model;
+	public int getTR_KEY() {
+		return TR_KEY;
 	}
 
-	public void setRJ_Model(String rJ_Model) {
-		RJ_Model = rJ_Model;
+	public void setTR_KEY(int tR_KEY) {
+		TR_KEY = tR_KEY;
 	}
 
-	public String getRJ_Relacja() {
-		return RJ_Relacja;
+	public String getKUR_Sygnatura() {
+		return KUR_Sygnatura;
 	}
 
-	public void setRJ_Relacja(String rJ_Relacja) {
-		RJ_Relacja = rJ_Relacja;
+	public void setKUR_Sygnatura(String kUR_Sygnatura) {
+		KUR_Sygnatura = kUR_Sygnatura;
 	}
 
-	public String getRJ_Przyjazd() {
-		return RJ_Przyjazd;
+	public String getTR_SkadRelacja() {
+		return TR_Skad;
 	}
 
-	public void setRJ_Przyjazd(String rJ_Przyjazd) {
-		RJ_Przyjazd = rJ_Przyjazd;
+	public void setRJ_Relacja(String tR_Skad) {
+		TR_Skad = tR_Skad;
 	}
 
-	public String getRJ_odjazd() {
-		return RJ_odjazd;
+	public String getTR_Dokad() {
+		return TR_Dokad;
 	}
 
-	public void setRJ_odjazd(String rJ_odjazd) {
-		RJ_odjazd = rJ_odjazd;
+	public void setTR_Dokad(String tR_Dokad) {
+		TR_Dokad = tR_Dokad;
+	}
+
+	public String getTR_Przystanek() {
+		return TR_Przystanek;
+	}
+
+	public void setTR_Przystanek(String tR_Przystanek) {
+		TR_Przystanek = tR_Przystanek;
+	}
+	
+	public String getTR_Dni_Tygodnia() {
+		return TR_Dni_Tygodnia;
+	}
+
+	public void setTR_Dni_Tygodnia(String tR_Dni_Tygodnia) {
+		TR_Dni_Tygodnia = tR_Dni_Tygodnia;
+	}
+	
+	public String getTR_Godzina_Odjazdu() {
+		return TR_Godzina_Odjazdu;
+	}
+
+	public void setTR_Godzina_Odjazdu(String tR_Godzina_Odjazdu) {
+		TR_Godzina_Odjazdu = tR_Godzina_Odjazdu;
+	}
+	
+	public String getTR_Godzina_Przyjazdu() {
+		return TR_Godzina_Przyjazdu;
+	}
+
+	public void setTR_Godzina_Przyjazdu(String tR_Godzina_Przyjazdu) {
+		TR_Godzina_Przyjazdu = tR_Godzina_Przyjazdu;
+	}
+	
+	public String getTR_Uwagi() {
+		return TR_Uwagi;
+	}
+
+	public void setTR_Uwagi(String tR_Uwagi) {
+		TR_Uwagi = tR_Uwagi;
 	}
 
 }
