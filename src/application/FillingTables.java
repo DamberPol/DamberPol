@@ -7,7 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class FillingTables extends Main {
-	
+
 	public ObservableList<Kierowcy> getProduct() throws SQLException {
 		ObservableList<Kierowcy> products = FXCollections.observableArrayList();
 		ResultSet rsKierowcy = queries.showAllTableKierowcy();
@@ -174,9 +174,9 @@ public class FillingTables extends Main {
 		return products;
 	}
 
-	public ObservableList<Rozk³ad_Jazdy> getProduct8() throws SQLException {
+	public ObservableList<Rozk³ad_Jazdy> getProduct8(String miejscowoscStartowa, String miejscowoscKoncowa) {
 		ObservableList<Rozk³ad_Jazdy> products = FXCollections.observableArrayList();
-
+		Rozk³ad_Jazdy rozklad = new Rozk³ad_Jazdy();
 		int TR_KEY = 0;
 		String KUR_Sygnatura = null;
 		String TR_Skad = null;
@@ -186,19 +186,30 @@ public class FillingTables extends Main {
 		String TR_Godzina_Odjazdu = null;
 		String TR_Godzina_Przyjazdu = null;
 		String TR_Uwagi = null;
-		/*
-		 * ResultSet rsToSort = null; while (rsToSort.next()) { TR_KEY =
-		 * rsToSort.getInt(1); KUR_Sygnatura = rsToSort.getString(2); TR_Skad =
-		 * rsToSort.getString(3); TR_Dokad = rsToSort.getString(4);
-		 * TR_Przystanek = rsToSort.getString(5); TR_Dni_Tygodnia =
-		 * rsToSort.getString(6); TR_Godzina_Odjazdu = rsToSort.getString(7);
-		 * TR_Godzina_Przyjazdu = rsToSort.getString(8); TR_Uwagi =
-		 * rsToSort.getString(9);
-		 * 
-		 * } products.add(new Rozk³ad_Jazdy(TR_KEY, KUR_Sygnatura, TR_Skad,
-		 * TR_Dokad, TR_Przystanek, TR_Dni_Tygodnia, TR_Godzina_Odjazdu,
-		 * TR_Godzina_Przyjazdu, TR_Uwagi));
-		 */
+
+		ResultSet rsToSort = queries.getResultForUser(miejscowoscStartowa, miejscowoscKoncowa);
+		try {
+			while (rsToSort.next()) {
+				TR_KEY = rsToSort.getInt(1);
+				KUR_Sygnatura = rsToSort.getString(2);
+				TR_Skad = rsToSort.getString(3);
+				TR_Dokad = rsToSort.getString(4);
+				TR_Przystanek = rsToSort.getString(5);
+				TR_Dni_Tygodnia = rsToSort.getString(6);
+				TR_Godzina_Odjazdu = rsToSort.getString(7);
+				TR_Godzina_Przyjazdu = rsToSort.getString(8);
+				TR_Uwagi = rsToSort.getString(9);
+
+				products.add(new Rozk³ad_Jazdy(TR_KEY, KUR_Sygnatura, TR_Skad, TR_Dokad, TR_Przystanek, TR_Dni_Tygodnia,
+						TR_Godzina_Odjazdu, TR_Godzina_Przyjazdu, TR_Uwagi));
+				// table8.getItems().add(rozklad);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return products;
 	}
 }

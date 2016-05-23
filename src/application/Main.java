@@ -214,26 +214,27 @@ public class Main extends Application {
 
 		TableColumn<Rozk³ad_Jazdy, String> rozkladPrzystanek = new TableColumn<>("Przystanek");
 		rozkladPrzystanek.setMinWidth(150);
-		rozkladPrzystanek.setCellValueFactory(new PropertyValueFactory<>("TR_Przystanek "));
+		rozkladPrzystanek.setCellValueFactory(new PropertyValueFactory<>("TR_Przystanek"));
 
 		TableColumn<Rozk³ad_Jazdy, String> rozkladWDni = new TableColumn<>("W dni");
 		rozkladWDni.setMinWidth(150);
-		rozkladWDni.setCellValueFactory(new PropertyValueFactory<>("TR_Dni_Tygodnia "));
+		rozkladWDni.setCellValueFactory(new PropertyValueFactory<>("TR_Dni_Tygodnia"));
 
 		TableColumn<Rozk³ad_Jazdy, String> rozkladGodzinaOdjazdu = new TableColumn<>("Godzina odjazdu");
 		rozkladGodzinaOdjazdu.setMinWidth(150);
-		rozkladGodzinaOdjazdu.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina_Odjazdu "));
+		rozkladGodzinaOdjazdu.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina_Odjazdu"));
 
 		TableColumn<Rozk³ad_Jazdy, String> rozkladGodzinaPrzyjazdu = new TableColumn<>("Godzina przyjazdu");
 		rozkladGodzinaPrzyjazdu.setMinWidth(150);
-		rozkladGodzinaPrzyjazdu.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina_Przyjazdu "));
+		rozkladGodzinaPrzyjazdu.setCellValueFactory(new PropertyValueFactory<>("TR_Godzina_Przyjazdu"));
 
 		TableColumn<Rozk³ad_Jazdy, String> rozkladUwagi = new TableColumn<>("Uwagi");
 		rozkladUwagi.setMinWidth(150);
-		rozkladUwagi.setCellValueFactory(new PropertyValueFactory<>("TR_Uwagi "));
+		rozkladUwagi.setCellValueFactory(new PropertyValueFactory<>("TR_Uwagi"));
+
 		FillingTables fillTable = new FillingTables();
 		table8 = new TableView<>();
-		table8.setItems(fillTable.getProduct8());
+
 		table8.getColumns().addAll(rozkladKluczTrasy, rozkladSygnaturaKursu, rozkladSkad, rozkladDokad,
 				rozkladPrzystanek, rozkladWDni, rozkladGodzinaOdjazdu, rozkladGodzinaPrzyjazdu, rozkladUwagi);
 
@@ -246,21 +247,31 @@ public class Main extends Application {
 		przyjazdLabel.setStyle("-fx-text-fill:#FFFFFF;  ");
 
 		choiceBoxPrzyjazd = new ChoiceBox<>();
-		choiceBoxPrzyjazd.setValue("Przystanki");
 
 		// choiceBoxOdjazd.setStyle(" -fx-font-size: 12px;");
 		// choiceBoxPrzyjazd.setStyle(" -fx-font-size: 12px;");
 
-		choiceBoxPrzyjazd.getItems().addAll("Przystanek");
+		choiceBoxOdjazd.setValue("Przystanek");
+		choiceBoxOdjazd.getItems().add("Przystanek");
+
+		choiceBoxPrzyjazd.setValue("Przystanek");
+		choiceBoxPrzyjazd.getItems().add("Przystanek");
+		
+		table8.setPlaceholder((new Label("Brak wybranego kursu")));
 
 		// TODO
 
-		choiceBoxPrzyjazd.getSelectionModel().selectedItemProperty()
-				.addListener((ObservableValue<? extends String> observable, String oldValue,
-						String miejscowoscStartowa) -> choiceBoxOdjazd.getSelectionModel().selectedItemProperty()
-								.addListener((ObservableValue<? extends String> obs, String old,
-										String miejscowoscKoncowa) -> System.out.println(miejscowoscStartowa)));
-		// TODO
+		choiceBoxPrzyjazd.getSelectionModel().selectedItemProperty().addListener(
+				(ObservableValue<? extends String> observable, String oldValue, String miejscowoscKoncowa) -> {
+					fillTable.getProduct8(
+							choiceBoxOdjazd.getSelectionModel().selectedItemProperty().getValue().toString(),
+							miejscowoscKoncowa);
+					table8.setItems(fillTable.getProduct8(
+							choiceBoxOdjazd.getSelectionModel().selectedItemProperty().getValue().toString(),
+							miejscowoscKoncowa));
+
+				});
+
 		ResultSet rsMiejscowosciOdjazd = queries.showAllTableMiejscowosci();
 
 		while (rsMiejscowosciOdjazd.next()) {
@@ -1128,26 +1139,6 @@ public class Main extends Application {
 
 	}
 
-	// TODO
-	/*
-	 * public ResultSet getMiejscowosciFromUser() {
-	 * ReadOnlyObjectProperty<String> pobranyPrzyjazd =
-	 * choiceBoxPrzyjazd.getSelectionModel().selectedItemProperty();
-	 * ReadOnlyObjectProperty<String> pobranyOdjazd =
-	 * choiceBoxOdjazd.getSelectionModel().selectedItemProperty();
-	 * 
-	 * String miejscowoscStartowa = pobranyPrzyjazd.toString(); String
-	 * miejscowoscKoncowa = pobranyOdjazd.toString();
-	 * 
-	 * ResultSet rsResultForUsers = null; try { rsResultForUsers =
-	 * queries.getResultForUser(miejscowoscStartowa, miejscowoscKoncowa); }
-	 * catch (SQLException e) { // TODO Auto-generated catch block
-	 * System.out.println("Zle pobrane wartosci z choiceBoxow");
-	 * e.printStackTrace(); } return rsResultForUsers;
-	 * 
-	 * }
-	 */
-
 	public TreeItem<String> makeBranch(String title, TreeItem<String> parent) {
 		TreeItem<String> item = new TreeItem<>(title);
 		item.setExpanded(true);
@@ -1272,15 +1263,18 @@ public class Main extends Application {
 		String MIE_Powiat = "'" + miejscowosci.setMIE_Powiat(powiatInput.getText()) + "'";
 		String MIE_Gmina = "'" + miejscowosci.setMIE_Gmina(gminaInput.getText()) + "'";
 		queries.insertDataToMiejscowosci(MIE_Nazwa_Miejscow, MIE_Wojewodztwo, MIE_Powiat, MIE_Gmina);
-		
+
 		table6.getItems().add(miejscowosci);
+
+		// TODO Nieskonczona proba oswiezania tabeli po dodaniu rekordu
 		FillingTables fillTable = new FillingTables();
 		try {
 			fillTable.getProduct6();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
 		nazwaMiejscowosciInput.clear();
 		wojewodztwoInput.clear();
 		powiatInput.clear();

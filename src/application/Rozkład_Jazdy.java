@@ -37,7 +37,6 @@ public class Rozk³ad_Jazdy {
 		this.TR_Godzina_Przyjazdu = TR_Godzina_Przyjazdu;
 		this.TR_Uwagi = TR_Uwagi;
 
-
 	}
 
 	public int getTR_KEY() {
@@ -56,11 +55,11 @@ public class Rozk³ad_Jazdy {
 		KUR_Sygnatura = kUR_Sygnatura;
 	}
 
-	public String getTR_SkadRelacja() {
+	public String getTR_Skad() {
 		return TR_Skad;
 	}
 
-	public void setRJ_Relacja(String tR_Skad) {
+	public void setTR_Skad(String tR_Skad) {
 		TR_Skad = tR_Skad;
 	}
 
@@ -79,7 +78,7 @@ public class Rozk³ad_Jazdy {
 	public void setTR_Przystanek(String tR_Przystanek) {
 		TR_Przystanek = tR_Przystanek;
 	}
-	
+
 	public String getTR_Dni_Tygodnia() {
 		return TR_Dni_Tygodnia;
 	}
@@ -87,7 +86,7 @@ public class Rozk³ad_Jazdy {
 	public void setTR_Dni_Tygodnia(String tR_Dni_Tygodnia) {
 		TR_Dni_Tygodnia = tR_Dni_Tygodnia;
 	}
-	
+
 	public String getTR_Godzina_Odjazdu() {
 		return TR_Godzina_Odjazdu;
 	}
@@ -95,7 +94,7 @@ public class Rozk³ad_Jazdy {
 	public void setTR_Godzina_Odjazdu(String tR_Godzina_Odjazdu) {
 		TR_Godzina_Odjazdu = tR_Godzina_Odjazdu;
 	}
-	
+
 	public String getTR_Godzina_Przyjazdu() {
 		return TR_Godzina_Przyjazdu;
 	}
@@ -103,7 +102,7 @@ public class Rozk³ad_Jazdy {
 	public void setTR_Godzina_Przyjazdu(String tR_Godzina_Przyjazdu) {
 		TR_Godzina_Przyjazdu = tR_Godzina_Przyjazdu;
 	}
-	
+
 	public String getTR_Uwagi() {
 		return TR_Uwagi;
 	}
