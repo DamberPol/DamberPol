@@ -7,23 +7,22 @@ public class Miejscowosci {
 	private String MIE_Powiat;
 	private String MIE_Gmina;
 
-	
-	public Miejscowosci(){
+	public Miejscowosci() {
 
-		this.MIE_KEY=0;
-		this.MIE_Nazwa_Miejscow="";
-		this.MIE_Wojewodztwo="";
-		this.MIE_Powiat="";
-		this.MIE_Gmina="";
+		this.MIE_KEY = 0;
+		this.MIE_Nazwa_Miejscow = "";
+		this.MIE_Wojewodztwo = "";
+		this.MIE_Powiat = "";
+		this.MIE_Gmina = "";
 	}
-	
-	public Miejscowosci(int MIE_KEY, String MIE_Nazwa_Miejscow, String MIE_Wojewodztwo, String MIE_Powiat, String MIE_Gmina)
-	{
-		this.MIE_KEY=MIE_KEY;
-		this.MIE_Nazwa_Miejscow=MIE_Nazwa_Miejscow;
-		this.MIE_Wojewodztwo=MIE_Wojewodztwo;
-		this.MIE_Powiat=MIE_Powiat;
-		this.MIE_Gmina=MIE_Gmina;
+
+	public Miejscowosci(int MIE_KEY, String MIE_Nazwa_Miejscow, String MIE_Wojewodztwo, String MIE_Powiat,
+			String MIE_Gmina) {
+		this.MIE_KEY = MIE_KEY;
+		this.MIE_Nazwa_Miejscow = MIE_Nazwa_Miejscow;
+		this.MIE_Wojewodztwo = MIE_Wojewodztwo;
+		this.MIE_Powiat = MIE_Powiat;
+		this.MIE_Gmina = MIE_Gmina;
 	}
 
 	public int getMIE_KEY() {
@@ -65,5 +64,5 @@ public class Miejscowosci {
 	public String setMIE_Gmina(String mIE_Gmina) {
 		return MIE_Gmina = mIE_Gmina;
 	}
-	
+
 }

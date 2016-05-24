@@ -5,24 +5,17 @@ public class Przystanki {
 	private String MIE_KEY;
 	private String PR_Ulica;
 
-
-	
-	public Przystanki(){
+	public Przystanki() {
 		this.PR_KEY = 0;
 		this.MIE_KEY = null;
-		this.PR_Ulica = "";
-
-		
+		this.PR_Ulica = null;
 	}
-	
-	public  Przystanki(	int PR_KEY, String MIE_KEY, String PR_Ulica)
-	{
- 
+
+	public Przystanki(int PR_KEY, String MIE_KEY, String PR_Ulica) {
+
 		this.PR_KEY = PR_KEY;
 		this.MIE_KEY = MIE_KEY;
 		this.PR_Ulica = PR_Ulica;
-
-		
 	}
 
 	public int getPR_KEY() {

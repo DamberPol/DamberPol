@@ -7,25 +7,23 @@ public class Kierowcy {
 	private String pesel;
 	private String datazatrudnienia;
 
-	
-	public Kierowcy(){
-		this.Id=0;
-		this.name="";
-		this.nazwisko="";
-		this.pesel= null;
-		this.datazatrudnienia="";
-		
-	}
-	
-	public Kierowcy(int Id, String name, String nazwisko, String pesel, String datazatrudnienia)
-	{
+	public Kierowcy() {
+		this.Id = 0;
+		this.name = "";
+		this.nazwisko = "";
+		this.pesel = null;
+		this.datazatrudnienia = "";
 
-		this.Id= Id;
-		this.name=name;
-		this.nazwisko=nazwisko;
-		this.pesel= pesel;
-		this.datazatrudnienia=datazatrudnienia;
-		
+	}
+
+	public Kierowcy(int Id, String name, String nazwisko, String pesel, String datazatrudnienia) {
+
+		this.Id = Id;
+		this.name = name;
+		this.nazwisko = nazwisko;
+		this.pesel = pesel;
+		this.datazatrudnienia = datazatrudnienia;
+
 	}
 
 	public int getId() {
@@ -68,6 +66,4 @@ public class Kierowcy {
 		return this.datazatrudnienia = datazatrudnienia;
 	}
 
-
-	
 }

@@ -24,7 +24,10 @@ public class FillingTables extends Main {
 			dataZatr = rsKierowcy.getString(5);
 			products.add(new Kierowcy(id, imie, nazwisko, pesel, dataZatr));
 		}
-
+		//table.setItems(null); 
+       // table.layout(); 
+      //  table.setItems(FXCollections.observableList(products)); 
+		System.out.println("WYPELNIANIE TABELI KIEROWCY");
 		return products;
 	}
 
@@ -174,9 +177,9 @@ public class FillingTables extends Main {
 		return products;
 	}
 
-	public ObservableList<Rozk³ad_Jazdy> getProduct8(String miejscowoscStartowa, String miejscowoscKoncowa) {
-		ObservableList<Rozk³ad_Jazdy> products = FXCollections.observableArrayList();
-		Rozk³ad_Jazdy rozklad = new Rozk³ad_Jazdy();
+	public ObservableList<RozkladJazdy> getProduct8(String miejscowoscStartowa, String miejscowoscKoncowa) {
+		ObservableList<RozkladJazdy> products = FXCollections.observableArrayList();
+		RozkladJazdy rozklad = new RozkladJazdy();
 		int TR_KEY = 0;
 		String KUR_Sygnatura = null;
 		String TR_Skad = null;
@@ -200,13 +203,11 @@ public class FillingTables extends Main {
 				TR_Godzina_Przyjazdu = rsToSort.getString(8);
 				TR_Uwagi = rsToSort.getString(9);
 
-				products.add(new Rozk³ad_Jazdy(TR_KEY, KUR_Sygnatura, TR_Skad, TR_Dokad, TR_Przystanek, TR_Dni_Tygodnia,
+				products.add(new RozkladJazdy(TR_KEY, KUR_Sygnatura, TR_Skad, TR_Dokad, TR_Przystanek, TR_Dni_Tygodnia,
 						TR_Godzina_Odjazdu, TR_Godzina_Przyjazdu, TR_Uwagi));
-				// table8.getItems().add(rozklad);
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

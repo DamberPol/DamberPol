@@ -15,7 +15,6 @@ public class Rejestr_przejazdow {
 		this.REJ_data_start = null;
 		this.REJ_data_konc = null;
 		this.REJ_iloscOsob = 0;
-
 	}
 
 	public Rejestr_przejazdow(int REJ_KEY, String KUR_Miejsc_Startowa, String PR_Ulica, String REJ_data_start,
@@ -27,7 +26,6 @@ public class Rejestr_przejazdow {
 		this.REJ_data_start = REJ_data_start;
 		this.REJ_data_konc = REJ_data_konc;
 		this.REJ_iloscOsob = REJ_iloscOsob;
-
 	}
 
 	public int getREJ_KEY() {

@@ -1,6 +1,6 @@
 package application;
 
-public class Rozk³ad_Jazdy {
+public class RozkladJazdy {
 	private int TR_KEY;
 	private String KUR_Sygnatura;
 	private String TR_Skad;
@@ -11,7 +11,7 @@ public class Rozk³ad_Jazdy {
 	private String TR_Godzina_Przyjazdu;
 	private String TR_Uwagi;
 
-	public Rozk³ad_Jazdy() {
+	public RozkladJazdy() {
 		this.TR_KEY = 0;
 		this.KUR_Sygnatura = "";
 		this.TR_Skad = "";
@@ -21,10 +21,9 @@ public class Rozk³ad_Jazdy {
 		this.TR_Godzina_Odjazdu = "";
 		this.TR_Godzina_Przyjazdu = "";
 		this.TR_Uwagi = "";
-
 	}
 
-	public Rozk³ad_Jazdy(int TR_KEY, String KUR_Sygnatura, String TR_Skad, String TR_Dokad, String TR_Przystanek,
+	public RozkladJazdy(int TR_KEY, String KUR_Sygnatura, String TR_Skad, String TR_Dokad, String TR_Przystanek,
 			String TR_Dni_Tygodnia, String TR_Godzina_Odjazdu, String TR_Godzina_Przyjazdu, String TR_Uwagi) {
 
 		this.TR_KEY = TR_KEY;

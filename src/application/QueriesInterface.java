@@ -18,8 +18,8 @@ public interface QueriesInterface {
 	public ResultSet showAllTableRejestrPrzejazdow() throws SQLException;
 
 	public ResultSet showAllTableTrasy() throws SQLException;
-	
-	public ResultSet getResultForUser (String miejscowoscStartowa, String miejscowoscKoncowa) throws SQLException;
+
+	public ResultSet getResultForUser(String miejscowoscStartowa, String miejscowoscKoncowa) throws SQLException;
 
 	public void insertDataToAutokary(String AUT_Marka, String AUT_Model, int AUT_Rok_Prod, int AUT_Poj_Silnik,
 			int AUT_Spalanie, String AUT_Kategoria, int AUT_Ilosc_Miejsc, String AUT_NR_Rej) throws SQLException;
@@ -36,7 +36,7 @@ public interface QueriesInterface {
 
 	public void insertDataToPrzystanki(String MIE_Nazwa_Miejscow, String PR_Ulica) throws SQLException;
 
-	public void insertDataToTrasy(String miejscStartowa, String miejscKoncowa, String TR_Skad,String przystanekUlica,
+	public void insertDataToTrasy(String miejscStartowa, String miejscKoncowa, String TR_Skad, String przystanekUlica,
 			String TR_Dzien_tyg, String TR_Godzina_odjazdu, String TR_Godzina, String TR_Uwagi) throws SQLException;
 
 	public void insertDataToRaport(String KUR_Miejsc_Startowa, String KUR_Miejsc_Konco, String REJ_data_start,
@@ -53,6 +53,5 @@ public interface QueriesInterface {
 	public void deleteByIdPrzystanki(int id) throws SQLException;
 
 	public void deleteByIdTrasy(int id) throws SQLException;
-	
 
 }

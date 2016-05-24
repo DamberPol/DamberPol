@@ -75,6 +75,7 @@ public class Kursy {
 	public String setKUR_Opis(String kUR_Opis) {
 		return KUR_Opis = kUR_Opis;
 	}
+
 	public String setKUR_Miejsc_Konco(String KUR_Miejsc_Konco) {
 		return KUR_Miejsc_Konco;
 	}

@@ -11,13 +11,11 @@ import java.sql.Connection;
 import javafx.geometry.*;
 
 public class Loguj extends ConnectionToDB {
-	static boolean ansver;
+	static boolean userAnswer;
 
 	public static boolean display() {
 		Stage window = new Stage();
 
-		// String login = "user";
-		// String has³o = "user";
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle("Zaloguj");
 		window.setMinHeight(120);
@@ -56,18 +54,18 @@ public class Loguj extends ConnectionToDB {
 			ConnectionToDB connect = new ConnectionToDB();
 			Connection connection = connect.getConnection(user);
 			if (connection != null) {
-				ansver = true;
+				userAnswer = true;
 				window.close();
 			} else {
 				// TODO Powiadomienie w labelu o niepoprawnym loginie/hasle
-				ansver = false;
+				userAnswer = false;
 			}
 
 		});
 
 		Button closeButton = new Button("Zamknij");
 		closeButton.setOnAction(e -> {
-			ansver = false;
+			userAnswer = false;
 			window.close();
 		});
 
@@ -81,7 +79,7 @@ public class Loguj extends ConnectionToDB {
 		window.setScene(scene);
 
 		window.showAndWait();
-		return ansver;
+		return userAnswer;
 
 	}
 

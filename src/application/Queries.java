@@ -6,6 +6,8 @@ import java.sql.Statement;
 
 import com.sun.glass.ui.GestureSupport;
 
+import sun.rmi.runtime.Log;
+
 public class Queries extends ConnectionToDB implements QueriesInterface {
 	Statement stmt = makeStatement();
 
@@ -26,7 +28,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 			stmt.execute(getResultQuery);
 			rsResultForUser = stmt.getResultSet();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -240,6 +241,14 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 			System.out.println("Dane nie dodane do tabeli");
 			System.out.println(e);
 		}
+		/*
+		FillingTables fillTable = new FillingTables();
+		try {
+			fillTable.getProduct();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 	}
 
 	@Override
@@ -380,7 +389,6 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 					+ KUR_KEY + "," + REJ_data_start + "," + REJ_data_konc + "," + REJ_iloscOsob + ")";
 
 			System.out.println(insertRaport);
-
 			stmt.executeUpdate(insertRaport);
 
 			System.out.println("Raport z³o¿ony poprawnie");

@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class ConnectionToDB {
 	Connection connectionToDB = null;
 
-	public  Connection getConnection(String user) {
+	public Connection getConnection(String user) {
 
 		try {
 			String Connectionurl = "jdbc:sqlserver://localhost:1433;DatabaseName=master;user= " + user
