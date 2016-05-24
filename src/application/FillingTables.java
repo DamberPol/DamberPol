@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 
 public class FillingTables extends Main {
 
-	public ObservableList<Kierowcy> getProduct() throws SQLException {
+	public ObservableList<Kierowcy> fillTableKierowcy() throws SQLException {
 		ObservableList<Kierowcy> products = FXCollections.observableArrayList();
 		ResultSet rsKierowcy = queries.showAllTableKierowcy();
 		int id = 0;
@@ -31,7 +31,7 @@ public class FillingTables extends Main {
 		return products;
 	}
 
-	public ObservableList<Przystanki> getProduct2() throws SQLException {
+	public ObservableList<Przystanki> fillTablePrzystanki() throws SQLException {
 		ObservableList<Przystanki> products = FXCollections.observableArrayList();
 		ResultSet rsPrzystanki = queries.showAllTablePrzystanki();
 		int PR_KEY = 0;
@@ -48,7 +48,7 @@ public class FillingTables extends Main {
 		return products;
 	}
 
-	public ObservableList<Trasa> getProduct3() throws SQLException {
+	public ObservableList<Trasa> fillTableTrasa() throws SQLException {
 		ObservableList<Trasa> products = FXCollections.observableArrayList();
 		ResultSet rsPrzystanki = queries.showAllTableTrasy();
 		int TR_KEY = 0;
@@ -77,7 +77,7 @@ public class FillingTables extends Main {
 		return products;
 	}
 
-	public ObservableList<Autokary> getProduct4() throws SQLException {
+	public ObservableList<Autokary> fillTableAutokary() throws SQLException {
 		ObservableList<Autokary> products = FXCollections.observableArrayList();
 		ResultSet rsAutokary = queries.showAllTableAutokary();
 		int AUT_KEY = 0;
@@ -106,7 +106,7 @@ public class FillingTables extends Main {
 		return products;
 	}
 
-	public ObservableList<Kursy> getProduct5() throws SQLException {
+	public ObservableList<Kursy> fillTableKursy() throws SQLException {
 		ObservableList<Kursy> products = FXCollections.observableArrayList();
 		ResultSet rsKursy = queries.showAllTableKursy();
 		int KUR_KEY = 0;
@@ -133,7 +133,7 @@ public class FillingTables extends Main {
 		return products;
 	}
 
-	public ObservableList<Miejscowosci> getProduct6() throws SQLException {
+	public ObservableList<Miejscowosci> fillTableMiejscowosci() throws SQLException {
 		ObservableList<Miejscowosci> products = FXCollections.observableArrayList();
 		ResultSet rsMiejscowosci = queries.showAllTableMiejscowosci();
 		int MIE_KEY = 0;
@@ -153,7 +153,7 @@ public class FillingTables extends Main {
 		return products;
 	}
 
-	public ObservableList<Rejestr_przejazdow> getProduct7() throws SQLException {
+	public ObservableList<Rejestr_przejazdow> fillTableRejestrPrzejazdow() throws SQLException {
 		ObservableList<Rejestr_przejazdow> products = FXCollections.observableArrayList();
 
 		int REJ_KEY = 0;

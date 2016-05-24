@@ -112,10 +112,9 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdAutokary(int id) throws SQLException {
-		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[AUTOKARY] WHERE AUT_KEY= " + id);
-			System.out.println("Rejestr o podanym ID poprawnie usuniêty");
+			System.out.println("Rejestr o podanym ID: "+id+" poprawnie usuniêty");
 		} catch (Exception e) {
 			System.out.println("Problem z usunieciem rekordu");
 			System.out.println(e);
@@ -125,10 +124,9 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdKierowcy(int id) throws SQLException {
-		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[KIEROWCY] WHERE KIE_KEY= " + id);
-			System.out.println("Rejestr o podanym ID poprawnie usuniêty");
+			System.out.println("Rejestr o podanym ID: "+id+"poprawnie usuniêty");
 		} catch (Exception e) {
 			System.out.println("Problem z usunieciem rekordu");
 			System.out.println(e);
@@ -138,12 +136,9 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdKursy(int id) throws SQLException {
-		//getConnection(user);
-		//Statement stmt = connectionToDB.createStatement();
-		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[KURSY] WHERE KUR_KEY= " + id);
-			System.out.println("Rejestr o podanym ID poprawnie usuniêty");
+			System.out.println("Rejestr o podanym ID: "+id+" poprawnie usuniêty");
 		} catch (Exception e) {
 			System.out.println("Problem z usunieciem rekordu");
 			System.out.println(e);
@@ -153,12 +148,9 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdMiejscowosci(int id) throws SQLException {
-		//getConnection(user);
-		//Statement stmt = connectionToDB.createStatement();
-		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[MIEJSCOWOSCI] WHERE MIE_KEY= " + id);
-			System.out.println("Rejestr o podanym ID poprawnie usuniêty");
+			System.out.println("Rejestr o podanym ID: "+id+" poprawnie usuniêty");
 		} catch (Exception e) {
 			System.out.println("Problem z usunieciem rekordu");
 			System.out.println(e);
@@ -168,12 +160,9 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdPrzystanki(int id) throws SQLException {
-		//getConnection(user);
-		//Statement stmt = connectionToDB.createStatement();
-		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[PRZYSTANKI] WHERE PR_KEY= " + id);
-			System.out.println("Rejestr o podanym ID poprawnie usuniêty");
+			System.out.println("Rejestr o podanym ID: "+id+" poprawnie usuniêty");
 		} catch (Exception e) {
 			System.out.println("Problem z usunieciem rekordu");
 			System.out.println(e);
@@ -183,10 +172,9 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 
 	@Override
 	public void deleteByIdTrasy(int id) throws SQLException {
-		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[TRASA] WHERE TR_KEY= " + id);
-			System.out.println("Rejestr o podanym ID poprawnie usuniêty");
+			System.out.println("Rejestr o podanym ID: "+id+" poprawnie usuniêty");
 		} catch (Exception e) {
 			System.out.println("Problem z usunieciem rekordu");
 			System.out.println(e);
@@ -195,10 +183,9 @@ public class Queries extends ConnectionToDB implements QueriesInterface {
 	}
 
 	public void deleteByIdRejestrPrzejazdow(int id) throws SQLException {
-		System.out.println(id);
 		try {
 			stmt.execute("DELETE FROM [master].[dbo].[REJESTR_PRZEJAZDOW] WHERE REJ_KEY= " + id);
-			System.out.println("Rejestr o podanym ID poprawnie usuniêty");
+			System.out.println("Rejestr o podanym ID: "+id+" poprawnie usuniêty");
 		} catch (Exception e) {
 			System.out.println("Problem z usunieciem rekordu");
 			System.out.println(e);

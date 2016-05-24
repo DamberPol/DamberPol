@@ -33,7 +33,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	Stage window;
-	Scene scenaOknoPowitalne, scenaRozkladJazdy, scene3, scenePanelDyzurnego, scene5, scene6, scene7, scene8, scene9, scene10;
+	Scene scenaOknoPowitalne, scenaRozkladJazdy, scene3, scenePanelDyzurnego, scene5, scene6, scene7, scene8, scene9,
+			scene10;
 	Button przyciskDoPaneluLogowania, przyciskDoOknaKlienta, btnWyszukajPolaczenia, btnCofnij;
 	Label labelPowitalny, odstep, odstep1, odstep2, labelRozk³adJazdy, odjazdLabel, przyjazdLabel;
 	BorderPane oknoPowitalne, layout2, bordePaneDlaOkna3, bordePaneDlaOkna4, bordePaneDlaOkna5, bordePaneDlaOkna6,
@@ -46,13 +47,13 @@ public class Main extends Application {
 	MenuBar menuBar, menuBar1, menuBar3, menuBar4, menuBar5, menuBar6, menuBar7, menuBar8;
 	Boolean rezultat;
 	TreeView<String> tree3, tree2, tree, tree4, tree5, tree6, tree7, tree8;
-	TableView<Kierowcy> table;
-	TableView<Przystanki> table2;
-	TableView<Trasa> table3;
-	TableView<Autokary> table4;
-	TableView<Kursy> table5;
-	TableView<Miejscowosci> table6;
-	TableView<Rejestr_przejazdow> table7;
+	TableView<Kierowcy> tableKierowcy;
+	TableView<Przystanki> tablePrzystanki;
+	TableView<Trasa> tableTrasa;
+	TableView<Autokary> tableAutokary;
+	TableView<Kursy> tableKursy;
+	TableView<Miejscowosci> tableMiejscowosci;
+	TableView<Rejestr_przejazdow> tableRejestrPrzejazdow;
 	TableView<RozkladJazdy> tableRozkladJazdy;
 	TextField nameInput, nazwiskoInput, peselInput, dataInput, iDPrzystaniki, iDMiejscowsci, inputulica, trasaKursStart,
 			trasaGodzinaPrzyjazdu, trasaKursKoniec, trasaMiejscowoscStartowa, trasaMiejscowoscKoncowa, trasaPrzystanek,
@@ -381,7 +382,7 @@ public class Main extends Application {
 			rezultat = checkbox.display();
 			if (rezultat == true) {
 
-				deltebuttonClicked();
+				btnDeleteKierowcy();
 			}
 		});
 
@@ -390,17 +391,16 @@ public class Main extends Application {
 		hbox.setSpacing(10);
 		hbox.getChildren().addAll(nameInput, nazwiskoInput, peselInput, dataInput, addbutton, deltebutton);
 
-		table = new TableView<>();
-		table.setItems(fillTable.getProduct());
-		table.getColumns().addAll(idColumn, nameColumn, nazwiskoColumn, peselColumn, dataColumn);
+		tableKierowcy = new TableView<>();
+		tableKierowcy.setItems(fillTable.fillTableKierowcy());
+		tableKierowcy.getColumns().addAll(idColumn, nameColumn, nazwiskoColumn, peselColumn, dataColumn);
 
 		VBox layout = new VBox();
-		layout.getChildren().addAll(table, hbox);
+		layout.getChildren().addAll(tableKierowcy, hbox);
 
 		bordePaneDlaOkna3.setTop(menuBar);
 		bordePaneDlaOkna3.setLeft(tree2);
 		bordePaneDlaOkna3.setCenter(layout);
-
 
 		bordePaneDlaOkna4 = new BorderPane();
 		scenePanelDyzurnego = new Scene(bordePaneDlaOkna4, 1250, 480);
@@ -430,9 +430,9 @@ public class Main extends Application {
 		menuBar3 = new MenuBar();
 		menuBar3.getMenus().addAll(filemenu);
 
-		TableColumn<Przystanki, String> idPrzystaniki = new TableColumn<>("Klucz przystanku");
-		idPrzystaniki.setMinWidth(200);
-		idPrzystaniki.setCellValueFactory(new PropertyValueFactory<>("PR_KEY"));
+		TableColumn<Przystanki, String> idPrzystanku = new TableColumn<>("Klucz przystanku");
+		idPrzystanku.setMinWidth(200);
+		idPrzystanku.setCellValueFactory(new PropertyValueFactory<>("PR_KEY"));
 
 		TableColumn<Przystanki, String> IdMiejscowsci = new TableColumn<>("Nazwa miejscowosci");
 		IdMiejscowsci.setMinWidth(200);
@@ -458,7 +458,7 @@ public class Main extends Application {
 			rezultat = checkbox.display();
 			if (rezultat == true) {
 
-				deltebutton2Clicked();
+				btnDeletePrzystanki();
 			}
 		});
 
@@ -467,9 +467,9 @@ public class Main extends Application {
 		hbox2.setSpacing(10);
 		hbox2.getChildren().addAll(iDMiejscowsci, inputulica, addbutton2, deltebutton2);
 
-		table2 = new TableView<>();
-		table2.getColumns().addAll(idPrzystaniki, IdMiejscowsci, ulicacolumn);
-		table2.setItems(fillTable.getProduct2());
+		tablePrzystanki = new TableView<>();
+		tablePrzystanki.getColumns().addAll(idPrzystanku, IdMiejscowsci, ulicacolumn);
+		tablePrzystanki.setItems(fillTable.fillTablePrzystanki());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -494,7 +494,7 @@ public class Main extends Application {
 		});
 
 		VBox layout2 = new VBox();
-		layout2.getChildren().addAll(table2, hbox2);
+		layout2.getChildren().addAll(tablePrzystanki, hbox2);
 
 		bordePaneDlaOkna5.setTop(menuBar3);
 		bordePaneDlaOkna5.setLeft(tree3);
@@ -585,7 +585,7 @@ public class Main extends Application {
 			rezultat = checkbox.display();
 			if (rezultat == true) {
 
-				deltebutton3Clicked();
+				btnDeleteTrasa();
 			}
 		});
 
@@ -596,10 +596,10 @@ public class Main extends Application {
 				trasaGodzinaOdjazdu, trasaGodzinaPrzyjazdu, trasaDzienTygodnia, trasaUwagi, trasaAddButton,
 				trasaDeleteButton);
 		// TODO
-		table3 = new TableView<>();
-		table3.getColumns().addAll(idTrasy, IdKursy, trasyMiejscStartowa, trasyMiejscKonco, IdPrzystanki,
+		tableTrasa = new TableView<>();
+		tableTrasa.getColumns().addAll(idTrasy, IdKursy, trasyMiejscStartowa, trasyMiejscKonco, IdPrzystanki,
 				godzinaOdjazducolumn, godzinacolumn, dzientygcolumn, uwagicolumn);
-		table3.setItems(fillTable.getProduct3());
+		tableTrasa.setItems(fillTable.fillTableTrasa());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -624,7 +624,7 @@ public class Main extends Application {
 		});
 
 		VBox layout3 = new VBox();
-		layout3.getChildren().addAll(table3, hbox3);
+		layout3.getChildren().addAll(tableTrasa, hbox3);
 
 		bordePaneDlaOkna6.setTop(menuBar4);
 		bordePaneDlaOkna6.setLeft(tree4);
@@ -708,7 +708,7 @@ public class Main extends Application {
 		numerRejestracyjny.setMinWidth(150);
 
 		addbutton4 = new Button("Add");
-		addbutton4.setOnAction(e -> addbutton4Clicked());
+		addbutton4.setOnAction(e -> btnAddAutokary());
 		addbutton4.setMinWidth(50);
 		deltebutton4 = new Button("Delete");
 		deltebutton4.setOnAction(e -> {
@@ -716,7 +716,7 @@ public class Main extends Application {
 			rezultat = checkbox.display();
 			if (rezultat == true) {
 
-				deltebutton4Clicked();
+				btnDeleteAutokary();
 			}
 		});
 
@@ -728,10 +728,10 @@ public class Main extends Application {
 		hbox4.getChildren().addAll(markaInput, modelInput, rokProdukcjiInput, pojemnoscSilnikaInput, spalanieInput,
 				katAutokaruInput, iloscMiejsInput, numerRejestracyjny, addbutton4, deltebutton4);
 
-		table4 = new TableView<>();
-		table4.getColumns().addAll(idAutokarucolumn, Markacolumn, Modelcolumn, rokProdukcjicolumn,
+		tableAutokary = new TableView<>();
+		tableAutokary.getColumns().addAll(idAutokarucolumn, Markacolumn, Modelcolumn, rokProdukcjicolumn,
 				pojemnoscSilnikacolumn, spalaniecolumn, KatAutokarucolumn, iloscMiejscColumn, nrRejstracjiColumn);
-		table4.setItems(fillTable.getProduct4());
+		tableAutokary.setItems(fillTable.fillTableAutokary());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -756,7 +756,7 @@ public class Main extends Application {
 		});
 
 		VBox layout4 = new VBox();
-		layout4.getChildren().addAll(table4, hbox4);
+		layout4.getChildren().addAll(tableAutokary, hbox4);
 
 		bordePaneDlaOkna7.setTop(menuBar5);
 		bordePaneDlaOkna7.setLeft(tree5);
@@ -832,7 +832,7 @@ public class Main extends Application {
 		kursCzasPrzyjazduInput.setMinWidth(50);
 
 		addbutton5 = new Button("Add");
-		addbutton5.setOnAction(e -> addbutton5Clicked());
+		addbutton5.setOnAction(e -> btnAddKursy());
 		addbutton5.setMinWidth(50);
 
 		deltebutton5 = new Button("Delete");
@@ -841,7 +841,7 @@ public class Main extends Application {
 			rezultat = checkbox.display();
 			if (rezultat == true) {
 
-				deltebutton5Clicked();
+				btnDeleteKursy();
 			}
 		});
 
@@ -853,10 +853,10 @@ public class Main extends Application {
 		hbox5.getChildren().addAll(idAutaInput, idKierowcyInput, kursSygnaturaKursuInput, kursMiejscStartowa,
 				kursOpisInput, kursCzasOdjazduInput, kursCzasPrzyjazduInput, addbutton5, deltebutton5);
 
-		table5 = new TableView<>();
-		table5.getColumns().addAll(columnIdKurs, columnIdAuta, columnKierowcyInput, columnSygnaturaKursu,
+		tableKursy = new TableView<>();
+		tableKursy.getColumns().addAll(columnIdKurs, columnIdAuta, columnKierowcyInput, columnSygnaturaKursu,
 				columnMiejscStartowa, columnMiejscKoncowa, columnKursCzasOdjazd, columnKursCzasprzyjazdu);
-		table5.setItems(fillTable.getProduct5());
+		tableKursy.setItems(fillTable.fillTableKursy());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -881,7 +881,7 @@ public class Main extends Application {
 		});
 
 		VBox layout5 = new VBox();
-		layout5.getChildren().addAll(table5, hbox5);
+		layout5.getChildren().addAll(tableKursy, hbox5);
 
 		bordePaneDlaOkna8.setTop(menuBar6);
 		bordePaneDlaOkna8.setLeft(tree6);
@@ -933,7 +933,7 @@ public class Main extends Application {
 		gminaInput.setMinWidth(50);
 
 		addbutton6 = new Button("Add");
-		addbutton6.setOnAction(e -> addbutton6Clicked());
+		addbutton6.setOnAction(e -> btnAddMiejscowosci());
 		addbutton6.setMinWidth(50);
 
 		deltebutton6 = new Button("Delete");
@@ -942,7 +942,7 @@ public class Main extends Application {
 			rezultat = checkbox.display();
 			if (rezultat == true) {
 
-				deltebutton6Clicked();
+				btnDeleteMiejscowosci();
 			}
 		});
 
@@ -954,10 +954,10 @@ public class Main extends Application {
 		hbox6.getChildren().addAll(nazwaMiejscowosciInput, wojewodztwoInput, powiatInput, gminaInput, addbutton6,
 				deltebutton6);
 
-		table6 = new TableView<>();
-		table6.getColumns().addAll(columnIDmiejscow, columnNazwaMiejscowosci, columnWojewodztwo, columnPowiat,
-				columnGmina);
-		table6.setItems(fillTable.getProduct6());
+		tableMiejscowosci = new TableView<>();
+		tableMiejscowosci.getColumns().addAll(columnIDmiejscow, columnNazwaMiejscowosci, columnWojewodztwo,
+				columnPowiat, columnGmina);
+		tableMiejscowosci.setItems(fillTable.fillTableMiejscowosci());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -984,7 +984,7 @@ public class Main extends Application {
 		});
 
 		VBox layout6 = new VBox();
-		layout6.getChildren().addAll(table6, hbox6);
+		layout6.getChildren().addAll(tableMiejscowosci, hbox6);
 
 		bordePaneDlaOkna9.setTop(menuBar7);
 		bordePaneDlaOkna9.setLeft(tree7);
@@ -1044,7 +1044,7 @@ public class Main extends Application {
 		rejestrIloscOsobInput.setMinWidth(50);
 
 		addbutton7 = new Button("Add");
-		addbutton7.setOnAction(e -> addbutton7Clicked());
+		addbutton7.setOnAction(e -> btnAddRejestrPrzejazdow());
 		addbutton7.setMinWidth(50);
 
 		deltebutton7 = new Button("Delete");
@@ -1053,7 +1053,7 @@ public class Main extends Application {
 			rezultat = checkbox.display();
 			if (rezultat == true) {
 
-				deltebutton7Clicked();
+				btnDeleteRejestrPrzejazdow();
 			}
 		});
 
@@ -1065,10 +1065,10 @@ public class Main extends Application {
 		hbox7.getChildren().addAll(reIdKursyInput, txtColRejestrPrzystanek, txtColRejestrDataStart,
 				txtColRejestrDataKoniec, rejestrIloscOsobInput, addbutton7, deltebutton7);
 
-		table7 = new TableView<>();
-		table7.getColumns().addAll(columnIdrejest, columnIDkurs, columnRejestdata, columnOdDnia, columnDoDnia,
-				columnIloscOsub);
-		table7.setItems(fillTable.getProduct7());
+		tableRejestrPrzejazdow = new TableView<>();
+		tableRejestrPrzejazdow.getColumns().addAll(columnIdrejest, columnIDkurs, columnRejestdata, columnOdDnia,
+				columnDoDnia, columnIloscOsub);
+		tableRejestrPrzejazdow.setItems(fillTable.fillTableRejestrPrzejazdow());
 
 		treeitem = new TreeItem<>("Spis opcji");
 		treeitem.setExpanded(true);
@@ -1093,7 +1093,7 @@ public class Main extends Application {
 		});
 
 		VBox layout7 = new VBox();
-		layout7.getChildren().addAll(table7, hbox7);
+		layout7.getChildren().addAll(tableRejestrPrzejazdow, hbox7);
 
 		bordePaneDlaOkna10.setTop(menuBar8);
 		bordePaneDlaOkna10.setLeft(tree8);
@@ -1119,16 +1119,16 @@ public class Main extends Application {
 		String KIE_Nazwisko = "'" + kierowca.setNazwisko(nazwiskoInput.getText()) + "'";
 		String KIE_Pesel = "'" + kierowca.setPesel(peselInput.getText()) + "'";
 		String KIE_Data_zatr = "'" + kierowca.setDatazatrudnienia(dataInput.getText()) + "'";
-		
+
 		queries.insertDataToKierowcy(KIE_Imie, KIE_Nazwisko, KIE_Pesel, KIE_Data_zatr);
-/*
+
 		FillingTables fillTable = new FillingTables();
 		try {
-			table.setItems(fillTable.getProduct());
+			tableKierowcy.setItems(fillTable.fillTableKierowcy());
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		*/
+
 		nameInput.clear();
 		nazwiskoInput.clear();
 		peselInput.clear();
@@ -1138,12 +1138,19 @@ public class Main extends Application {
 
 	public void btnAddPrzystanki() {
 		Przystanki przystanki = new Przystanki();
-		
+
 		String MIE_Nazwa_Miejscow = "'" + przystanki.setMIE_KEY(iDMiejscowsci.getText()) + "'";
 		String PR_Ulica = "'" + przystanki.setPR_Ulica(inputulica.getText()) + "'";
-		
-		table2.getItems().add(przystanki);
+
+		tablePrzystanki.getItems().add(przystanki);
 		queries.insertDataToPrzystanki(MIE_Nazwa_Miejscow, PR_Ulica);
+
+		FillingTables fillTable = new FillingTables();
+		try {
+			tablePrzystanki.setItems(fillTable.fillTablePrzystanki());
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		
 		iDMiejscowsci.clear();
 		inputulica.clear();
@@ -1163,7 +1170,13 @@ public class Main extends Application {
 
 		queries.insertDataToTrasy(trasaKursStartowa, trasaKursKoncowa, TR_Skad, MIE_Nazwa_Miejscow, TR_Dzien_tyg,
 				TR_Godzina_odjazdu, TR_Godzina, TR_Uwagi);
-		table3.getItems().add(trasa);
+		
+		FillingTables fillTable = new FillingTables();
+		try {
+			tableTrasa.setItems(fillTable.fillTableTrasa());
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 
 		trasaKursStart.clear();
 		trasaKursKoniec.clear();
@@ -1176,7 +1189,7 @@ public class Main extends Application {
 
 	}
 
-	public void addbutton4Clicked() {
+	public void btnAddAutokary() {
 		Autokary autokary = new Autokary();
 
 		String AUT_Marka = "'" + autokary.setAUT_Marka(modelInput.getText()) + "'";
@@ -1189,9 +1202,14 @@ public class Main extends Application {
 		String AUT_NR_Rej = "'" + autokary.setAUT_Nr_rejestracji(numerRejestracyjny.getText()) + "')";
 		queries.insertDataToAutokary(AUT_Marka, AUT_Model, AUT_Rok_Prod, AUT_Poj_Silnik, AUT_Spalanie, AUT_Kategoria,
 				AUT_Ilosc_Miejsc, AUT_NR_Rej);
-		table4.getItems().add(autokary);
+		
+		FillingTables fillTable = new FillingTables();
+		try {
+			tableAutokary.setItems(fillTable.fillTableAutokary());
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 
-		// idAutokaruInput.clear();
 		modelInput.clear();
 		markaInput.clear();
 		rokProdukcjiInput.clear();
@@ -1202,7 +1220,7 @@ public class Main extends Application {
 		numerRejestracyjny.clear();
 	}
 
-	public void addbutton5Clicked() {
+	public void btnAddKursy() {
 		Kursy kursy = new Kursy();
 
 		String numerRejAutokary = "'" + kursy.setAUT_KEY(idAutaInput.getText()) + "'";
@@ -1215,9 +1233,15 @@ public class Main extends Application {
 
 		queries.insertDataToKursy(KIE_Pesel, numerRejAutokary, KUR_Sygnatura_Kursu, KUR_Miejsc_Start, KUR_Miejsc_Konco,
 				KUR_Czas_Odjazdu, KUR_Czas_Przyjazdu);
-		table5.getItems().add(kursy);
+		
+		FillingTables fillTable = new FillingTables();
+		try {
+			tableKursy.setItems(fillTable.fillTableKursy());
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		
 		// TODO Dodaje poprawnie do bazy, niepoprawnie do kolumn
-		// IdKursInput.clear();
 		idAutaInput.clear();
 		idKierowcyInput.clear();
 		kursSygnaturaKursuInput.clear();
@@ -1227,25 +1251,21 @@ public class Main extends Application {
 		kursCzasPrzyjazduInput.clear();
 	}
 
-	public void addbutton6Clicked() {
+	public void btnAddMiejscowosci() {
 		Miejscowosci miejscowosci = new Miejscowosci();
 
 		String MIE_Nazwa_Miejscow = "'" + miejscowosci.setMIE_Nazwa_Miejscow(nazwaMiejscowosciInput.getText()) + "'";
 		String MIE_Wojewodztwo = "'" + miejscowosci.setMIE_Wojewodztwo(wojewodztwoInput.getText()) + "'";
 		String MIE_Powiat = "'" + miejscowosci.setMIE_Powiat(powiatInput.getText()) + "'";
 		String MIE_Gmina = "'" + miejscowosci.setMIE_Gmina(gminaInput.getText()) + "'";
+
 		queries.insertDataToMiejscowosci(MIE_Nazwa_Miejscow, MIE_Wojewodztwo, MIE_Powiat, MIE_Gmina);
 
-		table6.getItems().add(miejscowosci);
-
-		// TODO Nieskonczona proba oswiezania tabeli po dodaniu rekordu
 		FillingTables fillTable = new FillingTables();
 		try {
-			fillTable.getProduct6();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			tableMiejscowosci.setItems(fillTable.fillTableMiejscowosci());
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
 		nazwaMiejscowosciInput.clear();
 		wojewodztwoInput.clear();
@@ -1254,7 +1274,7 @@ public class Main extends Application {
 
 	}
 
-	public void addbutton7Clicked() {
+	public void btnAddRejestrPrzejazdow() {
 		Rejestr_przejazdow rejestr = new Rejestr_przejazdow();
 
 		String KUR_Miejsc_Startowa = "'" + rejestr.setKUR_Miejsc_Startowa(reIdKursyInput.getText()) + "'";
@@ -1263,8 +1283,13 @@ public class Main extends Application {
 		String REJ_data_konc = "'" + rejestr.setREJ_data_konc(txtColRejestrDataKoniec.getText()) + "'";
 		int REJ_iloscOsob = rejestr.setREJ_iloscOsob(Integer.parseInt(rejestrIloscOsobInput.getText()));
 		queries.insertDataToRaport(KUR_Miejsc_Startowa, KUR_Miejsc_Konco, REJ_data_start, REJ_data_konc, REJ_iloscOsob);
-		table7.getItems().add(rejestr);
 
+		FillingTables fillTable = new FillingTables();
+		try {
+			tableRejestrPrzejazdow.setItems(fillTable.fillTableRejestrPrzejazdow());
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		IdRejstrówPrzejazdówInput.clear();
 		reIdKursyInput.clear();
 		txtColRejestrPrzystanek.clear();
@@ -1274,116 +1299,128 @@ public class Main extends Application {
 
 	}
 
-	public void deltebuttonClicked() {
-
-		ObservableList<Kierowcy> productSelected, allProducts;
-		allProducts = table.getItems();
-		productSelected = table.getSelectionModel().getSelectedItems();
+	public void btnDeleteKierowcy() {
+		ObservableList<Kierowcy> productSelected;
+		tableKierowcy.getItems();
+		productSelected = tableKierowcy.getSelectionModel().getSelectedItems();
 		Kierowcy selectedKierowcy = productSelected.get(0);
 		int id = selectedKierowcy.getId();
-
+		
+		FillingTables fillTable = new FillingTables();
 		try {
 			queries.deleteByIdKierowcy(id);
-			productSelected.forEach(allProducts::remove);
+			tableKierowcy.setItems(fillTable.fillTableKierowcy());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void deltebutton2Clicked() {
-		ObservableList<Przystanki> productSelected, allProducts;
-		allProducts = table2.getItems();
-		productSelected = table2.getSelectionModel().getSelectedItems();
+	public void btnDeletePrzystanki() {
+		ObservableList<Przystanki> productSelected;
+		tablePrzystanki.getItems();
+		productSelected = tablePrzystanki.getSelectionModel().getSelectedItems();
 
 		Przystanki selectedPrzystanki = productSelected.get(0);
 		int id = selectedPrzystanki.getPR_KEY();
+		
+		FillingTables fillTable = new FillingTables();
 
 		try {
 			queries.deleteByIdPrzystanki(id);
-			productSelected.forEach(allProducts::remove);
-		} catch (SQLException e) {
+			tablePrzystanki.setItems(fillTable.fillTablePrzystanki());
+			} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void deltebutton3Clicked() {
-		ObservableList<Trasa> productSelected, allProducts;
-		allProducts = table3.getItems();
-		productSelected = table3.getSelectionModel().getSelectedItems();
+	public void btnDeleteTrasa() {
+		ObservableList<Trasa> productSelected;
+		tableTrasa.getItems();
+		productSelected = tableTrasa.getSelectionModel().getSelectedItems();
 		Trasa selectedTrasa = productSelected.get(0);
 		int id = selectedTrasa.getTR_KEY();
+		
+		FillingTables fillTable = new FillingTables();
 
 		try {
 			queries.deleteByIdTrasy(id);
-			productSelected.forEach(allProducts::remove);
+			tableTrasa.setItems(fillTable.fillTableTrasa());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void deltebutton4Clicked() {
-		ObservableList<Autokary> productSelected, allProducts;
-		allProducts = table4.getItems();
-		productSelected = table4.getSelectionModel().getSelectedItems();
+	public void btnDeleteAutokary() {
+		ObservableList<Autokary> productSelected;
+		tableAutokary.getItems();
+		productSelected = tableAutokary.getSelectionModel().getSelectedItems();
 
 		Autokary selectedAutokary = productSelected.get(0);
 		int id = selectedAutokary.getAUT_KEY();
+		
+		FillingTables fillTable = new FillingTables();
 
 		try {
 			queries.deleteByIdAutokary(id);
-			productSelected.forEach(allProducts::remove);
-		} catch (SQLException e) {
+			tableAutokary.setItems(fillTable.fillTableAutokary());
+			} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public void deltebutton5Clicked() {
-		ObservableList<Kursy> productSelected, allProducts;
-		allProducts = table5.getItems();
-		productSelected = table5.getSelectionModel().getSelectedItems();
+	public void btnDeleteKursy() {
+		ObservableList<Kursy> productSelected;
+		tableKursy.getItems();
+		productSelected = tableKursy.getSelectionModel().getSelectedItems();
 
 		Kursy selectedKursy = productSelected.get(0);
 		int id = selectedKursy.getKUR_KEY();
+		
+		FillingTables fillTable = new FillingTables();
 
 		try {
 			queries.deleteByIdKursy(id);
-			productSelected.forEach(allProducts::remove);
-		} catch (SQLException e) {
+			tableKursy.setItems(fillTable.fillTableKursy());
+			} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public void deltebutton6Clicked() {
-		ObservableList<Miejscowosci> productSelected, allProducts;
-		allProducts = table6.getItems();
-		productSelected = table6.getSelectionModel().getSelectedItems();
+	public void btnDeleteMiejscowosci() {
+		ObservableList<Miejscowosci> productSelected;
+		tableMiejscowosci.getItems();
+		productSelected = tableMiejscowosci.getSelectionModel().getSelectedItems();
 
 		Miejscowosci selectedMiejscowosci = productSelected.get(0);
 		int id = selectedMiejscowosci.getMIE_KEY();
+		
+		FillingTables fillTable = new FillingTables();
 
 		try {
 			queries.deleteByIdMiejscowosci(id);
-			productSelected.forEach(allProducts::remove);
-		} catch (SQLException e) {
+			tableMiejscowosci.setItems(fillTable.fillTableMiejscowosci());
+			} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public void deltebutton7Clicked() {
-		ObservableList<Rejestr_przejazdow> productSelected, allProducts;
-		allProducts = table7.getItems();
-		productSelected = table7.getSelectionModel().getSelectedItems();
+	public void btnDeleteRejestrPrzejazdow() {
+		ObservableList<Rejestr_przejazdow> productSelected;
+		tableRejestrPrzejazdow.getItems();
+		productSelected = tableRejestrPrzejazdow.getSelectionModel().getSelectedItems();
 
 		Rejestr_przejazdow selectedRejestrPrzejazdow = productSelected.get(0);
 		int id = selectedRejestrPrzejazdow.getREJ_KEY();
+		
+		FillingTables fillTable = new FillingTables();
 
 		try {
 			queries.deleteByIdRejestrPrzejazdow(id);
-			productSelected.forEach(allProducts::remove);
-		} catch (SQLException e) {
+			tableRejestrPrzejazdow.setItems(fillTable.fillTableRejestrPrzejazdow());
+			} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
