@@ -7,25 +7,21 @@ public class Product {
 	private int pesel;
 	private String datazatrudnienia;
 
-	
-	public Product(){
-		this.Id=0;
-		this.name="";
-		this.nazwisko="";
-		this.pesel= 0;
-		this.datazatrudnienia="";
-		
+	public Product() {
+		this.Id = 0;
+		this.name = null;
+		this.nazwisko = null;
+		this.pesel = 0;
+		this.datazatrudnienia = null;
 	}
-	
-	public Product(	int Id, String name, String nazwisko, int pesel, String datazatrudnienia)
-	{
 
-		this.Id= Id;
-		this.name=name;
-		this.nazwisko=nazwisko;
-		this.pesel= pesel;
-		this.datazatrudnienia=datazatrudnienia;
-		
+	public Product(int Id, String name, String nazwisko, int pesel, String datazatrudnienia) {
+
+		this.Id = Id;
+		this.name = name;
+		this.nazwisko = nazwisko;
+		this.pesel = pesel;
+		this.datazatrudnienia = datazatrudnienia;
 	}
 
 	public int getId() {
@@ -68,6 +64,4 @@ public class Product {
 		this.datazatrudnienia = datazatrudnienia;
 	}
 
-
-	
 }
