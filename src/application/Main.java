@@ -595,7 +595,7 @@ public class Main extends Application {
 		hbox3.getChildren().addAll(trasaKursStart, trasaKursKoniec, trasaMiejscowoscStartowa, trasaMiejscowoscKoncowa,
 				trasaGodzinaOdjazdu, trasaGodzinaPrzyjazdu, trasaDzienTygodnia, trasaUwagi, trasaAddButton,
 				trasaDeleteButton);
-		// TODO
+		
 		tableTrasa = new TableView<>();
 		tableTrasa.getColumns().addAll(idTrasy, IdKursy, trasyMiejscStartowa, trasyMiejscKonco, IdPrzystanki,
 				godzinaOdjazducolumn, godzinacolumn, dzientygcolumn, uwagicolumn);
@@ -1151,7 +1151,7 @@ public class Main extends Application {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		iDMiejscowsci.clear();
 		inputulica.clear();
 
@@ -1170,7 +1170,7 @@ public class Main extends Application {
 
 		queries.insertDataToTrasy(trasaKursStartowa, trasaKursKoncowa, TR_Skad, MIE_Nazwa_Miejscow, TR_Dzien_tyg,
 				TR_Godzina_odjazdu, TR_Godzina, TR_Uwagi);
-		
+
 		FillingTables fillTable = new FillingTables();
 		try {
 			tableTrasa.setItems(fillTable.fillTableTrasa());
@@ -1202,7 +1202,7 @@ public class Main extends Application {
 		String AUT_NR_Rej = "'" + autokary.setAUT_Nr_rejestracji(numerRejestracyjny.getText()) + "')";
 		queries.insertDataToAutokary(AUT_Marka, AUT_Model, AUT_Rok_Prod, AUT_Poj_Silnik, AUT_Spalanie, AUT_Kategoria,
 				AUT_Ilosc_Miejsc, AUT_NR_Rej);
-		
+
 		FillingTables fillTable = new FillingTables();
 		try {
 			tableAutokary.setItems(fillTable.fillTableAutokary());
@@ -1233,15 +1233,14 @@ public class Main extends Application {
 
 		queries.insertDataToKursy(KIE_Pesel, numerRejAutokary, KUR_Sygnatura_Kursu, KUR_Miejsc_Start, KUR_Miejsc_Konco,
 				KUR_Czas_Odjazdu, KUR_Czas_Przyjazdu);
-		
+
 		FillingTables fillTable = new FillingTables();
 		try {
 			tableKursy.setItems(fillTable.fillTableKursy());
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		
-		// TODO Dodaje poprawnie do bazy, niepoprawnie do kolumn
+
 		idAutaInput.clear();
 		idKierowcyInput.clear();
 		kursSygnaturaKursuInput.clear();
@@ -1282,6 +1281,7 @@ public class Main extends Application {
 		String REJ_data_start = "'" + rejestr.setREJ_data_start(txtColRejestrDataStart.getText()) + "'";
 		String REJ_data_konc = "'" + rejestr.setREJ_data_konc(txtColRejestrDataKoniec.getText()) + "'";
 		int REJ_iloscOsob = rejestr.setREJ_iloscOsob(Integer.parseInt(rejestrIloscOsobInput.getText()));
+
 		queries.insertDataToRaport(KUR_Miejsc_Startowa, KUR_Miejsc_Konco, REJ_data_start, REJ_data_konc, REJ_iloscOsob);
 
 		FillingTables fillTable = new FillingTables();
@@ -1305,7 +1305,7 @@ public class Main extends Application {
 		productSelected = tableKierowcy.getSelectionModel().getSelectedItems();
 		Kierowcy selectedKierowcy = productSelected.get(0);
 		int id = selectedKierowcy.getId();
-		
+
 		FillingTables fillTable = new FillingTables();
 		try {
 			queries.deleteByIdKierowcy(id);
@@ -1322,13 +1322,13 @@ public class Main extends Application {
 
 		Przystanki selectedPrzystanki = productSelected.get(0);
 		int id = selectedPrzystanki.getPR_KEY();
-		
+
 		FillingTables fillTable = new FillingTables();
 
 		try {
 			queries.deleteByIdPrzystanki(id);
 			tablePrzystanki.setItems(fillTable.fillTablePrzystanki());
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -1339,7 +1339,7 @@ public class Main extends Application {
 		productSelected = tableTrasa.getSelectionModel().getSelectedItems();
 		Trasa selectedTrasa = productSelected.get(0);
 		int id = selectedTrasa.getTR_KEY();
-		
+
 		FillingTables fillTable = new FillingTables();
 
 		try {
@@ -1357,13 +1357,13 @@ public class Main extends Application {
 
 		Autokary selectedAutokary = productSelected.get(0);
 		int id = selectedAutokary.getAUT_KEY();
-		
+
 		FillingTables fillTable = new FillingTables();
 
 		try {
 			queries.deleteByIdAutokary(id);
 			tableAutokary.setItems(fillTable.fillTableAutokary());
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
@@ -1376,13 +1376,13 @@ public class Main extends Application {
 
 		Kursy selectedKursy = productSelected.get(0);
 		int id = selectedKursy.getKUR_KEY();
-		
+
 		FillingTables fillTable = new FillingTables();
 
 		try {
 			queries.deleteByIdKursy(id);
 			tableKursy.setItems(fillTable.fillTableKursy());
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
@@ -1395,13 +1395,13 @@ public class Main extends Application {
 
 		Miejscowosci selectedMiejscowosci = productSelected.get(0);
 		int id = selectedMiejscowosci.getMIE_KEY();
-		
+
 		FillingTables fillTable = new FillingTables();
 
 		try {
 			queries.deleteByIdMiejscowosci(id);
 			tableMiejscowosci.setItems(fillTable.fillTableMiejscowosci());
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
@@ -1414,13 +1414,13 @@ public class Main extends Application {
 
 		Rejestr_przejazdow selectedRejestrPrzejazdow = productSelected.get(0);
 		int id = selectedRejestrPrzejazdow.getREJ_KEY();
-		
+
 		FillingTables fillTable = new FillingTables();
 
 		try {
 			queries.deleteByIdRejestrPrzejazdow(id);
 			tableRejestrPrzejazdow.setItems(fillTable.fillTableRejestrPrzejazdow());
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 

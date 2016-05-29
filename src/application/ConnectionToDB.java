@@ -18,7 +18,9 @@ public class ConnectionToDB {
 				System.out.println("Poprawnie polaczono z baza danych");
 			}
 		} catch (SQLException ex) {
-			ex.printStackTrace();
+			System.out.println("Wylaczona baza danych");
+		
+		//	ex.printStackTrace();
 
 		}
 		return connectionToDB;
@@ -31,8 +33,8 @@ public class ConnectionToDB {
 			getConnection(user);
 			stmt = connectionToDB.createStatement();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		//	System.out.println("Wylaczona baza danych");
+			//e.printStackTrace();
 		}
 		return stmt;
 	}
