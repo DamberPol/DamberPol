@@ -24,10 +24,7 @@ public class FillingTables extends Main {
 			dataZatr = rsKierowcy.getString(5);
 			products.add(new Kierowcy(id, imie, nazwisko, pesel, dataZatr));
 		}
-		//table.setItems(null); 
-       // table.layout(); 
-      //  table.setItems(FXCollections.observableList(products)); 
-		System.out.println("WYPELNIANIE TABELI KIEROWCY");
+
 		return products;
 	}
 

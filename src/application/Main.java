@@ -138,7 +138,7 @@ public class Main extends Application {
 		layout2 = new BorderPane();
 		layout2.setPadding(new Insets(20, 20, 20, 20));
 
-		scenaRozkladJazdy = new Scene(layout2, 800, 600);
+		scenaRozkladJazdy = new Scene(layout2, 1200, 600);
 		scenaRozkladJazdy.getStylesheets().add("application/Rozk³ad_Jazdy.css");
 
 		hboxklijent = new HBox();
@@ -578,8 +578,10 @@ public class Main extends Application {
 		trasaUwagi.setMinWidth(50);
 
 		trasaAddButton = new Button("Add");
+		trasaAddButton.setMinWidth(60);
 		trasaAddButton.setOnAction(e -> btnAddTrasy());
 		trasaDeleteButton = new Button("Delete");
+		trasaDeleteButton.setMinWidth(60);
 		trasaDeleteButton.setOnAction(e -> {
 
 			rezultat = checkbox.display();
@@ -595,7 +597,7 @@ public class Main extends Application {
 		hbox3.getChildren().addAll(trasaKursStart, trasaKursKoniec, trasaMiejscowoscStartowa, trasaMiejscowoscKoncowa,
 				trasaGodzinaOdjazdu, trasaGodzinaPrzyjazdu, trasaDzienTygodnia, trasaUwagi, trasaAddButton,
 				trasaDeleteButton);
-		
+
 		tableTrasa = new TableView<>();
 		tableTrasa.getColumns().addAll(idTrasy, IdKursy, trasyMiejscStartowa, trasyMiejscKonco, IdPrzystanki,
 				godzinaOdjazducolumn, godzinacolumn, dzientygcolumn, uwagicolumn);

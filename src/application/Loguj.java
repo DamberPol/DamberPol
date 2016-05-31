@@ -55,10 +55,12 @@ public class Loguj extends ConnectionToDB {
 			Connection connection = connect.getConnection(user);
 			if (connection != null) {
 				userAnswer = true;
+				Logowanie.display(userAnswer);
 				window.close();
 			} else {
 				// TODO Powiadomienie w labelu o niepoprawnym loginie/hasle
 				userAnswer = false;
+				Logowanie.display(userAnswer);
 			}
 
 		});
